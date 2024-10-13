@@ -1,9 +1,92 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36" version="24.7.17">
   <diagram name="Page-1" id="ZWGrXdtK1na4yL_JF_Z4">
-    <mxGraphModel>
+    <mxGraphModel dx="1434" dy="746" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="G9XlE_KiT_lDeHbKaAnt-1" value="Start" style="ellipse;aspect=fixed;strokeWidth=2;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="215" y="20" width="51" height="51" as="geometry" />
+        </mxCell>
+        <mxCell id="G9XlE_KiT_lDeHbKaAnt-2" value="User accesses login page" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="122" y="121" width="236" height="49" as="geometry" />
+        </mxCell>
+        <mxCell id="G9XlE_KiT_lDeHbKaAnt-3" value="User enters email and password" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="131" y="220" width="217" height="67" as="geometry" />
+        </mxCell>
+        <mxCell id="G9XlE_KiT_lDeHbKaAnt-4" value="Is user logged in?" style="rhombus;strokeWidth=2;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="86" y="336" width="171" height="171" as="geometry" />
+        </mxCell>
+        <mxCell id="G9XlE_KiT_lDeHbKaAnt-5" value="Show Home Screen" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="20" y="835" width="196" height="49" as="geometry" />
+        </mxCell>
+        <mxCell id="G9XlE_KiT_lDeHbKaAnt-6" value="Is login successful?" style="rhombus;strokeWidth=2;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="155" y="580" width="182" height="182" as="geometry" />
+        </mxCell>
+        <mxCell id="G9XlE_KiT_lDeHbKaAnt-7" value="Display login error" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="266" y="835" width="192" height="49" as="geometry" />
+        </mxCell>
+        <mxCell id="G9XlE_KiT_lDeHbKaAnt-8" value="End" style="ellipse;aspect=fixed;strokeWidth=2;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="97" y="934" width="41" height="41" as="geometry" />
+        </mxCell>
+        <mxCell id="G9XlE_KiT_lDeHbKaAnt-9" value="" style="curved=1;startArrow=none;endArrow=block;exitX=0.49;exitY=0.99;entryX=0.5;entryY=-0.01;rounded=0;" edge="1" parent="1" source="G9XlE_KiT_lDeHbKaAnt-1" target="G9XlE_KiT_lDeHbKaAnt-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="G9XlE_KiT_lDeHbKaAnt-10" value="" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=0.99;entryX=0.5;entryY=-0.01;rounded=0;" edge="1" parent="1" source="G9XlE_KiT_lDeHbKaAnt-2" target="G9XlE_KiT_lDeHbKaAnt-3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="G9XlE_KiT_lDeHbKaAnt-11" value="" style="curved=1;startArrow=none;endArrow=block;exitX=0.32;exitY=0.99;entryX=0.5;entryY=0;rounded=0;" edge="1" parent="1" source="G9XlE_KiT_lDeHbKaAnt-3" target="G9XlE_KiT_lDeHbKaAnt-4">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="171" y="311" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="G9XlE_KiT_lDeHbKaAnt-12" value="Yes" style="curved=1;startArrow=none;endArrow=block;exitX=0.21;exitY=1;entryX=0.46;entryY=0.01;rounded=0;" edge="1" parent="1" source="G9XlE_KiT_lDeHbKaAnt-4" target="G9XlE_KiT_lDeHbKaAnt-5">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="101" y="544" />
+              <mxPoint x="101" y="799" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="G9XlE_KiT_lDeHbKaAnt-13" value="No" style="curved=1;startArrow=none;endArrow=block;exitX=0.8;exitY=1;entryX=0.5;entryY=0;rounded=0;" edge="1" parent="1" source="G9XlE_KiT_lDeHbKaAnt-4" target="G9XlE_KiT_lDeHbKaAnt-6">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="246" y="544" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="G9XlE_KiT_lDeHbKaAnt-14" value="Yes" style="curved=1;startArrow=none;endArrow=block;exitX=0.29;exitY=1;entryX=0.65;entryY=0.01;rounded=0;" edge="1" parent="1" source="G9XlE_KiT_lDeHbKaAnt-6" target="G9XlE_KiT_lDeHbKaAnt-5">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="193" y="799" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="G9XlE_KiT_lDeHbKaAnt-15" value="No" style="curved=1;startArrow=none;endArrow=block;exitX=0.68;exitY=1;entryX=0.36;entryY=0.01;rounded=0;" edge="1" parent="1" source="G9XlE_KiT_lDeHbKaAnt-6" target="G9XlE_KiT_lDeHbKaAnt-7">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="293" y="799" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="G9XlE_KiT_lDeHbKaAnt-16" value="" style="curved=1;startArrow=none;endArrow=block;exitX=0.53;exitY=0.01;entryX=0.86;entryY=0.99;rounded=0;" edge="1" parent="1" source="G9XlE_KiT_lDeHbKaAnt-7" target="G9XlE_KiT_lDeHbKaAnt-3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="378" y="799" />
+              <mxPoint x="378" y="311" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="G9XlE_KiT_lDeHbKaAnt-17" value="" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1.01;entryX=0.51;entryY=0.01;rounded=0;" edge="1" parent="1" source="G9XlE_KiT_lDeHbKaAnt-5" target="G9XlE_KiT_lDeHbKaAnt-8">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
