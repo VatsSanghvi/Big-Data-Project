@@ -1,9 +1,115 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36" version="24.7.17">
   <diagram name="Page-1" id="oLXVhcQPoyziTqbPdPcM">
-    <mxGraphModel>
+    <mxGraphModel dx="1434" dy="746" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="O38cyDRtwLniDWvRTW-O-1" value="Start" style="ellipse;aspect=fixed;strokeWidth=2;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="301" y="70" width="51" height="51" as="geometry" />
+        </mxCell>
+        <mxCell id="O38cyDRtwLniDWvRTW-O-2" value="User accesses registration page" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="203" y="171" width="246" height="67" as="geometry" />
+        </mxCell>
+        <mxCell id="O38cyDRtwLniDWvRTW-O-3" value="User fills out registration form" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="206" y="287" width="240" height="67" as="geometry" />
+        </mxCell>
+        <mxCell id="O38cyDRtwLniDWvRTW-O-4" value="Is form complete?" style="rhombus;strokeWidth=2;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="492" y="404" width="177" height="177" as="geometry" />
+        </mxCell>
+        <mxCell id="O38cyDRtwLniDWvRTW-O-5" value="Does email exist?" style="rhombus;strokeWidth=2;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="517" y="654" width="172" height="172" as="geometry" />
+        </mxCell>
+        <mxCell id="O38cyDRtwLniDWvRTW-O-6" value="Show form error" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="289" y="715" width="177" height="49" as="geometry" />
+        </mxCell>
+        <mxCell id="O38cyDRtwLniDWvRTW-O-7" value="Show &#39;Email already exists&#39; error" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="150" y="899" width="243" height="67" as="geometry" />
+        </mxCell>
+        <mxCell id="O38cyDRtwLniDWvRTW-O-8" value="Save user data to database" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="476" y="910" width="254" height="49" as="geometry" />
+        </mxCell>
+        <mxCell id="O38cyDRtwLniDWvRTW-O-9" value="Create user account" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="500" y="1017" width="205" height="49" as="geometry" />
+        </mxCell>
+        <mxCell id="O38cyDRtwLniDWvRTW-O-10" value="Redirect to login/home screen" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="489" y="1116" width="227" height="67" as="geometry" />
+        </mxCell>
+        <mxCell id="O38cyDRtwLniDWvRTW-O-11" value="End" style="ellipse;aspect=fixed;strokeWidth=2;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="582" y="1233" width="41" height="41" as="geometry" />
+        </mxCell>
+        <mxCell id="O38cyDRtwLniDWvRTW-O-12" value="" style="curved=1;startArrow=none;endArrow=block;exitX=0.49;exitY=0.99;entryX=0.5;entryY=-0.01;rounded=0;" edge="1" parent="1" source="O38cyDRtwLniDWvRTW-O-1" target="O38cyDRtwLniDWvRTW-O-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="O38cyDRtwLniDWvRTW-O-13" value="" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=0.99;entryX=0.5;entryY=0;rounded=0;" edge="1" parent="1" source="O38cyDRtwLniDWvRTW-O-2" target="O38cyDRtwLniDWvRTW-O-3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="O38cyDRtwLniDWvRTW-O-14" value="" style="curved=1;startArrow=none;endArrow=block;exitX=1;exitY=0.91;entryX=0.5;entryY=0;rounded=0;" edge="1" parent="1" source="O38cyDRtwLniDWvRTW-O-3" target="O38cyDRtwLniDWvRTW-O-4">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="580" y="379" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="O38cyDRtwLniDWvRTW-O-15" value="Yes" style="curved=1;startArrow=none;endArrow=block;exitX=0.59;exitY=1;entryX=0.5;entryY=0;rounded=0;" edge="1" parent="1" source="O38cyDRtwLniDWvRTW-O-4" target="O38cyDRtwLniDWvRTW-O-5">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="603" y="617" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="O38cyDRtwLniDWvRTW-O-16" value="No" style="curved=1;startArrow=none;endArrow=block;exitX=0.05;exitY=1;entryX=0.6;entryY=0;rounded=0;" edge="1" parent="1" source="O38cyDRtwLniDWvRTW-O-4" target="O38cyDRtwLniDWvRTW-O-6">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="468" y="617" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="O38cyDRtwLniDWvRTW-O-17" value="" style="curved=1;startArrow=none;endArrow=block;exitX=0.44;exitY=0;entryX=0.5;entryY=1;rounded=0;" edge="1" parent="1" source="O38cyDRtwLniDWvRTW-O-6" target="O38cyDRtwLniDWvRTW-O-3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="326" y="617" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="O38cyDRtwLniDWvRTW-O-18" value="Yes" style="curved=1;startArrow=none;endArrow=block;exitX=0;exitY=0.89;entryX=0.84;entryY=0;rounded=0;" edge="1" parent="1" source="O38cyDRtwLniDWvRTW-O-5" target="O38cyDRtwLniDWvRTW-O-7">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="446" y="862" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="O38cyDRtwLniDWvRTW-O-19" value="" style="curved=1;startArrow=none;endArrow=block;exitX=0.47;exitY=0;entryX=0.33;entryY=1;rounded=0;" edge="1" parent="1" source="O38cyDRtwLniDWvRTW-O-7" target="O38cyDRtwLniDWvRTW-O-3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="254" y="862" />
+              <mxPoint x="254" y="379" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="O38cyDRtwLniDWvRTW-O-20" value="No" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=-0.01;rounded=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="O38cyDRtwLniDWvRTW-O-5" target="O38cyDRtwLniDWvRTW-O-8">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="O38cyDRtwLniDWvRTW-O-21" value="" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=0.99;entryX=0.5;entryY=0.01;rounded=0;" edge="1" parent="1" source="O38cyDRtwLniDWvRTW-O-8" target="O38cyDRtwLniDWvRTW-O-9">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="O38cyDRtwLniDWvRTW-O-22" value="" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1.01;entryX=0.5;entryY=0.01;rounded=0;" edge="1" parent="1" source="O38cyDRtwLniDWvRTW-O-9" target="O38cyDRtwLniDWvRTW-O-10">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="O38cyDRtwLniDWvRTW-O-23" value="" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;" edge="1" parent="1" source="O38cyDRtwLniDWvRTW-O-10" target="O38cyDRtwLniDWvRTW-O-11">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
