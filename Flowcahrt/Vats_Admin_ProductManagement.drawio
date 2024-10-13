@@ -1,9 +1,126 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36" version="24.7.17">
   <diagram name="Page-1" id="UbA56Km1S1fsofJo0lUL">
-    <mxGraphModel>
+    <mxGraphModel dx="1434" dy="746" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="qtah64N2vkhYEoDZ3rAx-1" value="Start" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="379" y="20" width="96" height="49" as="geometry" />
+        </mxCell>
+        <mxCell id="qtah64N2vkhYEoDZ3rAx-2" value="Admin logs in" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="349" y="119" width="157" height="49" as="geometry" />
+        </mxCell>
+        <mxCell id="qtah64N2vkhYEoDZ3rAx-3" value="Admin selects &#39;Manage Products&#39;" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="296" y="218" width="261" height="67" as="geometry" />
+        </mxCell>
+        <mxCell id="qtah64N2vkhYEoDZ3rAx-4" value="Admin chooses an action" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="308" y="335" width="238" height="49" as="geometry" />
+        </mxCell>
+        <mxCell id="qtah64N2vkhYEoDZ3rAx-5" value="Admin inputs product details" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="31" y="573" width="216" height="67" as="geometry" />
+        </mxCell>
+        <mxCell id="qtah64N2vkhYEoDZ3rAx-6" value="System confirms product addition" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="20" y="690" width="238" height="67" as="geometry" />
+        </mxCell>
+        <mxCell id="qtah64N2vkhYEoDZ3rAx-7" value="Admin selects product to update" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="307" y="457" width="241" height="67" as="geometry" />
+        </mxCell>
+        <mxCell id="qtah64N2vkhYEoDZ3rAx-8" value="Admin updates product details" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="313" y="573" width="228" height="67" as="geometry" />
+        </mxCell>
+        <mxCell id="qtah64N2vkhYEoDZ3rAx-9" value="System confirms product update" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="308" y="690" width="238" height="67" as="geometry" />
+        </mxCell>
+        <mxCell id="qtah64N2vkhYEoDZ3rAx-10" value="Admin selects product to delete" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="595" y="573" width="241" height="67" as="geometry" />
+        </mxCell>
+        <mxCell id="qtah64N2vkhYEoDZ3rAx-11" value="System confirms product deletion" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="596" y="690" width="238" height="67" as="geometry" />
+        </mxCell>
+        <mxCell id="qtah64N2vkhYEoDZ3rAx-12" value="Admin logs out" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="343" y="806" width="168" height="49" as="geometry" />
+        </mxCell>
+        <mxCell id="qtah64N2vkhYEoDZ3rAx-13" value="End" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="384" y="905" width="86" height="49" as="geometry" />
+        </mxCell>
+        <mxCell id="qtah64N2vkhYEoDZ3rAx-14" value="" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;" edge="1" parent="1" source="qtah64N2vkhYEoDZ3rAx-1" target="qtah64N2vkhYEoDZ3rAx-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qtah64N2vkhYEoDZ3rAx-15" value="" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;" edge="1" parent="1" source="qtah64N2vkhYEoDZ3rAx-2" target="qtah64N2vkhYEoDZ3rAx-3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qtah64N2vkhYEoDZ3rAx-16" value="" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=0.99;entryX=0.5;entryY=-0.01;rounded=0;" edge="1" parent="1" source="qtah64N2vkhYEoDZ3rAx-3" target="qtah64N2vkhYEoDZ3rAx-4">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qtah64N2vkhYEoDZ3rAx-17" value="Add Product" style="curved=1;startArrow=none;endArrow=block;exitX=0.01;exitY=0.99;entryX=0.5;entryY=0;rounded=0;" edge="1" parent="1" source="qtah64N2vkhYEoDZ3rAx-4" target="qtah64N2vkhYEoDZ3rAx-5">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="139" y="420" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qtah64N2vkhYEoDZ3rAx-18" value="" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;" edge="1" parent="1" source="qtah64N2vkhYEoDZ3rAx-5" target="qtah64N2vkhYEoDZ3rAx-6">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qtah64N2vkhYEoDZ3rAx-19" value="Update Product" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=0.99;entryX=0.5;entryY=-0.01;rounded=0;" edge="1" parent="1" source="qtah64N2vkhYEoDZ3rAx-4" target="qtah64N2vkhYEoDZ3rAx-7">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qtah64N2vkhYEoDZ3rAx-20" value="" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=0.99;entryX=0.5;entryY=0;rounded=0;" edge="1" parent="1" source="qtah64N2vkhYEoDZ3rAx-7" target="qtah64N2vkhYEoDZ3rAx-8">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qtah64N2vkhYEoDZ3rAx-21" value="" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;" edge="1" parent="1" source="qtah64N2vkhYEoDZ3rAx-8" target="qtah64N2vkhYEoDZ3rAx-9">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qtah64N2vkhYEoDZ3rAx-22" value="Delete Product" style="curved=1;startArrow=none;endArrow=block;exitX=0.99;exitY=0.99;entryX=0.5;entryY=0;rounded=0;" edge="1" parent="1" source="qtah64N2vkhYEoDZ3rAx-4" target="qtah64N2vkhYEoDZ3rAx-10">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="715" y="420" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qtah64N2vkhYEoDZ3rAx-23" value="" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;" edge="1" parent="1" source="qtah64N2vkhYEoDZ3rAx-10" target="qtah64N2vkhYEoDZ3rAx-11">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qtah64N2vkhYEoDZ3rAx-24" value="" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=0.99;entryX=0;entryY=0.21;rounded=0;" edge="1" parent="1" source="qtah64N2vkhYEoDZ3rAx-6" target="qtah64N2vkhYEoDZ3rAx-12">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="139" y="781" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qtah64N2vkhYEoDZ3rAx-25" value="" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=0.99;entryX=0.5;entryY=0.01;rounded=0;" edge="1" parent="1" source="qtah64N2vkhYEoDZ3rAx-9" target="qtah64N2vkhYEoDZ3rAx-12">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qtah64N2vkhYEoDZ3rAx-26" value="" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=0.99;entryX=1;entryY=0.21;rounded=0;" edge="1" parent="1" source="qtah64N2vkhYEoDZ3rAx-11" target="qtah64N2vkhYEoDZ3rAx-12">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="715" y="781" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qtah64N2vkhYEoDZ3rAx-27" value="" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1.01;entryX=0.5;entryY=0.01;rounded=0;" edge="1" parent="1" source="qtah64N2vkhYEoDZ3rAx-12" target="qtah64N2vkhYEoDZ3rAx-13">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
