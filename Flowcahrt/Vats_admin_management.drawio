@@ -1,9 +1,97 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36" version="24.7.17">
   <diagram name="Page-1" id="YpynzZ7Vl8e1bckxe3w0">
-    <mxGraphModel>
+    <mxGraphModel dx="1434" dy="746" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="NMfxPxxlH8ghfmb8yUGS-1" value="Start" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="233" y="20" width="96" height="49" as="geometry" />
+        </mxCell>
+        <mxCell id="NMfxPxxlH8ghfmb8yUGS-2" value="Admin logs in" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="203" y="119" width="157" height="49" as="geometry" />
+        </mxCell>
+        <mxCell id="NMfxPxxlH8ghfmb8yUGS-3" value="Admin selects &#39;Manage Users&#39;" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="150" y="218" width="261" height="67" as="geometry" />
+        </mxCell>
+        <mxCell id="NMfxPxxlH8ghfmb8yUGS-4" value="Admin chooses an action" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="162" y="335" width="238" height="49" as="geometry" />
+        </mxCell>
+        <mxCell id="NMfxPxxlH8ghfmb8yUGS-5" value="Admin inputs user details" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="20" y="465" width="243" height="49" as="geometry" />
+        </mxCell>
+        <mxCell id="NMfxPxxlH8ghfmb8yUGS-6" value="System confirms user addition" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="35" y="573" width="213" height="67" as="geometry" />
+        </mxCell>
+        <mxCell id="NMfxPxxlH8ghfmb8yUGS-7" value="Admin selects user to delete" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="313" y="457" width="215" height="67" as="geometry" />
+        </mxCell>
+        <mxCell id="NMfxPxxlH8ghfmb8yUGS-8" value="System confirms user deletion" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="314" y="573" width="213" height="67" as="geometry" />
+        </mxCell>
+        <mxCell id="NMfxPxxlH8ghfmb8yUGS-9" value="Admin logs out" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="197" y="690" width="168" height="49" as="geometry" />
+        </mxCell>
+        <mxCell id="NMfxPxxlH8ghfmb8yUGS-10" value="End" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="238" y="789" width="86" height="49" as="geometry" />
+        </mxCell>
+        <mxCell id="NMfxPxxlH8ghfmb8yUGS-11" value="" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;" edge="1" parent="1" source="NMfxPxxlH8ghfmb8yUGS-1" target="NMfxPxxlH8ghfmb8yUGS-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NMfxPxxlH8ghfmb8yUGS-12" value="" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;" edge="1" parent="1" source="NMfxPxxlH8ghfmb8yUGS-2" target="NMfxPxxlH8ghfmb8yUGS-3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NMfxPxxlH8ghfmb8yUGS-13" value="" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=0.99;entryX=0.5;entryY=-0.01;rounded=0;" edge="1" parent="1" source="NMfxPxxlH8ghfmb8yUGS-3" target="NMfxPxxlH8ghfmb8yUGS-4">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NMfxPxxlH8ghfmb8yUGS-14" value="Add User" style="curved=1;startArrow=none;endArrow=block;exitX=0.26;exitY=0.99;entryX=0.5;entryY=0.01;rounded=0;" edge="1" parent="1" source="NMfxPxxlH8ghfmb8yUGS-4" target="NMfxPxxlH8ghfmb8yUGS-5">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="142" y="420" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NMfxPxxlH8ghfmb8yUGS-15" value="" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1.01;entryX=0.5;entryY=0;rounded=0;" edge="1" parent="1" source="NMfxPxxlH8ghfmb8yUGS-5" target="NMfxPxxlH8ghfmb8yUGS-6">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NMfxPxxlH8ghfmb8yUGS-16" value="Delete User" style="curved=1;startArrow=none;endArrow=block;exitX=0.74;exitY=0.99;entryX=0.5;entryY=-0.01;rounded=0;" edge="1" parent="1" source="NMfxPxxlH8ghfmb8yUGS-4" target="NMfxPxxlH8ghfmb8yUGS-7">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="421" y="420" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NMfxPxxlH8ghfmb8yUGS-17" value="" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=0.99;entryX=0.5;entryY=0;rounded=0;" edge="1" parent="1" source="NMfxPxxlH8ghfmb8yUGS-7" target="NMfxPxxlH8ghfmb8yUGS-8">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NMfxPxxlH8ghfmb8yUGS-18" value="" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.09;entryY=0;rounded=0;" edge="1" parent="1" source="NMfxPxxlH8ghfmb8yUGS-6" target="NMfxPxxlH8ghfmb8yUGS-9">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="142" y="665" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NMfxPxxlH8ghfmb8yUGS-19" value="" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.91;entryY=0;rounded=0;" edge="1" parent="1" source="NMfxPxxlH8ghfmb8yUGS-8" target="NMfxPxxlH8ghfmb8yUGS-9">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="421" y="665" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NMfxPxxlH8ghfmb8yUGS-20" value="" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;" edge="1" parent="1" source="NMfxPxxlH8ghfmb8yUGS-9" target="NMfxPxxlH8ghfmb8yUGS-10">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
