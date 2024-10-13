@@ -1,9 +1,82 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36" version="24.7.17">
   <diagram name="Page-1" id="M3qMPmKcATXmmoVNSZgg">
-    <mxGraphModel>
+    <mxGraphModel dx="1434" dy="746" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="JKOkEMV6gc6lej_M5oBY-1" value="Start" style="ellipse;aspect=fixed;strokeWidth=2;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="256" y="20" width="51" height="51" as="geometry" />
+        </mxCell>
+        <mxCell id="JKOkEMV6gc6lej_M5oBY-2" value="User accesses profile settings" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="176" y="121" width="210" height="67" as="geometry" />
+        </mxCell>
+        <mxCell id="JKOkEMV6gc6lej_M5oBY-3" value="User updates profile information" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="69" y="237" width="206" height="67" as="geometry" />
+        </mxCell>
+        <mxCell id="JKOkEMV6gc6lej_M5oBY-4" value="Is the information valid?" style="rhombus;strokeWidth=2;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="61" y="354" width="223" height="223" as="geometry" />
+        </mxCell>
+        <mxCell id="JKOkEMV6gc6lej_M5oBY-5" value="Save updated profile information" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="45" y="649" width="209" height="67" as="geometry" />
+        </mxCell>
+        <mxCell id="JKOkEMV6gc6lej_M5oBY-6" value="Show confirmation message" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="20" y="766" width="259" height="49" as="geometry" />
+        </mxCell>
+        <mxCell id="JKOkEMV6gc6lej_M5oBY-7" value="End" style="ellipse;aspect=fixed;strokeWidth=2;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="129" y="865" width="41" height="41" as="geometry" />
+        </mxCell>
+        <mxCell id="JKOkEMV6gc6lej_M5oBY-8" value="Display error message" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="304" y="658" width="217" height="49" as="geometry" />
+        </mxCell>
+        <mxCell id="JKOkEMV6gc6lej_M5oBY-9" value="" style="curved=1;startArrow=none;endArrow=block;exitX=0.49;exitY=0.99;entryX=0.5;entryY=-0.01;rounded=0;" edge="1" parent="1" source="JKOkEMV6gc6lej_M5oBY-1" target="JKOkEMV6gc6lej_M5oBY-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="JKOkEMV6gc6lej_M5oBY-10" value="" style="curved=1;startArrow=none;endArrow=block;exitX=0.2;exitY=0.99;entryX=0.5;entryY=0;rounded=0;" edge="1" parent="1" source="JKOkEMV6gc6lej_M5oBY-2" target="JKOkEMV6gc6lej_M5oBY-3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="172" y="212" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="JKOkEMV6gc6lej_M5oBY-11" value="" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;" edge="1" parent="1" source="JKOkEMV6gc6lej_M5oBY-3" target="JKOkEMV6gc6lej_M5oBY-4">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="JKOkEMV6gc6lej_M5oBY-12" value="Yes" style="curved=1;startArrow=none;endArrow=block;exitX=0.42;exitY=1;entryX=0.5;entryY=0.01;rounded=0;" edge="1" parent="1" source="JKOkEMV6gc6lej_M5oBY-4" target="JKOkEMV6gc6lej_M5oBY-5">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="149" y="613" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="JKOkEMV6gc6lej_M5oBY-13" value="" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;" edge="1" parent="1" source="JKOkEMV6gc6lej_M5oBY-5" target="JKOkEMV6gc6lej_M5oBY-6">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="JKOkEMV6gc6lej_M5oBY-14" value="" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;" edge="1" parent="1" source="JKOkEMV6gc6lej_M5oBY-6" target="JKOkEMV6gc6lej_M5oBY-7">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="JKOkEMV6gc6lej_M5oBY-15" value="No" style="curved=1;startArrow=none;endArrow=block;exitX=0.94;exitY=1;entryX=0.32;entryY=0.01;rounded=0;" edge="1" parent="1" source="JKOkEMV6gc6lej_M5oBY-4" target="JKOkEMV6gc6lej_M5oBY-8">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="304" y="613" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="JKOkEMV6gc6lej_M5oBY-16" value="" style="curved=1;startArrow=none;endArrow=block;exitX=0.53;exitY=0.01;entryX=0.9;entryY=0.99;rounded=0;" edge="1" parent="1" source="JKOkEMV6gc6lej_M5oBY-8" target="JKOkEMV6gc6lej_M5oBY-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="428" y="613" />
+              <mxPoint x="428" y="212" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
