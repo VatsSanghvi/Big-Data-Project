@@ -180,7 +180,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="Y58JkeksdqxKK475Ll9a-33" value="PRODUCT" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fixedRows=1;rowLines=1;fontStyle=1;align=center;resizeLast=1;" parent="1" vertex="1">
-          <mxGeometry x="37" y="631" width="173" height="160" as="geometry" />
+          <mxGeometry x="20" y="631" width="173" height="160" as="geometry" />
         </mxCell>
         <mxCell id="Y58JkeksdqxKK475Ll9a-34" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=0;" parent="Y58JkeksdqxKK475Ll9a-33" vertex="1">
           <mxGeometry y="30" width="173" height="22" as="geometry" />
