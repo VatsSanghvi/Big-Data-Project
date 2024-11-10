@@ -1,1 +1,6 @@
-fastapi~=0.115.3
+fastapi
+sqlalchemy
+passlib
+uvicorn
+pymysql
+python-dotenv
