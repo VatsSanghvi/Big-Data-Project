@@ -1,0 +1,10 @@
+@use 'primeflex/primeflex.scss' as *;
+
+.loader {
+    @include styleclass('absolute w-screen h-screen top-0 left-0 bg-black-alpha-40 z-5 flex justify-content-center align-items-center');
+
+    &-spinner {
+        @include styleclass('text-white');
+        font-size: 8rem;
+    }
+}
