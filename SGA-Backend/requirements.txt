@@ -2,5 +2,8 @@ fastapi
 sqlalchemy
 passlib
 uvicorn
-pymysql
 python-dotenv
+pyodbc
+pydantic[email]
+bcrypt
+python-multipart

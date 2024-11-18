@@ -1,46 +1,20 @@
-from fastapi import FastAPI, Depends, HTTPException
-from sqlalchemy.orm import Session
+from fastapi import FastAPI, APIRouter
+from app.routers import category,flyer,grocerylist,price_comparison,product,store,user_routes
+from app.database import engine
+from app.models import category,flyer,grocerylist,price_comparison,product,store,user
 
-from crud import user
-from schemas import user as schemas
-from models import user as models
-from .database import SessionLocal, engine
+user.Base.metadata.create_all(bind=engine)
 
-models.Base.metadata.create_all(bind=engine)
-
+# Initialize the FastAPI app
 app = FastAPI()
+router = APIRouter()
 
-#Dependency
-def get_db():
-    db = SessionLocal()
-    try : 
-        yield db
-    finally:
-        db.close()
+# Include the routers
+""" app.include_router(category.router, prefix="/category")
+app.include_router(flyer.router, prefix="/flyer")
+app.include_router(grocerylist.router, prefix="/grocerylist")
+app.include_router(price_comparison.router, prefix="/price_comparison")
+app.include_router(product.router, prefix="/product")
+app.include_router(store.router, prefix="/store") """
+app.include_router(user_routes.router, prefix="/users")
 
-
-@app.post("/users/",response_model=schemas.User)
-def post_user(user:schemas.UserCreate, db:Session=Depends(get_db)):
-    db_user = user.get_user_by_email(db, email=user.email)
-    if db_user:
-        raise HTTPException(status_code=400, detail="Email already registered")
-    return user.create_user(db=db,user=user)
-
-
-@app.get("/users/", response_model=list[schemas.User])
-def get_users(skip:int=0, limit:int=0, db:Session=Depends(get_db)):
-    users = users.get_users(db,skip=skip,limit=limit)
-    return users
-
-
-@app.get("/users/{user_id}/",response_model=schemas.User)
-def get_user(user_id:int, db:Session=Depends(get_db)):
-    db_user = user.get_user(db,user_id =user_id )
-    if db_user is None:
-        raise HTTPException(status_code=404, detail="User not found")
-    return db_user
-
-
-@app.post("/users/{user_id}/todos/",response_model=schemas.Todo)
-def post_todo_for_user(user_id:int, todo:schemas.TodoCreate, db:Session=Depends(get_db)):
-    return user.create_user_todo(db=db,user_id=user_id, todo=todo)
