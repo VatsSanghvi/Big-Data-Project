@@ -1,16 +1,25 @@
 // * React Libraries
-import { Navigate, RouteObject } from "react-router-dom";
+import { Navigate, redirect, RouteObject } from "react-router-dom";
+
+// * Layouts
+import { AuthLayout } from "@layout";
+
+// * Pages
+import { LoginPage } from "@pages";
 
 export const authRoutes : RouteObject[] = [
     {
         path: '/',
-        element: <div> Layout </div>,
+        element: <AuthLayout />,
         errorElement: <Navigate to="/" />,
         children: [
             {
                 index: true,
-                path: '/',
-                element: <div>Home</div>
+                loader: () => redirect('/login') 
+            },
+            {
+                path: 'login',
+                element: <LoginPage />
             },
             {
                 path: 'register',

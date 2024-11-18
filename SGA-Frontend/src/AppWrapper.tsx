@@ -12,6 +12,7 @@ import  'primeflex/primeflex.css';
 import 'primeicons/primeicons.css';
 import '@styles/index.scss';
 import "primereact/resources/themes/md-light-indigo/theme.css";
+import "@fontsource-variable/raleway";
 
 export const AppWrapper = () => {
     return (

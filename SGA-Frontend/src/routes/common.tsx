@@ -9,6 +9,9 @@ export const commonRoutes : RouteObject[] = [
         children: [
             {
                 index: true,
+                loader: () => <Navigate to="/home" />
+            },
+            {
                 path: 'home',
                 element: <div>Home</div>
             },
