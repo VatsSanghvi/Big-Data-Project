@@ -1,14 +1,24 @@
-import { CardHeader, MInputText, MPassword } from "@components"
-import { loginInitialValues, loginValidationSchema } from "@forms"
+// * Third Party Libraries
 import { useFormik } from "formik"
 import { Button } from "primereact/button"
+
+// * Components
+import { CardHeader, MInputText, MPassword } from "@components"
+
+// * Forms
+import { loginInitialValues, loginValidationSchema } from "@forms"
+import { user } from "@services"
 
 export const LoginPage = () => {
 
     const formik = useFormik({
         initialValues: loginInitialValues,
         validationSchema: loginValidationSchema,
-        onSubmit: () => {}
+        onSubmit: async({email, password}) => {
+            const response = await user.login(email, password);
+
+            console.log(response.data);
+        }
     })
 
     return (
