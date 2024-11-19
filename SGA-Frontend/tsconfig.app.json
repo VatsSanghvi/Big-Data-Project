@@ -25,6 +25,7 @@
       "@assets": ["src/assets"],
       "@components": ["src/components"],
       "@constants": ["src/constants"],
+      "@forms": ["src/forms"],
       "@helpers": ["src/helpers"],
       "@hooks": ["src/hooks"],
       "@layout": ["src/layout"],
