@@ -1,3 +1,9 @@
+---- Create the database
+--CREATE DATABASE SMART_GROCERY_ASSISTANT;
+
+---- Switch to the newly created database
+--USE SMART_GROCERY_ASSISTANT;
+
 -- Users Table
 CREATE TABLE users (
     user_id INT IDENTITY(1,1) PRIMARY KEY,
