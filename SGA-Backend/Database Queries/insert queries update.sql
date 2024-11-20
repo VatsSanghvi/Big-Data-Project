@@ -406,4 +406,13 @@
 --('No Name Vanilla Ice Cream Sandwiches – 24x120 ml', 6.59, 'in stock', 'Vanilla Ice Cream, Chocolate Wafer', '2024-01-01', '2024-12-31', 21, 6, 4),
 --('No Name Vanilla Ice Cream Sandwiches – 24x120 ml', 6.39, 'in stock', 'Vanilla Ice Cream, Chocolate Wafer', '2024-01-01', '2024-12-31', 21, 6, 5);
 
+-- ╔════════════════════════════════════════════════╗
+-- ║              Search Logs Table                 ║
+-- ╚════════════════════════════════════════════════╝
 
+-- INSERT INTO search_logs(search_term, user_id) 
+-- VALUES 
+-- ('No Name', 1),
+-- ('Heinz', 5),
+-- ('Chips', 8), 
+-- ('pasta', 10)

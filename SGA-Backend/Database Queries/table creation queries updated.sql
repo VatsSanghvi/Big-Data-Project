@@ -88,3 +88,10 @@ CREATE TABLE price_comparison (
     store_id INT FOREIGN KEY REFERENCES store(store_id) ON DELETE CASCADE,
     product_id INT FOREIGN KEY REFERENCES products(product_id) ON DELETE CASCADE
 );
+
+-- Search Log Table 
+CREATE TABLE search_logs (
+    search_id INT IDENTITY(1,1) PRIMARY KEY,
+    search_term VARCHAR(50) NOT NULL,
+	user_id INT FOREIGN KEY REFERENCES users(user_id) ON DELETE SET NULL
+);
