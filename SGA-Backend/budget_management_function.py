@@ -1,11 +1,12 @@
 import pyodbc
+from decimal import Decimal
 
 def connect_db():
     try:
         conn = pyodbc.connect(
             'DRIVER={ODBC Driver 17 for SQL Server};'
             'SERVER=DP\DSQL;'
-            'DATABASE=smart_grocery_management;'
+            'DATABASE=SMART_GROCERY_ASSISTANT;'
             'Trusted_Connection=yes;'
         )
         return conn
@@ -16,7 +17,7 @@ def connect_db():
 def fetch_products():
     conn = connect_db()
     cursor = conn.cursor()
-    cursor.execute("SELECT product_id, product_name, product_price FROM products")
+    cursor.execute("SELECT product_id, product_name, price FROM products")
     products = cursor.fetchall()
     conn.close()
     return products
@@ -28,12 +29,12 @@ def display_products():
         print(f"{'Product ID':<12}{'Product Name':<50}{'Product Price':<12}")
         print("-" * 94)
         for row in products:
-            print(f"{row.product_id:<12}{row.product_name:<50}{row.product_price:<12}")
+            print(f"{row.product_id:<12}{row.product_name:<50}{row.price:<12}")
 
 def get_product_by_id(product_id):
     conn = connect_db()
     cursor = conn.cursor()
-    cursor.execute("SELECT product_name, product_price FROM products WHERE product_id = ?", (product_id,))
+    cursor.execute("SELECT product_name, price FROM products WHERE product_id = ?", (product_id,))
     product = cursor.fetchone()
     conn.close()
     return product if product else None
@@ -54,7 +55,7 @@ class Budget:
             return False
     
     def remaining_budget(self):
-        return self.amount - self.total_spent
+        return Decimal(self.amount) - self.total_spent
 
 class Item:
     def __init__(self, name, price, qunatity=1):
