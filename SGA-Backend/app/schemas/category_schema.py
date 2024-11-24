@@ -3,7 +3,7 @@ from typing import Optional
 from pydantic import BaseModel, ConfigDict
 from .department_schema import DepartmentResponse
     
-class CategoryCreate(BaseModel):
+class CategoryInsert(BaseModel):
     category_name: str
     department_id: int
     

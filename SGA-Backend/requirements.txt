@@ -4,6 +4,6 @@ passlib
 uvicorn
 python-dotenv
 pyodbc
-pydantic[email_validator]
+pydantic[email-validator]
 bcrypt
 python-multipart

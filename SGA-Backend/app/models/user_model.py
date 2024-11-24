@@ -5,13 +5,13 @@ from app.schemas.user_schema import UserRole
 class User(Base):
     __tablename__ = "users"
     
-    id = Column(Integer, 
+    user_id = Column(Integer,
                 Identity(start=1, increment=1), 
                 primary_key=True, 
                 index=True)
     first_name = Column(String(255), nullable=False)
     last_name = Column(String(255), nullable=False)
     email = Column(String(255), unique=True, nullable=False)
-    password_hash = Column(String(255), nullable=False)
+    password = Column(String(255), nullable=False)
     phone_number = Column(String(20), nullable=True)
     role = Column(SQLAlchemyEnum(UserRole), nullable=False)

@@ -11,7 +11,7 @@ class UserRole(str, Enum):
     MANAGER = "manager"
     CUSTOMER = "customer"
 
-class UserInsert(BaseModel):
+class UserRegister(BaseModel):
     first_name: str
     last_name: str
     email: EmailStr

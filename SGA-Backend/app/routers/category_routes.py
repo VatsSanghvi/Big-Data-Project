@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.crud import category_crud
-from app.schemas.category_schema import CategoryCreate, CategoriesResponse
+from app.schemas.category_schema import CategoryInsert, CategoriesResponse
 from app.database import SessionLocal
 
 router = APIRouter()
@@ -15,7 +15,7 @@ def get_db():
         db.close()
 
 @router.post("/", response_model=CategoriesResponse)
-def create_category(category: CategoryCreate, db: Session = Depends(get_db)):
+def create_category(category: CategoryInsert, db: Session = Depends(get_db)):
     try:
         return category_crud.insert_category(db=db, category=category)
     except Exception as e:
@@ -32,14 +32,14 @@ def get_all_categories(db: Session = Depends(get_db)):
 @router.get("/{category_id}", response_model=CategoriesResponse)
 def get_category_by_id(category_id: int, db: Session = Depends(get_db)):
     try:
-        return category_crud.get_category(db=db, category_id=category_id)
+        return category_crud.get_category_by_id(db=db, category_id=category_id)
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
 @router.put("/{category_id}", response_model=CategoriesResponse)
-def update_category(category_id: int, category: CategoryCreate, db: Session = Depends(get_db)):
+def update_category(category_id: int, category: CategoryInsert, db: Session = Depends(get_db)):
     try:
-        return category_crud.update_category(db=db, category_id=category_id, category=category)
+        return category_crud.update_category(db=db, category_id=category_id, updates=category)
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 

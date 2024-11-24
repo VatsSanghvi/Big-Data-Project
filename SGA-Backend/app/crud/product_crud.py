@@ -32,7 +32,7 @@ def insert_product(db: Session, product: ProductInsert) -> ProductResponse:
         db.add(product_obj)
         db.commit()
 
-        # Refresh the object to get updated values (e.g., auto-generated ID)
+        # Refresh the object to get updated values
         db.refresh(product_obj)
 
         # Convert to Pydantic model for returning

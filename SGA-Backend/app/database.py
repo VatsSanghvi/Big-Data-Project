@@ -23,5 +23,6 @@ params = urllib.parse.quote_plus(
 
 engine = create_engine(f'mssql+pyodbc:///?odbc_connect={params}')
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
