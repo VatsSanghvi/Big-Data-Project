@@ -1,13 +1,14 @@
 
 from typing import Optional
 from pydantic import BaseModel, ConfigDict
-from .store_schema import StoreResponse
+from app.schemas.store_schema import StoreResponse
     
 class DepartmentCreate(BaseModel):
     department_name: str
-    store_id: int
+    fk_store_id: int
     
 class DepartmentResponse(BaseModel):
+    department_id: int
     department_name: str
     store: Optional[StoreResponse] 
     

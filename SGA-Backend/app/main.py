@@ -3,14 +3,14 @@ from app.routers import category_routes, flyer_routes, grocerylist_routes, price
 from app.models import category_model, flyer_model, grocerylist_model, price_comparison_model, product_model, store_model, user_model, department_model
 from app.database import engine
 
+user_model.Base.metadata.create_all(bind=engine)
+department_model.Base.metadata.create_all(bind=engine)
 category_model.Base.metadata.create_all(bind=engine)
 # flyer_model.Base.metadata.create_all(bind=engine)
 # grocerylist_model.Base.metadata.create_all(bind=engine)
 # price_comparison_model.Base.metadata.create_all(bind=engine)
-product_model.Base.metadata.create_all(bind=engine)
 store_model.Base.metadata.create_all(bind=engine)
-user_model.Base.metadata.create_all(bind=engine)
-department_model.Base.metadata.create_all(bind=engine)
+product_model.Base.metadata.create_all(bind=engine)
 
 # Initialize the FastAPI app
 app = FastAPI()

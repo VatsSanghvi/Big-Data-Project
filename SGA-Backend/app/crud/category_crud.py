@@ -16,7 +16,7 @@ def insert_category(db: Session, category: CategoryInsert) -> CategoryResponse:
         # Map DTO to SQLAlchemy Category object
         category_obj = Category(
             category_name=category.category_name,
-            department_id=category.department_id
+            fk_department_id=category.fk_department_id
         )
 
         # Add and commit the category

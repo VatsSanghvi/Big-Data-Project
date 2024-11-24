@@ -9,9 +9,9 @@ class Department(Base):
     department_name = Column(String(100), nullable=False)
 
     # Foreign keys
-    store_id = Column(Integer, ForeignKey("stores.store_id"))
+    fk_store_id = Column(Integer, ForeignKey("stores.store_id"))
 
-    # Back reference to Store
+    # Relationships
     store = relationship("Store", back_populates="departments")
     categories = relationship("Category", back_populates="department")
     products = relationship("Product", back_populates="department")

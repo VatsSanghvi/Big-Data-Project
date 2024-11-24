@@ -16,7 +16,7 @@ def insert_store(db: Session, store: StoreCreate) -> StoreResponse:
         # Map DTO to SQLAlchemy Store object
         store_obj = Store(
             store_name=store.store_name,
-            manager_id=store.manager_id
+            fk_manager_id=store.fk_manager_id
         )
 
         # Add and commit the store

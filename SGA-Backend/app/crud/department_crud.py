@@ -16,7 +16,7 @@ def insert_department(db: Session, department: DepartmentCreate) -> DepartmentRe
         # Map DTO to SQLAlchemy Department object
         department_obj = Department(
             department_name=department.department_name,
-            store_id=department.store_id
+            fk_store_id=department.fk_store_id
         )
 
         # Add and commit the department

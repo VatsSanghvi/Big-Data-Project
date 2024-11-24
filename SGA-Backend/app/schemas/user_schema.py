@@ -1,5 +1,5 @@
 from enum import Enum
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, ConfigDict
 from typing import List, Optional
 
 class UserLogin(BaseModel):
@@ -26,6 +26,8 @@ class UserResponse(BaseModel):
     email: EmailStr
     phone_number: Optional[str] = None
     role: UserRole
+
+    model_config = ConfigDict(from_attributes=True)
 
 class UsersResponse(BaseModel):
     ok: bool

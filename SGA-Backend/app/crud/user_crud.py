@@ -7,7 +7,7 @@ from passlib.context import CryptContext
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-def register_user(db: Session, user: UserRegister) -> UserResponse:
+def register_user(db: Session, user: UserRegister) -> User:
     # Validate email
     validate_email_domain(user.email)
 
@@ -38,10 +38,19 @@ def register_user(db: Session, user: UserRegister) -> UserResponse:
 
 def authenticate_user(db: Session, email: str, password: str):
     """Authenticate a user by email and password"""
-    user = db.query(User).filter(User.email == email).first()
+    user_obj = db.query(User).filter(User.email == email).first()
+    user = User(
+        user_id=user_obj.user_id,
+        first_name=user_obj.first_name,
+        last_name=user_obj.last_name,
+        email=user_obj.email,
+        password=user_obj.password,
+        phone_number=user_obj.phone_number,
+        role=user_obj.role
+    )
     if not user:
         return None
-    if not verify_password(password, user.password_hash):
+    if not verify_password(password, user.password):
         return None
     return user
 

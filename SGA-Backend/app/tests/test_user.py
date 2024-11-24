@@ -1,5 +1,3 @@
-
-from sqlalchemy.orm import sessionmaker
 from app.database import TestingSessionLocal
 from app.schemas.user_schema import UserRegister, UserRole
 from app.crud import user_crud
@@ -22,9 +20,9 @@ def test_register_user():
     new_user = UserRegister(
         first_name="John",
         last_name="Pilgrim",
-        email="johnpilgrim@gmail.com",
+        email="johnpilgrim33@gmail.com",
         password="password123",
-        phone_number="1234567890",
+        phone_number="123456789",
         role=UserRole.ADMIN
     )
 
@@ -35,7 +33,12 @@ def test_register_user():
     assert user_crud.verify_password(
         plain_password="password123",
         hashed_password=inserted_user.password)
-    assert inserted_user.role == UserRole.ADMIN
+    assert user_crud.validate_email_domain(
+        email=inserted_user.email
+    )
+    assert user_crud.validate_phone_number(
+        phone_number=inserted_user.phone_number
+    )
 
 test_register_user()
 
