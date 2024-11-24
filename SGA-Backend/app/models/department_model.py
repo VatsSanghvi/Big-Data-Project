@@ -4,12 +4,14 @@ from app.database import Base
 
 class Department(Base):
     __tablename__ = "departments"
-    
+
     department_id = Column(Integer, Identity(start=1, increment=1), primary_key=True, index=True)
     department_name = Column(String(100), nullable=False)
-    
+
     # Foreign keys
     store_id = Column(Integer, ForeignKey("stores.store_id"))
-    
+
     # Back reference to Store
-    store = relationship("Store", back_populates="stores")
+    store = relationship("Store", back_populates="departments")
+    categories = relationship("Category", back_populates="department")
+    products = relationship("Product", back_populates="department")

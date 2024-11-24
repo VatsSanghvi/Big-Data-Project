@@ -1,8 +1,7 @@
-from typing import List
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from app.crud import user_crud
-from app.schemas.user_schema import UserResponse, UserLogin, UserResponse
+from app.schemas.user_schema import UserLogin, UserRegister
 from app.schemas.user_schema import  UserResponse
 from app.database import SessionLocal
 
@@ -17,9 +16,9 @@ def get_db():
         db.close()
 
 @router.post("/register", response_model=UserResponse)
-def register(user: UserResponse, db: Session = Depends(get_db)):
+def register(user: UserRegister, db: Session = Depends(get_db)):
     try:
-        return user_crud.register(db=db, user=user)
+        return user_crud.register_user(db=db, user=user)
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 

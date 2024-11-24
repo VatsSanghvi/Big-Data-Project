@@ -20,10 +20,10 @@ class UserRegister(BaseModel):
     role: UserRole
 
 class UserResponse(BaseModel):
-    id: int
+    user_id: int
     first_name: str
     last_name: str
-    email: str
+    email: EmailStr
     phone_number: Optional[str] = None
     role: UserRole
 

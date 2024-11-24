@@ -32,14 +32,14 @@ def get_all_stores(db: Session = Depends(get_db)):
 @router.get("/{store_id}", response_model=StoresResponse)
 def get_store_by_id(store_id: int, db: Session = Depends(get_db)):
     try:
-        return store_crud.get_store(db=db, store_id=store_id)
+        return store_crud.get_store_by_id(db=db, store_id=store_id)
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
 @router.put("/{store_id}", response_model=StoresResponse)
 def update_store(store_id: int, store: StoreCreate, db: Session = Depends(get_db)):
     try:
-        return store_crud.update_store(db=db, store_id=store_id, store=store)
+        return store_crud.update_store(db=db, store_id=store_id, updates=store)
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 

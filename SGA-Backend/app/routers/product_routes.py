@@ -19,9 +19,7 @@ def get_db():
 def insert_product(product: ProductInsert, db: Session = Depends(get_db)):
     try:
         created_product = product_crud.insert_product(db=db, product=product)
-        return ProductsResponse(
-            ok=True,
-            msg=f"{created_product.product_name} created successfully",
-        )
+        return created_product
+
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))

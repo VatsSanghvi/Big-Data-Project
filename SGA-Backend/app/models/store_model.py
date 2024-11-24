@@ -10,4 +10,5 @@ class Store(Base):
     manager_id = Column(Integer, nullable=False)
     
     # Back reference to products
-    manager = relationship("User", back_populates="users")
+    departments = relationship("Department", back_populates="store")
+    products = relationship("Product", back_populates="store")

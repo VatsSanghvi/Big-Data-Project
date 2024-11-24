@@ -31,14 +31,14 @@ def get_all_departments(db: Session = Depends(get_db)):
 @router.get("/{department_id}", response_model=DepartmentsResponse)
 def get_department_by_id(department_id: int, db: Session = Depends(get_db)):
     try:
-        return department_crud.get_department(db=db, department_id=department_id)
+        return department_crud.get_department_by_id(db=db, department_id=department_id)
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
 @router.put("/{department_id}", response_model=DepartmentsResponse)
 def update_department(department_id: int, department: DepartmentCreate, db: Session = Depends(get_db)):
     try:
-        return department_crud.update_department(db=db, department_id=department_id, department=department)
+        return department_crud.update_department(db=db, department_id=department_id, updates=department)
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 

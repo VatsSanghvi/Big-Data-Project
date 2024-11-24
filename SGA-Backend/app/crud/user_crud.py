@@ -1,13 +1,13 @@
 from typing import List
 from sqlalchemy.orm import Session
 from app.models.user_model import User
-from app.schemas.user_schema import UserRegister
+from app.schemas.user_schema import UserRegister, UserResponse
 from app.utils.authentication import hash_password
 from passlib.context import CryptContext
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-def register_user(db: Session, user: UserRegister):
+def register_user(db: Session, user: UserRegister) -> UserResponse:
     # Validate email
     validate_email_domain(user.email)
 
