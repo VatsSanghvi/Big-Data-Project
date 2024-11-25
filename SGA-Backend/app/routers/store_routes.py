@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.crud import store_crud
-from app.schemas.store_schema import StoreCreate, StoresResponse
+from app.schemas.store_schema import StoreInsert, StoresResponse
 from app.database import SessionLocal
 
 router = APIRouter()
@@ -16,7 +16,7 @@ def get_db():
 
    
 @router.post("/", response_model=StoresResponse)
-def create_store(store: StoreCreate, db: Session = Depends(get_db)):
+def create_store(store: StoreInsert, db: Session = Depends(get_db)):
     try:
         return store_crud.insert_store(db=db, store=store)
     except Exception as e:
@@ -37,7 +37,7 @@ def get_store_by_id(store_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail=str(e))
 
 @router.put("/{store_id}", response_model=StoresResponse)
-def update_store(store_id: int, store: StoreCreate, db: Session = Depends(get_db)):
+def update_store(store_id: int, store: StoreInsert, db: Session = Depends(get_db)):
     try:
         return store_crud.update_store(db=db, store_id=store_id, updates=store)
     except Exception as e:

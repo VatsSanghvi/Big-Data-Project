@@ -2,9 +2,9 @@ from typing import List
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 from app.models.store_model import Store
-from app.schemas.store_schema import StoreCreate, StoreResponse
+from app.schemas.store_schema import StoreInsert, StoreResponse
 
-def insert_store(db: Session, store: StoreCreate) -> StoreResponse:
+def insert_store(db: Session, store: StoreInsert) -> StoreResponse:
     """
     Insert a Store record into the database.
 
@@ -56,7 +56,7 @@ def get_store_by_id(db: Session, store_id: int) -> StoreResponse:
         raise RuntimeError(f"Store with ID {store_id} not found.")
     return StoreResponse.model_validate(store)
 
-def update_store(db: Session, store_id: int, updates: StoreCreate) -> StoreResponse:
+def update_store(db: Session, store_id: int, updates: StoreInsert) -> StoreResponse:
     """
     Update a Store record in the database.
 

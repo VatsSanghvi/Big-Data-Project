@@ -23,9 +23,9 @@ def insert_product(db: Session, product: ProductInsert) -> ProductResponse:
             ingredients=product.ingredients,
             price_valid_from=product.price_valid_from,
             price_valid_to=product.price_valid_to,
-            category_id=product.category_id,
-            department_id=product.department_id,
-            store_id=product.store_id,
+            fk_category_id=product.fk_category_id,
+            fk_department_id=product.fk_department_id,
+            fk_store_id=product.fk_store_id,
         )
         
         # Add and commit the product

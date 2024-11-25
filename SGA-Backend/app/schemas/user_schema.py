@@ -6,18 +6,13 @@ class UserLogin(BaseModel):
     email: str
     password: str
 
-class UserRole(str, Enum):
-    ADMIN = "admin"
-    MANAGER = "manager"
-    CUSTOMER = "customer"
-
 class UserRegister(BaseModel):
     first_name: str
     last_name: str
     email: EmailStr
     password: str
     phone_number: Optional[str] = None
-    role: UserRole
+    role: str
 
 class UserResponse(BaseModel):
     user_id: int
@@ -25,7 +20,7 @@ class UserResponse(BaseModel):
     last_name: str
     email: EmailStr
     phone_number: Optional[str] = None
-    role: UserRole
+    role: str
 
     model_config = ConfigDict(from_attributes=True)
 

@@ -8,11 +8,13 @@ class Store(Base):
 
     store_id = Column(Integer, Identity(start=1, increment=1), primary_key=True, index=True)
     store_name = Column(String(100), nullable=False)
+    location = Column(String(100), nullable=False)
 
     # Foreign key for manager
     fk_manager_id = Column(Integer, ForeignKey("users.user_id"), nullable=False)
 
     # Relationships
-    manager = relationship("User", back_populates="managed_store", uselist=False)  # One-to-one
+    manager = relationship("User", back_populates="managed_store", uselist=False, cascade="all, delete")
     departments = relationship("Department", back_populates="store")
     products = relationship("Product", back_populates="store")
+
