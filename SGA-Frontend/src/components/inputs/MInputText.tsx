@@ -1,9 +1,9 @@
 // * React Libraries
-import { FC, HTMLInputTypeAttribute } from "react";
+import { FC } from "react";
 
 // * Third Party Libraries
 import { classNames } from "primereact/utils";
-import { InputText } from "primereact/inputtext";
+import { InputText, InputTextProps } from "primereact/inputtext";
 
 // * Hooks
 import { useBreakpoints } from "@hooks";
@@ -17,7 +17,7 @@ import { MIBase } from "@models";
 // * Helpers
 import { getId, hasError } from "@helpers";
 
-export const MInputText : FC<MInputTextProps> = (props) => {
+export const MInputText : FC<MIBase<InputTextProps>> = (props) => {
     const {
         id,
         name,
@@ -48,11 +48,4 @@ export const MInputText : FC<MInputTextProps> = (props) => {
             />
         </MInputBase>
     )
-}
-
-export type InputMode = "none" | "text" | "tel" | "url" | "email" | "numeric" | "decimal" | "search";
-
-interface MInputTextProps extends MIBase {
-    type?: HTMLInputTypeAttribute;
-    inputMode?: InputMode;
 }

@@ -9,7 +9,7 @@ import { classNames } from "primereact/utils";
 import { getId, hasError } from "@helpers";
 
 // * Models
-import { MIBase } from "@models"
+import { IBase } from "@models"
 
 export const MInputBase : FC<MInputBaseProps> = (props) => {
     const {
@@ -47,6 +47,7 @@ export const MInputBase : FC<MInputBaseProps> = (props) => {
     )
 }
 
-interface MInputBaseProps extends MIBase {
+interface MInputBaseProps extends IBase {
     children: ReactNode;
+    id?: string;
 }

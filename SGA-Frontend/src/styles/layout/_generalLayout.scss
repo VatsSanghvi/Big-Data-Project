@@ -1,0 +1,19 @@
+@use 'primeflex/primeflex.scss' as *;
+@use '../breakpoints' as *;
+
+.general-layout {
+    @include styleclass('flex flex-column w-full h-full surface-ground');
+
+    &-area {
+        @include styleclass('w-full h-full flex')
+    }
+
+    &-menu {
+        @include styleclass('w-25rem h-full bg-green-300');
+    }
+
+    &-outlet {
+        @include styleclass('w-full h-full bg-blue-100');
+    }
+
+}

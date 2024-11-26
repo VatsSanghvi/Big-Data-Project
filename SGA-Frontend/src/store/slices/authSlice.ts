@@ -1,27 +1,25 @@
-import { LoginState, Role } from '@models';
+import { initialAuthValues } from '@constants';
+import { LoginState, User } from '@models';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface AuthState {
-   authState: LoginState;
-   role: Role;
+export interface AuthState {
+    authState: LoginState;
+    user: User;
 }
 
-const initialState : AuthState = {
-   authState: LoginState.UnAuthenticated,
-   role: Role.User
-};
+const initialState : AuthState = initialAuthValues;
 
 export const authSlice = createSlice({
-   name: 'auth',
-   initialState,
-   reducers: {
-       setAuthState: (state, { payload } : PayloadAction<LoginState>) => {
-           state.authState = payload;
-       },
-       setRole: (state, { payload } : PayloadAction<Role>) => {
-           state.role = payload;
-       }
-   }
+    name: 'auth',
+    initialState,
+    reducers: {
+        setAuthState: (state, { payload } : PayloadAction<LoginState>) => {
+            state.authState = payload;
+        },
+        setUser: (state, { payload } : PayloadAction<User>) => {
+            state.user = payload;
+        }
+    }
 });
 
-export const { setAuthState, setRole } = authSlice.actions;
+export const { setAuthState, setUser } = authSlice.actions;

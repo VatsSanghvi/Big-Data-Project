@@ -5,45 +5,32 @@ import { Navigate, redirect, RouteObject } from "react-router-dom";
 import { AuthLayout } from "@layout";
 
 // * Pages
-import { LoginPage } from "@pages";
+import { LoginPage, RegisterPage } from "@pages";
+import { PublicRoute } from "./decorators";
 
 export const authRoutes : RouteObject[] = [
     {
-        path: '/',
-        element: <AuthLayout />,
-        errorElement: <Navigate to="/" />,
+        element: (
+            <PublicRoute>
+                <AuthLayout />
+            </PublicRoute>
+        ),
         children: [
             {
                 index: true,
-                loader: () => redirect('/login') 
+                loader: () => <Navigate to="/login" />,
             },
             {
-                path: 'login',
+                path: '/login',
                 element: <LoginPage />
             },
             {
-                path: 'register',
-                element: <div>Register</div>
+                path: '/register',
+                element: <RegisterPage />
             },
             {
-                path: 'reset',
-                element: <div>Reset</div>
-            },
-            {
-                path: 'reset-sent',
-                element: <div>Reset Sent</div>
-            },
-            {
-                path: 'new-password',
-                element: <div>New Password</div>
-            },
-            {
-                path: 'resseted',
-                element: <div>Resetted</div>
-            },
-            {
-                path: 'confirm',
-                element: <div>Confirm</div>
+                path: '*',
+                element: <Navigate to="/login" />
             }
         ]
     }

@@ -1,16 +1,9 @@
 // * React Libraries
-import { Navigate, RouteObject } from "react-router-dom";
+import { RouteObject } from "react-router-dom";
 
 export const adminRoutes : RouteObject[] = [
     {
-        path: "/",
+        path: "/stores",
         element: <div> Layout </div>,
-        errorElement: <Navigate to="/" />,
-        children: [
-            {
-                path: 'store',
-                element: <div>store</div>
-            }
-        ]
     }
 ]

@@ -3,7 +3,7 @@ import { FC } from "react";
 
 // * Third Party Libraries
 import { classNames } from "primereact/utils";
-import { Password } from "primereact/password";
+import { Password, PasswordProps } from "primereact/password";
 
 // * Hooks
 import { useBreakpoints } from "@hooks";
@@ -17,14 +17,14 @@ import { MIBase } from "@models";
 // * Helpers
 import { getId } from "@helpers";
 
-export const MPassword : FC<MPasswordProps> = (props) => {
+export const MPassword : FC<MIBase<PasswordProps>> = (props) => {
     const {
         id,
         name,
         formik,
         className,
         feedback = false,
-        toogleMask = false    
+        toggleMask = false    
     } = props;
     
     const { isMobile } = useBreakpoints();
@@ -34,6 +34,7 @@ export const MPassword : FC<MPasswordProps> = (props) => {
         {'p-inputtext-sm': isMobile},
         className
     )
+
     return (
         <MInputBase
             {...props}
@@ -47,13 +48,8 @@ export const MPassword : FC<MPasswordProps> = (props) => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 feedback={feedback}
-                toggleMask={toogleMask}
+                toggleMask={toggleMask}
             />
         </MInputBase>
     )
-}
-
-interface MPasswordProps extends MIBase {
-    feedback?: boolean;
-    toogleMask?: boolean;
 }

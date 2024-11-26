@@ -1,10 +1,13 @@
 // * Third Party Libraries
 import { object, string } from "yup"
 
-export const loginInitialValues = {
+// * Models
+import { LoginForm } from "@models"
+
+export const loginInitialValues : LoginForm = {
     email: '',
     password: ''
-}
+};
 
 export const loginValidationSchema = object({
     email: string()
@@ -13,4 +16,4 @@ export const loginValidationSchema = object({
     password: string()
             .required('Password is required')
             
-})
+});

@@ -8,7 +8,7 @@ import { App } from "./App";
 import { LoaderProvider, ToastProvider } from "@providers";
 
 // * Styles
-import  'primeflex/primeflex.css';
+import 'primeflex/primeflex.css';
 import 'primeicons/primeicons.css';
 import '@styles/index.scss';
 import "primereact/resources/themes/md-light-indigo/theme.css";

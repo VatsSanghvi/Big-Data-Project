@@ -1,11 +1,3 @@
-// * Routes
-import { adminRoutes, managerRoutes, userRoutes } from "@routes";
+export const unLoggedDefaultRoute = '/login';
 
-// * Models
-import { Role } from "@models";
-
-export const roleRoutes = {
-    [Role.User]: userRoutes,
-    [Role.Manager]: managerRoutes,
-    [Role.Admin]: adminRoutes
-}
+export const loggedDefaultRoute = '/home';

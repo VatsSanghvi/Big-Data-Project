@@ -3,43 +3,71 @@ import { useFormik } from "formik"
 import { Button } from "primereact/button"
 
 // * Components
-import { CardHeader, MInputText, MPassword } from "@components"
+import { CardHeader, MInputText, MPassword, NavigateButton, SubmitButton } from "@components"
 
 // * Forms
 import { loginInitialValues, loginValidationSchema } from "@forms"
+
+// * Helpers
+import { getProps } from "@helpers"
+
+// * Hooks
+import { useAuthStore, useToast } from "@hooks"
+
+// * Models
+import { User } from "@models"
+
+// * Services
 import { user } from "@services"
 
 export const LoginPage = () => {
 
+    const { onLogin } = useAuthStore();
+    const { showSuccess, showError } = useToast();
+
     const formik = useFormik({
         initialValues: loginInitialValues,
         validationSchema: loginValidationSchema,
-        onSubmit: async({email, password}) => {
-            const response = await user.login(email, password);
+        onSubmit: async(values) => {
+            console.log(values);
+            const response = await user.login(values);
 
-            console.log(response.data);
+            if (response.status === 200) {
+                const data = response.data;
+
+                const user : User = {
+                    id: data.user_id,
+                    firstName: data.first_name,
+                    lastName: data.last_name,
+                    email: data.email,
+                    phoneNumber: data.phone_number,
+                    role: data.role
+                };
+
+                onLogin(user);
+
+                showSuccess("Login Successful", `Welcome ${user.firstName} ${user.lastName}`);
+            }
+            else {
+                showError("Error", "Login Failed");
+            }
         }
-    })
+    });
 
     return (
-        <div className="w-full login">
+        <div className="login">
             <CardHeader title="Sign In" />
             <form
                 onSubmit={formik.handleSubmit}
             >
-                <MInputText 
-                    formik={formik}
-                    name="email"
-                    label="Username"
+                <MInputText
+                    {...getProps(formik, 'email', 'Email')}
                     type="email"
                     inputMode="email"
-                    variant="filled"
                 />
                 <MPassword 
-                    formik={formik}
-                    name="password"
-                    label="Password"
-                    variant="filled"
+                    {...getProps(formik, 'password', 'Password')}
+                    toggleMask
                 />
                 <div className="forgot-password">
                     <Button
@@ -48,22 +76,22 @@ export const LoginPage = () => {
                         Forgot Password?
                     </Button>
                 </div>
-                <Button
-                    type="submit"
+                <SubmitButton
                     className="submit-button"
                     size="large"
                 >
                     Sign In
-                </Button>
+                </SubmitButton>
                 <div
                     className="signup-link"
                 >
                     <p>Dont have an account?</p>
-                    <Button
+                    <NavigateButton
                         link
+                        go="/register"
                     >
                         Sign Up Now
-                    </Button>
+                    </NavigateButton>
                 </div>
             </form>
         </div>
