@@ -1,5 +1,5 @@
 // * Models
-import { LoginForm, RegisterForm } from "@models";
+import { LoginForm, RegisterRequest } from "@models";
 
 // * Constants
 import { endpoints } from "@constants";
@@ -12,7 +12,7 @@ export const user = {
     login: (user: LoginForm) => {
         return instance.post(endpoints.auth.login, user);
     },
-    register: async (values: RegisterForm) => {
-        return await instance.post(endpoints.auth.register, values);
+    register: (values: RegisterRequest) => {
+        return instance.post(endpoints.auth.register, values);
     }
 }
