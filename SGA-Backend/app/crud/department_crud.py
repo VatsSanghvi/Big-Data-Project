@@ -80,7 +80,7 @@ def update_department(db: Session, department_id: int, updates: DepartmentCreate
         db.rollback()
         raise RuntimeError(f"Failed to update department: {str(e)}") from e
 
-def delete_department(db: Session, department_id: int) -> None:
+def delete_department(db: Session, department_id: int):
     """
     Delete a Department record from the database.
 
@@ -95,6 +95,8 @@ def delete_department(db: Session, department_id: int) -> None:
     try:
         db.delete(department)
         db.commit()
+
+        return {"message": f"Department {department.department_name} deleted successfully."}
     except SQLAlchemyError as e:
         db.rollback()
         raise RuntimeError(f"Failed to delete department: {str(e)}") from e

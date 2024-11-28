@@ -19,11 +19,12 @@ class Product(Base):
     price_valid_to = Column(Date, nullable=False)
 
     # Foreign keys
-    fk_category_id = Column(Integer, ForeignKey('categories.category_id'), nullable=False)
-    fk_department_id = Column(Integer, ForeignKey('departments.department_id'), nullable=False)
-    fk_store_id = Column(Integer, ForeignKey('stores.store_id'), nullable=False)
+    fk_category_id = Column(Integer, ForeignKey('categories.category_id', ondelete='CASCADE'), nullable=False)
+    fk_department_id = Column(Integer, ForeignKey('departments.department_id', ondelete='CASCADE'), nullable=True)
+    fk_store_id = Column(Integer, ForeignKey('stores.store_id', ondelete='CASCADE'), nullable=True)
 
     # Relationships
     category = relationship("Category", back_populates="products")
     department = relationship("Department", back_populates="products")
     store = relationship("Store", back_populates="products")
+    store_prices = relationship("StorePrice", back_populates="product")

@@ -96,7 +96,7 @@ def test_update_store():
 
     # Validate results
     assert updated_store.store_name == "Updated Store"
-    assert updated_store.fk_department_id == 2
+    assert updated_store.manager.user_id == 2
 
 # Run the tests
 test_insert_store()

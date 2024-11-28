@@ -13,4 +13,4 @@ class Category(Base):
 
     # Relationships
     department = relationship("Department", back_populates="categories")
-    products = relationship("Product", back_populates="category")
+    products = relationship("Product", back_populates="category", cascade="all, delete-orphan")
