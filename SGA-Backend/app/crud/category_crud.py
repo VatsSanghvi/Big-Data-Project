@@ -82,7 +82,7 @@ def update_category(db: Session, category_id: int, updates: CategoryInsert) -> C
         db.rollback()
         raise RuntimeError(f"Failed to update category: {str(e)}") from e
      
-def delete_category(db: Session, category_id: int) -> None:
+def delete_category(db: Session, category_id: int):
     """
     Delete a Category record from the database.
 
@@ -96,6 +96,8 @@ def delete_category(db: Session, category_id: int) -> None:
     try:
         db.delete(category)
         db.commit()
+
+        return {"message": f"Category {category.category_name} deleted successfully."}
     except SQLAlchemyError as e:
         db.rollback()
         raise RuntimeError(f"Failed to delete category: {str(e)}") from e

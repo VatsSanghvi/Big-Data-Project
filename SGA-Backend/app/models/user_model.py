@@ -15,4 +15,9 @@ class User(Base):
     role = Column(String(20), nullable=False)
 
     # Relationships
-    managed_store = relationship("Store", back_populates="manager")
+    managed_store = relationship(
+        "Store",
+        back_populates="manager",
+        cascade="all, delete-orphan",  # Enables cascade delete
+        passive_deletes=True  # Enables database-side ON DELETE CASCADE
+    )

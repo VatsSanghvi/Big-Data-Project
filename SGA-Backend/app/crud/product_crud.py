@@ -92,7 +92,7 @@ def update_product(db: Session, product_id: int, updates: ProductInsert) -> Prod
         db.rollback()
         raise RuntimeError(f"Failed to update product: {str(e)}") from e
 
-def delete_product(db: Session, product_id: int) -> None:
+def delete_product(db: Session, product_id: int):
     """
     Delete a Product record from the database.
 
@@ -107,6 +107,8 @@ def delete_product(db: Session, product_id: int) -> None:
     try:
         db.delete(product)
         db.commit()
+
+        return {"message": f"Product {product.product_name} deleted successfully."}
     except SQLAlchemyError as e:
         db.rollback()
         raise RuntimeError(f"Failed to delete product: {str(e)}") from e

@@ -1,5 +1,4 @@
-from enum import Enum
-from pydantic import BaseModel, EmailStr, ConfigDict
+from pydantic import BaseModel, EmailStr, ConfigDict, constr
 from typing import List, Optional
 
 class UserLogin(BaseModel):
@@ -14,7 +13,7 @@ class UserRegister(BaseModel):
     phone_number: Optional[str] = None
     role: str
 
-class UserResponse(BaseModel):
+class UserBase(BaseModel):
     user_id: int
     first_name: str
     last_name: str
@@ -22,12 +21,25 @@ class UserResponse(BaseModel):
     phone_number: Optional[str] = None
     role: str
 
+class UserResponse(UserBase):
     model_config = ConfigDict(from_attributes=True)
 
 class UsersResponse(BaseModel):
     ok: bool
     msg: str
     users: List[UserResponse]
+
+class UserUpdate(BaseModel):
+    name: Optional[str] = None
+    phone_number: Optional[str] = None
+    address: Optional[str] = None
+
+class PasswordReset(BaseModel):
+    email: EmailStr
+
+class PasswordUpdate(BaseModel):
+    current_password: str
+    new_password: constr(min_length=8)
 
 
 

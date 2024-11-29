@@ -1,7 +1,8 @@
 from typing import List
+from datetime import datetime
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
-from app.models.store_model import Store
+from app.models.store_model import Store, StorePrice
 from app.schemas.store_schema import StoreInsert, StoreResponse
 
 def insert_store(db: Session, store: StoreInsert) -> StoreResponse:
@@ -16,6 +17,7 @@ def insert_store(db: Session, store: StoreInsert) -> StoreResponse:
         # Map DTO to SQLAlchemy Store object
         store_obj = Store(
             store_name=store.store_name,
+            location=store.location,
             fk_manager_id=store.fk_manager_id
         )
 
@@ -82,7 +84,7 @@ def update_store(db: Session, store_id: int, updates: StoreInsert) -> StoreRespo
         db.rollback()
         raise RuntimeError(f"Failed to update store: {str(e)}") from e
 
-def delete_store(db: Session, store_id: int) -> None:
+def delete_store(db: Session, store_id: int):
     """
     Delete a Store record from the database.
 
@@ -96,7 +98,22 @@ def delete_store(db: Session, store_id: int) -> None:
     try:
         db.delete(store)
         db.commit()
+
+        return {"message": f"Store {store.store_name} deleted successfully."}
     except SQLAlchemyError as e:
         db.rollback()
         raise RuntimeError(f"Failed to delete store: {str(e)}") from e
+
+def get_store_prices(
+        db: Session,
+        product_id: int,
+        store_ids: List[int],
+        current_time: datetime = datetime.now()
+):
+    return db.query(StorePrice).filter(
+        StorePrice.product_id == product_id,
+        StorePrice.store_id.in_(store_ids),
+        StorePrice.price_valid_from <= current_time,
+        StorePrice.price_valid_until >= current_time
+    ).all()
 

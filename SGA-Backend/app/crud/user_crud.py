@@ -1,14 +1,20 @@
+from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 from app.models.user_model import User
-from app.schemas.user_schema import UserRegister
+from app.schemas.user_schema import UserRegister,UserUpdate, UserResponse
 from app.utils.authentication import hash_password
 from passlib.context import CryptContext
 import re
 
-
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 def register_user(db: Session, user: UserRegister) -> User:
+    """
+    Register a new user in the database
+
+    :param db: SQLAlchemy database session
+    :param user: The user data to register
+    """
     # Validate email
     validate_email_domain(user.email)
 
@@ -36,24 +42,68 @@ def register_user(db: Session, user: UserRegister) -> User:
 
     return new_user
 
-
 def authenticate_user(db: Session, email: str, password: str):
-    """Authenticate a user by email and password"""
-    user_obj = db.query(User).filter(User.email == email).first()
-    user = User(
-        user_id=user_obj.user_id,
-        first_name=user_obj.first_name,
-        last_name=user_obj.last_name,
-        email=user_obj.email,
-        password=user_obj.password,
-        phone_number=user_obj.phone_number,
-        role=user_obj.role
-    )
+    """
+    Authenticate a user by email and password
+
+    :param db: SQLAlchemy database session
+    :param email: The user's email
+    :param password: The user's password
+    """
+    user = get_user_by_email(db, email)
     if not user:
         return None
     if not verify_password(password, user.password) and validate_email_domain(user.email) and validate_phone_number(user.phone_number):
         return None
     return user
+
+def get_user_by_id(db: Session, user_id: int):
+    """
+    Get a user by their ID
+    :param db: SQLAlchemy database session
+    :param user_id: The user's ID
+    :return: The user object
+    """
+    user = db.query(User).filter(User.user_id == user_id).first()
+    if not user:
+        raise ValueError(f"User with ID {user_id} not found.")
+    return user
+
+def get_user_by_email(db: Session, email: str):
+    """
+    Get a user by their email
+    :param db: SQLAlchemy database session
+    :param email: The user's email
+    :return: The user object
+    """
+    user = db.query(User).filter(User.email == email).first()
+    if not user:
+        raise ValueError(f"User with email {email} not found.")
+    return user
+
+def update_password(db: Session, user_id: int, current_password: str, new_password: str):
+    """
+    Update a user's password
+    :param db: SQLAlchemy database session
+    :param user_id: The user's ID
+    :param current_password: The user's current password
+    :param new_password: The user's new password
+    :return: True if the password was updated, False otherwise
+    """
+    user = get_user_by_id(db, user_id)
+    if not user:
+        raise ValueError(f"User with ID {user_id} not found.")
+
+    if not verify_password(current_password, user.password):
+        return False
+
+    try:
+        user.password = pwd_context.hash(new_password)
+        db.commit()
+        return True
+    except:
+        db.rollback()
+        raise ValueError("Failed to update password")
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     """Verify a plain password against a hashed password"""
@@ -81,3 +131,30 @@ def validate_email_domain(email: str):
 def validate_phone_number(phone_number: str):
     if not phone_number.isdigit() or len(phone_number) != 10:
         raise ValueError("Phone number must be exactly 10 digits.")
+
+
+def update_user_profile(db: Session, user_id: int, updates: UserUpdate):
+    """
+    Update a user's profile
+    :param db: SQLAlchemy database session
+    :param user_id: The user's ID
+    :param updates: The user's updated data
+    :return: The updated user object
+    """
+    user = db.query(User).filter(User.user_id == user_id).first()
+    if not user:
+        raise ValueError(f"User with ID {user_id} not found.")
+
+    # Apply updates
+    for key, value in updates.model_dump(exclude_unset=True).items():
+        setattr(user, key, value)
+
+    try:
+        db.commit()
+        db.refresh(user)
+        return UserResponse.model_validate(user)
+    except SQLAlchemyError as e:
+        db.rollback()
+        raise RuntimeError(f"Failed to update product: {str(e)}") from e
+
+
