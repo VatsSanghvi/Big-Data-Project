@@ -9,7 +9,11 @@
     }
 
     &-menu {
-        @include styleclass('w-25rem h-full bg-green-300');
+        @include styleclass('w-25rem h-full flex justify-content-center align-items-center');
+
+        .menu-container {
+            @include styleclass('shadow-4');
+        }
     }
 
     &-outlet {

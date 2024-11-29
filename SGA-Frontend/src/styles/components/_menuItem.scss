@@ -1,0 +1,11 @@
+@use 'primeflex/primeflex.scss' as *;
+@use '../breakpoints' as *;
+
+.menu-item {
+    @include styleclass('flex w-full p-3 align-items-center border-y-2 border-400');
+
+    i {
+        @include styleclass('mr-2');
+        height: 1rem;
+    }
+}
