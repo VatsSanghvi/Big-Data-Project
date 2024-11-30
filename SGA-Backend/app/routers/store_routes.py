@@ -24,10 +24,10 @@ def create_store(store: StoreInsert, db: Session = Depends(get_db)):
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-@router.get("/all", response_model=List[StoreResponse])
-def get_all_stores(db: Session = Depends(get_db)):
+@router.get("/{owner_id}", response_model=List[StoreResponse])
+def get_all_stores(owner_id: int, db: Session = Depends(get_db)):
     try:
-        return store_crud.get_all_stores(db=db)
+        return store_crud.get_all_stores(owner_id=owner_id, db=db)
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 

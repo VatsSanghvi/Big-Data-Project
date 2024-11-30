@@ -18,7 +18,7 @@ def insert_store(db: Session, store: StoreInsert) -> StoreResponse:
         store_obj = Store(
             store_name=store.store_name,
             location=store.location,
-            fk_manager_id=store.fk_manager_id
+            fk_owner_id=store.fk_owner_id
         )
 
         # Add and commit the store
@@ -34,14 +34,14 @@ def insert_store(db: Session, store: StoreInsert) -> StoreResponse:
         db.rollback() # Rollback transaction in case of error
         raise RuntimeError(f"Failed to insert store: {str(e)}") from e
 
-def get_all_stores(db: Session) -> List[StoreResponse]:
+def get_all_stores(owner_id: int, db: Session) -> List[StoreResponse]:
     """
     Retrieve all Store records from the database.
 
     :param db: SQLAlchemy database session.
     :return: List of StoreResponse objects.
     """
-    stores = db.query(Store).all()
+    stores = db.query(Store).filter(Store.fk_owner_id == owner_id).all()
     return [StoreResponse.model_validate(store) for store in stores]
 
 def get_store_by_id(db: Session, store_id: int) -> StoreResponse:
