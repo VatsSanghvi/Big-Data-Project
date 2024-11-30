@@ -8,10 +8,11 @@ class GroceryList(Base):
     name = Column(String)
 
     # Foreign Keys
-    user_id = Column(Integer, ForeignKey("users.user_id"))
+    user_id = Column(Integer, ForeignKey("users.user_id", ondelete="CASCADE"), nullable=False)
 
     # Relationships
     items = relationship("GroceryItem", back_populates="grocery_list", cascade="all, delete")
+    user = relationship("User", back_populates="grocery_lists")
 
 class GroceryItem(Base):
     __tablename__ = "grocery_items"
