@@ -12,10 +12,22 @@ class Store(Base):
     location = Column(String(255), nullable=False)
 
     # Foreign key for manager
-    fk_owner_id = Column(Integer, ForeignKey("users.user_id", ondelete="CASCADE"), nullable=False)
+    fk_owner_id = Column(Integer, ForeignKey("users.user_id", ondelete="SET NULL"), nullable=False)
+    fk_manager_id = Column(Integer, ForeignKey("users.user_id", ondelete="SET NULL"), nullable=True)
 
     # Relationships
-    owner = relationship("User", back_populates="managed_store")
+    owned_stores = relationship(
+        "Store",
+        back_populates="owned_stores",
+        foreign_keys="Store.fk_owner_id"
+    )
+
+    managed_stores = relationship(
+        "Store",
+        back_populates="managed_stores",
+        foreign_keys="Store.fk_manager_id"
+    )
+
     departments = relationship("Department", back_populates="store")
     products = relationship("Product", back_populates="store")
     prices = relationship("StorePrice", back_populates="store")

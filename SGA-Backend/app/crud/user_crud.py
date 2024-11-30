@@ -105,6 +105,53 @@ def update_password(db: Session, user_id: int, current_password: str, new_passwo
         db.rollback()
         raise ValueError("Failed to update password")
 
+def update_user_role(db: Session, user_id: int, role: str):
+    """
+    Update a user's profile
+    :param db: SQLAlchemy database session
+    :param user_id: The user's ID
+    :param role: The user's role
+    :return: The updated user object
+    """
+    user = db.query(User).filter(User.user_id == user_id).first()
+    if not user:
+        raise ValueError(f"User with ID {user_id} not found.")
+
+    # Apply updates
+    setattr(user, "role", role)
+
+    try:
+        db.commit()
+        db.refresh(user)
+        return UserResponse.model_validate(user)
+    except SQLAlchemyError as e:
+        db.rollback()
+        raise RuntimeError(f"Failed to update product: {str(e)}") from e
+
+def update_user_profile(db: Session, user_id: int, updates: UserUpdate):
+    """
+    Update a user's profile
+    :param db: SQLAlchemy database session
+    :param user_id: The user's ID
+    :param updates: The user's updated data
+    :return: The updated user object
+    """
+    user = db.query(User).filter(User.user_id == user_id).first()
+    if not user:
+        raise ValueError(f"User with ID {user_id} not found.")
+
+    # Apply updates
+    for key, value in updates.model_dump(exclude_unset=True).items():
+        setattr(user, key, value)
+
+    try:
+        db.commit()
+        db.refresh(user)
+        return UserResponse.model_validate(user)
+    except SQLAlchemyError as e:
+        db.rollback()
+        raise RuntimeError(f"Failed to update product: {str(e)}") from e
+
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     """Verify a plain password against a hashed password"""
     return pwd_context.verify(plain_password, hashed_password)
@@ -131,30 +178,3 @@ def validate_email_domain(email: str):
 def validate_phone_number(phone_number: str):
     if not phone_number.isdigit() or len(phone_number) != 10:
         raise ValueError("Phone number must be exactly 10 digits.")
-
-
-def update_user_profile(db: Session, user_id: int, updates: UserUpdate):
-    """
-    Update a user's profile
-    :param db: SQLAlchemy database session
-    :param user_id: The user's ID
-    :param updates: The user's updated data
-    :return: The updated user object
-    """
-    user = db.query(User).filter(User.user_id == user_id).first()
-    if not user:
-        raise ValueError(f"User with ID {user_id} not found.")
-
-    # Apply updates
-    for key, value in updates.model_dump(exclude_unset=True).items():
-        setattr(user, key, value)
-
-    try:
-        db.commit()
-        db.refresh(user)
-        return UserResponse.model_validate(user)
-    except SQLAlchemyError as e:
-        db.rollback()
-        raise RuntimeError(f"Failed to update product: {str(e)}") from e
-
-

@@ -18,7 +18,8 @@ def insert_store(db: Session, store: StoreInsert) -> StoreResponse:
         store_obj = Store(
             store_name=store.store_name,
             location=store.location,
-            fk_owner_id=store.fk_owner_id
+            fk_owner_id=store.fk_owner_id,
+            fk_manager_id=store.fk_manager_id
         )
 
         # Add and commit the store
@@ -34,7 +35,7 @@ def insert_store(db: Session, store: StoreInsert) -> StoreResponse:
         db.rollback() # Rollback transaction in case of error
         raise RuntimeError(f"Failed to insert store: {str(e)}") from e
 
-def get_all_stores(owner_id: int, db: Session) -> List[StoreResponse]:
+def get_stores_by_owner(owner_id: int, db: Session) -> List[StoreResponse]:
     """
     Retrieve all Store records from the database.
 
