@@ -2,12 +2,14 @@ from typing import Optional, List
 from pydantic import BaseModel, ConfigDict
 from datetime import datetime
 from decimal import Decimal
+from app.schemas.user_schema import UserResponse
 
 # Store schemas
-class StoreInsert(BaseModel):
+class StoreInsertUpdate(BaseModel):
     store_name: str
     location: str
     fk_owner_id: int
+    email: str
 
 class StoreBase(BaseModel):
     store_id: int
@@ -15,6 +17,7 @@ class StoreBase(BaseModel):
     location: str
 
 class StoreResponse(StoreBase):
+    manager: Optional[UserResponse]
     model_config = ConfigDict(from_attributes=True)
 
 # Price comparison schemas
