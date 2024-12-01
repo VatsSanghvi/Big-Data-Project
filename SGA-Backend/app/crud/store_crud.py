@@ -3,14 +3,14 @@ from datetime import datetime
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 from app.models.store_model import Store, StorePrice
-from app.schemas.store_schema import StoreInsert, StoreResponse
+from app.schemas.store_schema import StoreInsertUpdate, StoreResponse
 
-def insert_store(db: Session, store: StoreInsert) -> StoreResponse:
+def insert_store(db: Session, store: StoreInsertUpdate) -> StoreResponse:
     """
     Insert a Store record into the database.
 
     :param db: SQLAlchemy database session.
-    :param store: StoreInsert DTO to be inserted.
+    :param store: StoreInsertUpdate DTO to be inserted.
     :return: StoreResponse object representing the inserted store.
     """
     try:
@@ -19,7 +19,6 @@ def insert_store(db: Session, store: StoreInsert) -> StoreResponse:
             store_name=store.store_name,
             location=store.location,
             fk_owner_id=store.fk_owner_id,
-            fk_manager_id=store.fk_manager_id
         )
 
         # Add and commit the store
@@ -45,21 +44,7 @@ def get_stores_by_owner(owner_id: int, db: Session) -> List[StoreResponse]:
     stores = db.query(Store).filter(Store.fk_owner_id == owner_id).all()
     return [StoreResponse.model_validate(store) for store in stores]
 
-def get_store_by_id(db: Session, store_id: int) -> StoreResponse:
-    """
-    Retrieve a single Store record by its ID.
-
-    :param db: SQLAlchemy database session.
-    :param store_id: ID of the store to retrieve.
-    :return: StoreResponse object if found.
-    :raises: RuntimeError if the store is not found.
-    """
-    store = db.query(Store).filter(Store.store_id == store_id).first()
-    if not store:
-        raise RuntimeError(f"Store with ID {store_id} not found.")
-    return StoreResponse.model_validate(store)
-
-def update_store(db: Session, store_id: int, updates: StoreInsert) -> StoreResponse:
+def update_store(db: Session, store_id: int, updates: StoreInsertUpdate) -> StoreResponse:
     """
     Update a Store record in the database.
 
@@ -84,6 +69,29 @@ def update_store(db: Session, store_id: int, updates: StoreInsert) -> StoreRespo
     except SQLAlchemyError as e:
         db.rollback()
         raise RuntimeError(f"Failed to update store: {str(e)}") from e
+
+def add_store_manager(db: Session, store_id: int, user_id: int):
+    """
+    Add a user as a manager for a store.
+
+    :param db: SQLAlchemy database session.
+    :param store_id: ID of the store to add the manager to.
+    :param user_id: ID of the user to add as a manager.
+    :return: StoreResponse object representing the updated store.
+    :raises: RuntimeError if the store is not found.
+    """
+    store = db.query(Store).filter(Store.store_id == store_id).first()
+    if not store:
+        raise RuntimeError(f"Store with ID {store_id} not found.")
+
+    store.fk_manager_id = user_id
+    try:
+        db.commit()
+        db.refresh(store)
+        return StoreResponse.model_validate(store)
+    except SQLAlchemyError as e:
+        db.rollback()
+        raise RuntimeError(f"Failed to add manager to store: {str(e)}") from e
 
 def delete_store(db: Session, store_id: int):
     """

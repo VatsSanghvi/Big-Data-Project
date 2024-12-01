@@ -9,8 +9,8 @@ class Category(Base):
     category_name = Column(String(100), nullable=False)
 
     # Foreign Keys
-    fk_department_id = Column(Integer, ForeignKey('departments.department_id'), nullable=False)
+    fk_department_id = Column(Integer, ForeignKey('departments.department_id'), ondelete="CASCADE", nullable=False)
 
     # Relationships
     department = relationship("Department", back_populates="categories")
-    products = relationship("Product", back_populates="category", cascade="all, delete-orphan")
+    products = relationship("Product", back_populates="category")

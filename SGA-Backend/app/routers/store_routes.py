@@ -30,19 +30,12 @@ def get_all_stores(owner_id: int, db: Session = Depends(get_db)):
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-@router.get("/{store_id}", response_model=StoreResponse)
-def get_store_by_id(store_id: int, db: Session = Depends(get_db)):
-    try:
-        return store_crud.get_store_by_id(db=db, store_id=store_id)
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
-
-@router.put("/{store_id}", response_model=StoreResponse)
-def update_store(store_id: int, store: StoreInsertUpdate, db: Session = Depends(get_db)):
+@router.put("/{store_id}/{email}", response_model=StoreResponse)
+def update_store(store_id: int, email: str, store: StoreInsertUpdate, db: Session = Depends(get_db)):
     try:
         store = store_crud.update_store(db=db, store_id=store_id, updates=store)
-        if store.email:
-            user = user_crud.get_user_by_email(db=db, email=store.email)
+        if email:
+            user = user_crud.get_user_by_email(db=db, email=email)
             if not user:
                 raise HTTPException(status_code=400, detail="User not found")
             role = "manager"
@@ -50,6 +43,8 @@ def update_store(store_id: int, store: StoreInsertUpdate, db: Session = Depends(
             update_user_role = user_crud.update_user_role(db=db, user_id=user.user_id, role=role)
             if not update_user_role:
                 raise HTTPException(status_code=400, detail="Failed to update user role")
+
+            store = store_crud.add_store_manager(db=db, store_id=store.store_id, user_id=user.user_id)
 
         return store
     except Exception as e:

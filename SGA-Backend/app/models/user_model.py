@@ -14,19 +14,9 @@ class User(Base):
     role = Column(String(10), nullable=False)
 
     # Relationships
-    managed_stores = relationship(
-        "Store",
-        back_populates="manager",
-        foreign_keys="[Store.fk_manager_id]"
-    )
+    owned_store = relationship("Store", back_populates="owner", foreign_keys="Store.fk_owner_id")
+    managed_store = relationship("Store", back_populates="manager", foreign_keys="Store.fk_manager_id")
 
-    owned_stores = relationship(
-        "Store",
-        back_populates="owner",
-        foreign_keys="[Store.fk_owner_id]"
-    )
-
-    # Relationships
     grocery_lists = relationship("GroceryList", back_populates="user", cascade="all, delete-orphan")
 
     __table_args__ = (

@@ -3,7 +3,6 @@ from sqlalchemy.schema import CheckConstraint
 from sqlalchemy.orm import relationship
 from app.database import Base
 
-
 class Store(Base):
     __tablename__ = "stores"
 
@@ -12,21 +11,12 @@ class Store(Base):
     location = Column(String(255), nullable=False)
 
     # Foreign key for manager
-    fk_owner_id = Column(Integer, ForeignKey("users.user_id", ondelete="SET NULL"), nullable=False)
-    fk_manager_id = Column(Integer, ForeignKey("users.user_id", ondelete="SET NULL"), nullable=True)
+    fk_owner_id = Column(Integer, ForeignKey("users.user_id"), nullable=False)
+    fk_manager_id = Column(Integer, ForeignKey("users.user_id"), nullable=True)
 
     # Relationships
-    owned_stores = relationship(
-        "Store",
-        back_populates="owned_stores",
-        foreign_keys="Store.fk_owner_id"
-    )
-
-    managed_stores = relationship(
-        "Store",
-        back_populates="managed_stores",
-        foreign_keys="Store.fk_manager_id"
-    )
+    owner = relationship("User", back_populates="owned_store", foreign_keys=fk_owner_id)
+    manager = relationship("User", back_populates="managed_store", foreign_keys=fk_manager_id)
 
     departments = relationship("Department", back_populates="store")
     products = relationship("Product", back_populates="store")
