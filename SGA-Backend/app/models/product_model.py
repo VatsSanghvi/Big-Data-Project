@@ -37,7 +37,7 @@ class Product(Base):
     # Foreign keys
     fk_category_id = Column(Integer, ForeignKey("categories.category_id"), nullable=True)
     fk_department_id = Column(Integer, ForeignKey("departments.department_id"), nullable=True)
-    fk_store_id = Column(Integer, ForeignKey("stores.store_id"), ondelete="CASCADE", nullable=True)
+    fk_store_id = Column(Integer, ForeignKey("stores.store_id", ondelete="CASCADE"), nullable=True)
 
     # Add Check Constraints for price and status
     __table_args__ = (

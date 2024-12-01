@@ -32,7 +32,7 @@ class StorePrice(Base):
     quantity_limit = Column(Integer, nullable=True)
     matched_with_store = Column(String(100), nullable=True)
 
-    # Foreign Keys with cascade delete
+    # Foreign Keys
     store_id = Column(Integer, ForeignKey("stores.store_id", ondelete="CASCADE"))
     product_id = Column(Integer, ForeignKey("products.product_id", ondelete="CASCADE"))
 

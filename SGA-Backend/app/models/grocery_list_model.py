@@ -8,10 +8,10 @@ class GroceryList(Base):
     name = Column(String)
 
     # Foreign Keys
-    user_id = Column(Integer, ForeignKey("users.user_id", ondelete="CASCADE"), nullable=False)
+    user_id = Column(Integer, ForeignKey("users.user_id"), nullable=False)
 
     # Relationships
-    items = relationship("GroceryItem", back_populates="grocery_list", cascade="all, delete")
+    items = relationship("GroceryItem", back_populates="grocery_list")
     user = relationship("User", back_populates="grocery_lists")
 
 class GroceryItem(Base):
@@ -21,7 +21,7 @@ class GroceryItem(Base):
     category = Column(String)
 
     # Foreign Keys
-    grocery_list_id = Column(Integer, ForeignKey("grocery_lists.id"))
+    grocery_list_id = Column(Integer, ForeignKey("grocery_lists.id", ondelete="CASCADE"), nullable=False)
 
     # Relationships
     grocery_list = relationship("GroceryList", back_populates="items")

@@ -9,7 +9,7 @@ class Department(Base):
     department_name = Column(String(100), nullable=False)
 
     # Foreign keys
-    fk_store_id = Column(Integer, ForeignKey("stores.store_id"), ondelete="CASCADE", nullable=False)
+    fk_store_id = Column(Integer, ForeignKey("stores.store_id", ondelete="CASCADE"), nullable=False)
 
     # Relationships
     store = relationship("Store", back_populates="departments")

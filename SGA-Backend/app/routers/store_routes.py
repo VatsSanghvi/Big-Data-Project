@@ -50,9 +50,15 @@ def update_store(store_id: int, email: str, store: StoreInsertUpdate, db: Sessio
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-@router.delete("/{store_id}")
-def delete_store(store_id: int, db: Session = Depends(get_db)):
+@router.delete("/{store_id}/{admin_id}")
+def delete_store(store_id: int, admin_id: int, db: Session = Depends(get_db)):
     try:
+        admin = user_crud.get_user_by_id(db=db, user_id=admin_id)
+        if not admin:
+            raise HTTPException(status_code=400, detail="Admin not found")
+        if admin.role != "admin":
+            raise HTTPException(status_code=400, detail="Unauthorized to delete store")
+
         return store_crud.delete_store(db=db, store_id=store_id)
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))

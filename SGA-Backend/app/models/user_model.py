@@ -17,7 +17,7 @@ class User(Base):
     owned_store = relationship("Store", back_populates="owner", foreign_keys="Store.fk_owner_id")
     managed_store = relationship("Store", back_populates="manager", foreign_keys="Store.fk_manager_id")
 
-    grocery_lists = relationship("GroceryList", back_populates="user", cascade="all, delete-orphan")
+    grocery_lists = relationship("GroceryList", back_populates="user")
 
     __table_args__ = (
         CheckConstraint("LEN(phone_number) = 10", name="chk_phone_number_length"),
