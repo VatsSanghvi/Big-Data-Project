@@ -3,14 +3,14 @@ from datetime import datetime
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 from app.models.store_model import Store, StorePrice
-from app.schemas.store_schema import StoreInsertUpdate, StoreResponse
+from app.schemas.store_schema import StoreCreate, StoreResponse
 
-def insert_store(db: Session, store: StoreInsertUpdate) -> StoreResponse:
+def insert_store(db: Session, store: StoreCreate) -> StoreResponse:
     """
     Insert a Store record into the database.
 
     :param db: SQLAlchemy database session.
-    :param store: StoreInsertUpdate DTO to be inserted.
+    :param store: StoreCreate DTO to be inserted.
     :return: StoreResponse object representing the inserted store.
     """
     try:
@@ -44,13 +44,13 @@ def get_stores_by_owner(owner_id: int, db: Session) -> List[StoreResponse]:
     stores = db.query(Store).filter(Store.fk_owner_id == owner_id).all()
     return [StoreResponse.model_validate(store) for store in stores]
 
-def update_store(db: Session, store_id: int, updates: StoreInsertUpdate) -> StoreResponse:
+def update_store(db: Session, store_id: int, updates: StoreCreate) -> StoreResponse:
     """
     Update a Store record in the database.
 
     :param db: SQLAlchemy database session.
     :param store_id: ID of the store to update.
-    :param updates: StoreInsert DTO containing the updated data.
+    :param updates: StoreCreate DTO containing the updated data.
     :return: StoreResponse object representing the updated store.
     :raises: RuntimeError if the store is not found.
     """
@@ -70,7 +70,7 @@ def update_store(db: Session, store_id: int, updates: StoreInsertUpdate) -> Stor
         db.rollback()
         raise RuntimeError(f"Failed to update store: {str(e)}") from e
 
-def add_store_manager(db: Session, store_id: int, user_id: int):
+def assign_manager(db: Session, store_id: int, user_id: int):
     """
     Add a user as a manager for a store.
 

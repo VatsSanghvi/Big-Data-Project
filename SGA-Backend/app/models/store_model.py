@@ -34,7 +34,7 @@ class StorePrice(Base):
 
     # Foreign Keys
     store_id = Column(Integer, ForeignKey("stores.store_id", ondelete="CASCADE"))
-    product_id = Column(Integer, ForeignKey("products.product_id", ondelete="CASCADE"))
+    product_id = Column(Integer, ForeignKey("products.product_id"))
 
     # Add Check Constraint for price
     __table_args__ = (
