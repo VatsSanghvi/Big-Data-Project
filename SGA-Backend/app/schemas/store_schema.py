@@ -4,16 +4,16 @@ from datetime import datetime
 from decimal import Decimal
 from app.schemas.user_schema import UserResponse
 
-class StoreCreate(BaseModel):
+class StoreCreateRequest(BaseModel):
     store_name: str
     location: str
     fk_owner_id: int
+    manager_email: Optional[str] = None
 
-class AssignManager(BaseModel):
+class StoreUpdateRequest(BaseModel):
     store_name: str
     location: str
-    fk_owner_id: int
-    email: str
+    manager_email: Optional[str] = None
 
 class StoreBase(BaseModel):
     store_id: int
@@ -21,7 +21,7 @@ class StoreBase(BaseModel):
     location: str
 
 class StoreResponse(StoreBase):
-    owner: Optional[UserResponse]
+    manager: Optional[UserResponse]
     model_config = ConfigDict(from_attributes=True)
 
 # Price comparison schemas

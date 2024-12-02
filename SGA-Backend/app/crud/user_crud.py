@@ -16,7 +16,7 @@ def register_user(db: Session, user: UserRegister) -> User:
     :param user: The user data to register
     """
     # Validate email
-    validate_email_domain(user.email)
+    validate_email(user.email)
 
     # Check if email already exists
     existing_user = db.query(User).filter(User.email == user.email).first()
@@ -53,7 +53,11 @@ def authenticate_user(db: Session, email: str, password: str):
     user = get_user_by_email(db, email)
     if not user:
         return None
-    if not verify_password(password, user.password) and validate_email_domain(user.email) and validate_phone_number(user.phone_number):
+    if not verify_password(password, user.password):
+        return None
+    elif not validate_email(email):
+        return None
+    elif not validate_phone_number(user.phone_number):
         return None
     return user
 
@@ -156,25 +160,21 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
     """Verify a plain password against a hashed password"""
     return pwd_context.verify(plain_password, hashed_password)
 
-def validate_email_domain(email: str):
+def validate_email(email: str):
     """
     Validates if an email is from an allowed domain.
 
     :param email: The email address to validate.
     :raises ValueError: If the email domain is not allowed or the email is invalid.
     """
-    allowed_domains = ["gmail.com", "hotmail.com", "yahoo.com", "icloud.com"]
 
     # Validate the basic email format
     email_regex = r"^[\w\.-]+@([\w-]+\.)+[\w-]{2,4}$"
     if not re.match(email_regex, email):
         raise ValueError("Invalid email")
-
-    # Extract domain and check if it's allowed
-    domain = email.split("@")[-1]
-    if domain not in allowed_domains:
-        raise ValueError(f"Email domain '{domain}' is not supported. Allowed domains: {', '.join(allowed_domains)}.")
+    return True
 
 def validate_phone_number(phone_number: str):
     if not phone_number.isdigit() or len(phone_number) != 10:
         raise ValueError("Phone number must be exactly 10 digits.")
+    return True

@@ -8,7 +8,7 @@ class UserLogin(BaseModel):
 class UserRegister(BaseModel):
     first_name: str
     last_name: str
-    email: EmailStr
+    email: str
     password: str
     phone_number: Optional[str] = None
     role: str
@@ -17,7 +17,7 @@ class UserBase(BaseModel):
     user_id: int
     first_name: str
     last_name: str
-    email: EmailStr
+    email: str
     phone_number: Optional[str] = None
     role: str
 

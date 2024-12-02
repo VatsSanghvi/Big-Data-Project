@@ -1,11 +1,11 @@
-from typing import List
+from typing import List, Optional
 from datetime import datetime
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 from app.models.store_model import Store, StorePrice
-from app.schemas.store_schema import StoreCreate, StoreResponse
+from app.schemas.store_schema import StoreCreateRequest, StoreUpdateRequest, StoreResponse
 
-def insert_store(db: Session, store: StoreCreate) -> StoreResponse:
+def insert_store(db: Session, store: StoreCreateRequest) -> StoreResponse:
     """
     Insert a Store record into the database.
 
@@ -44,7 +44,21 @@ def get_stores_by_owner(owner_id: int, db: Session) -> List[StoreResponse]:
     stores = db.query(Store).filter(Store.fk_owner_id == owner_id).all()
     return [StoreResponse.model_validate(store) for store in stores]
 
-def update_store(db: Session, store_id: int, updates: StoreCreate) -> StoreResponse:
+def get_store_by_id(db: Session, store_id: int) -> StoreResponse:
+    """
+    Retrieve a Store record from the database.
+
+    :param db: SQLAlchemy database session.
+    :param store_id: ID of the store to retrieve.
+    :return: StoreResponse object representing the store.
+    :raises: RuntimeError if the store is not found.
+    """
+    store = db.query(Store).filter(Store.store_id == store_id).first()
+    if not store:
+        raise RuntimeError(f"Store with ID {store_id} not found.")
+    return StoreResponse.model_validate(store)
+
+def update_store(db: Session, store_id: int, updates: StoreUpdateRequest) -> StoreResponse:
     """
     Update a Store record in the database.
 
@@ -70,7 +84,7 @@ def update_store(db: Session, store_id: int, updates: StoreCreate) -> StoreRespo
         db.rollback()
         raise RuntimeError(f"Failed to update store: {str(e)}") from e
 
-def assign_manager(db: Session, store_id: int, user_id: int):
+def update_manager(db: Session, store_id: int, user_id: Optional[int] = None) -> StoreResponse:
     """
     Add a user as a manager for a store.
 
@@ -84,7 +98,11 @@ def assign_manager(db: Session, store_id: int, user_id: int):
     if not store:
         raise RuntimeError(f"Store with ID {store_id} not found.")
 
-    store.fk_manager_id = user_id
+    if user_id:
+        store.fk_manager_id = user_id
+    else:
+        store.fk_manager_id = None
+
     try:
         db.commit()
         db.refresh(store)
