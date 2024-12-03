@@ -1,18 +1,8 @@
-export interface RegisterForm {
-    firstName: string;
-    lastName: string;
-    email: string;
+import { User } from "./user";
+
+export interface RegisterForm extends Omit<User, 'user_id'> {
     password: string;
-    confirmPassword: string;
-    phoneNumber: string;
-    role: string;
+    confirm_password: string;
 }
 
-export interface RegisterRequest {
-    first_name: string;
-    last_name: string;
-    email: string;
-    password: string;
-    phone_number: string;
-    role: string;
-}
+export type RegisterRequest = Omit<RegisterForm, 'confirm_password'>;

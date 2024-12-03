@@ -14,9 +14,6 @@ import { getProps } from "@helpers"
 // * Hooks
 import { useAuthStore, useToast } from "@hooks"
 
-// * Models
-import { User } from "@models"
-
 // * Services
 import { user } from "@services"
 
@@ -35,18 +32,9 @@ export const LoginPage = () => {
             if (response.status === 200) {
                 const data = response.data;
 
-                const user : User = {
-                    id: data.user_id,
-                    firstName: data.first_name,
-                    lastName: data.last_name,
-                    email: data.email,
-                    phoneNumber: data.phone_number,
-                    role: data.role
-                };
+                onLogin(data);
 
-                onLogin(user);
-
-                showSuccess("Login Successful", `Welcome ${user.firstName} ${user.lastName}`);
+                showSuccess("Login Successful", `Welcome ${data.first_name} ${data.last_name}`);
             }
             else {
                 showError("Error", "Login Failed");

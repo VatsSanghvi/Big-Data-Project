@@ -10,6 +10,7 @@ export interface IBase {
     label: string;
     wrapperClassName?: string;
     wrapperStyle?: CSSProperties;
+    columns?: number;
 }
 
 export type MIBase<T> = Omit<T & IBase, 'value' | 'onChange' | 'onBlur'>

@@ -41,7 +41,9 @@ export const GeneralLayout = () => {
                     )
                 }
                 <div className="general-layout-outlet">
-                    <Outlet />
+                    <div className="general-layout-outlet-card">
+                        <Outlet />
+                    </div>
                 </div>
             </div>
         </div>

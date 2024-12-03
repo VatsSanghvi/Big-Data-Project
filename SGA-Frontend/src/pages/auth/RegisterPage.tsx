@@ -2,7 +2,7 @@
 import { useFormik } from "formik";
 
 // * Components
-import { CardHeader, MInputNumber, MInputText, MPassword, NavigateButton, SubmitButton } from "@components"
+import { CardHeader, MInputMask, MInputText, MPassword, NavigateButton, SubmitButton } from "@components"
 
 // * Forms
 import { registerInitialValues, registerValidationSchema } from "@forms";
@@ -14,7 +14,7 @@ import { getProps } from "@helpers";
 import { useAuthStore, useToast } from "@hooks";
 
 // * Models
-import { RegisterRequest, Role, User } from "@models";
+import { RegisterRequest } from "@models";
 
 // * Services
 import { user } from "@services";
@@ -28,34 +28,20 @@ export const RegisterPage = () => {
         initialValues: registerInitialValues,
         validationSchema: registerValidationSchema,
         onSubmit: async(values) => {
-            console.log(values);    
+            console.log(values);
 
-            const newUser : RegisterRequest = {
-                first_name: values.firstName,
-                last_name: values.lastName,
-                email: values.email,
-                password: values.password,
-                phone_number: values.phoneNumber.toString(),
-                role: Role.User
-            }
+            const { confirm_password, ...rest } = values;
+
+            const newUser : RegisterRequest = rest
 
             const response = await user.register(newUser);
 
             if (response.status === 200) {
                 const data = response.data;
 
-                const user : User = {
-                    id: data.user_id,
-                    firstName: data.first_name,
-                    lastName: data.last_name,
-                    email: data.email,
-                    phoneNumber: data.phone_number,
-                    role: data.role
-                };
+                onLogin(data);
 
-                onLogin(user);
-
-                showSuccess("Registration Successful", `Welcome ${user.firstName} ${user.lastName}`);
+                showSuccess("Registration Successful", `Welcome ${data.first_name} ${data.last_name}`);
                 
             } else {
                 showError("Error", "Registration Failed");
@@ -69,8 +55,8 @@ export const RegisterPage = () => {
             <form
                 onSubmit={formik.handleSubmit}
             >
-                <MInputText {...getProps(formik, 'firstName', 'First Name')}/>
-                <MInputText {...getProps(formik, 'lastName', 'Last Name')}/>
+                <MInputText {...getProps(formik, 'first_name', 'First Name')}/>
+                <MInputText {...getProps(formik, 'last_name', 'Last Name')}/>
                 <MInputText 
                     {...getProps(formik, 'email', 'Email')}
                     type="email"
@@ -81,12 +67,13 @@ export const RegisterPage = () => {
                     toggleMask
                 />
                 <MPassword 
-                    {...getProps(formik, 'confirmPassword', 'Confirm Password')}
+                    {...getProps(formik, 'confirm_password', 'Confirm Password')}
                     toggleMask
                 />
-                <MInputNumber 
-                    {...getProps(formik, 'phoneNumber', 'Phone Number')}
-                    useGrouping={false}
+                <MInputMask
+                    {...getProps(formik, 'phone_number', 'Phone Number')}
+                    unmask
+                    mask="(999) 999-9999"
                 />
                 <SubmitButton
                     className="submit-button"
