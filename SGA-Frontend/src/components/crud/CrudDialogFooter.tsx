@@ -9,8 +9,8 @@ import { DialogMode, DialogTitle } from "@models";
 
 export const CrudDialogFooter : FC<CrudDialogFooterProps> = (props) => {
     const {
-        mode,
-        setMode,
+        openMode,
+        setOpenMode,
         title,
         onSubmit
     } = props;
@@ -20,11 +20,11 @@ export const CrudDialogFooter : FC<CrudDialogFooterProps> = (props) => {
             <Button 
                 label="Cancel"
                 icon="pi pi-times"
-                onClick={() => setMode(DialogMode.CLOSE)}
+                onClick={() => setOpenMode(DialogMode.CLOSE)}
             />
             <Button 
                 autoFocus
-                label={`${DialogTitle[mode]} ${title}`}
+                label={`${DialogTitle[openMode]} ${title}`}
                 icon="pi pi-check"
                 onClick={onSubmit}
             />
@@ -33,8 +33,8 @@ export const CrudDialogFooter : FC<CrudDialogFooterProps> = (props) => {
 }
 
 interface CrudDialogFooterProps {
-    mode: DialogMode;
-    setMode: (mode: DialogMode) => void;
+    openMode: DialogMode;
+    setOpenMode: (mode: DialogMode) => void;
     title: string;
     onSubmit: () => void;
 }

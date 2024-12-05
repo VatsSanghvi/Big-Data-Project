@@ -13,15 +13,15 @@ import { StoreForm } from "./StoreForm";
 
 export const StoreDialog : FC<StoreDialogProps> = (props) => {
     const {
-        mode,
+        openMode,
         formik,
-        setMode
+        setOpenMode
     } = props;
 
     return (
         <CrudDialog
-            mode={mode}
-            setMode={setMode}
+            openMode={openMode}
+            setOpenMode={setOpenMode}
             title="Store"
             onSubmit={formik.handleSubmit}
         >
@@ -33,7 +33,7 @@ export const StoreDialog : FC<StoreDialogProps> = (props) => {
 }
 
 interface StoreDialogProps {
-    mode: DialogMode;
+    openMode: DialogMode;
     formik: FormikProps<IStoreForm>;
-    setMode: (mode: DialogMode) => void;
+    setOpenMode: (openMode: DialogMode) => void;
 }

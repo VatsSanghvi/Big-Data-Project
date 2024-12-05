@@ -1,13 +1,13 @@
 import { ComponentStyle } from "@models";
 import { classNames } from "primereact/utils";
-import { FC, ReactNode } from "react";
+import { ReactNode } from "react";
 
-export const ListTemplate : FC<ListTemplateProps> = (props) => {
+export const ListTemplate = <T,>(props : ListTemplateProps<T>) => {
 
     const {
         items,
         noItemsMessage,
-        itemTemplate,
+        children,
         className,
         style
     } = props;
@@ -32,15 +32,15 @@ export const ListTemplate : FC<ListTemplateProps> = (props) => {
         >
             {
                 items.map((item, index) => (
-                    itemTemplate(index, item)
+                    children(item, index)
                 ))
             }
         </div>
     )
 }
 
-interface ListTemplateProps extends ComponentStyle {
-    items: unknown[];
+interface ListTemplateProps<T> extends ComponentStyle {
+    items: T[];
     noItemsMessage: string;
-    itemTemplate: (index: number, props: unknown) => ReactNode;
+    children: (item : T, index: number) => ReactNode;
 }

@@ -6,6 +6,7 @@ import { commonRoutes } from "./common";
 import { RolesRoute } from "./decorators/RolesRoute";
 import { Role } from "@models";
 import { StoresPage } from "@pages";
+// import { StoreProvider } from "@providers";
 
 export const routes : RouteObject[] = [
     ...authRoutes,

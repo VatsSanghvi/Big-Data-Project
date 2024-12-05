@@ -1,12 +1,19 @@
-import { DialogMode, DialogTitle } from "@models";
-import { Dialog } from "primereact/dialog";
+// * React Libraries
 import { FC, ReactNode } from "react";
+
+// * Third Party Libraries
+import { Dialog } from "primereact/dialog";
+
+// * Models
+import { DialogMode, DialogTitle } from "@models";
+
+// * Components
 import { CrudDialogFooter } from "./CrudDialogFooter";
 
 export const CrudDialog : FC<CrudDialogProps> = (props) => {
     const {
-        mode,
-        setMode,
+        openMode,
+        setOpenMode,
         title,
         children,
         onSubmit
@@ -15,13 +22,13 @@ export const CrudDialog : FC<CrudDialogProps> = (props) => {
     return (
         <Dialog
             className="crud-dialog"
-            header={`${DialogTitle[mode]} ${title}`}
-            visible={mode !== DialogMode.CLOSE}
-            onHide={() => setMode(DialogMode.CLOSE)}
+            header={`${DialogTitle[openMode]} ${title}`}
+            visible={openMode !== DialogMode.CLOSE}
+            onHide={() => setOpenMode(DialogMode.CLOSE)}
             footer={
                 <CrudDialogFooter 
-                    mode={mode} 
-                    setMode={setMode} 
+                    openMode={openMode} 
+                    setOpenMode={setOpenMode} 
                     onSubmit={onSubmit}
                     title={title}
                 />
@@ -33,8 +40,8 @@ export const CrudDialog : FC<CrudDialogProps> = (props) => {
 }
 
 interface CrudDialogProps {
-    mode: DialogMode;
-    setMode: (mode: DialogMode) => void;
+    openMode: DialogMode;
+    setOpenMode: (mode: DialogMode) => void;
     title: string;
     children: ReactNode;
     onSubmit: () => void;

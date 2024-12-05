@@ -1,8 +1,15 @@
-import { Store } from "@models";
-import { classNames } from "primereact/utils";
+// * React Libraries
 import { FC } from "react";
+
+// * Third Party Libraries
+import { classNames } from "primereact/utils";
+
+// * Components
 import { EditButton } from "../EditButton";
 import { DeleteButton } from "../DeleteButton";
+
+// * Models
+import { Store } from "@models";
 
 export const StoreItemTemplate : FC<StoreItemTemplateProps> = (props) => {
     const {

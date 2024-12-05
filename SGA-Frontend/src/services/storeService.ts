@@ -1,5 +1,5 @@
 // * Models
-import { StoreCreate, StoreUpdate } from "@models";
+import { StoreForm } from "@models";
 
 // * Constants
 import { endpoints } from "@constants";
@@ -11,11 +11,11 @@ export const store = {
     get: (owner_id: number) => {
         return instance.get(`${endpoints.store.get}/${owner_id}`);
     },
-    create: (newStore: StoreCreate) => {
+    create: (newStore: StoreForm) => {
         return instance.post(endpoints.store.create, newStore);
     },
-    update: (store_id: number, updatedStore: StoreUpdate) => {
-        return instance.put(`${endpoints.store.update}/${store_id}`, updatedStore);
+    update: (store: StoreForm) => {
+        return instance.put(`${endpoints.store.update}/${store.store_id}`, store);
     },
     delete: (store_id: number) => {
         return instance.delete(`${endpoints.store.delete}/${store_id}`);

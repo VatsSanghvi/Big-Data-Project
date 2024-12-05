@@ -11,12 +11,16 @@ import { MInputText } from "@components";
 import { getProps } from "@helpers";
 
 // * Models
-import { StoreForm as IStoreForm } from "@models";
+import { BreakpointColumns, StoreForm as IStoreForm } from "@models";
 
 export const StoreForm : FC<StoreFormProps> = (props) => {
     const {
         formik
     } = props;
+
+    const breakpoints : BreakpointColumns = {
+        sm: 6,
+    }
 
     return (
         <form
@@ -25,17 +29,17 @@ export const StoreForm : FC<StoreFormProps> = (props) => {
             <MInputText 
                 {...getProps(formik, 'store_name', 'Store Name')}
                 columns={12}
-                className="sm:col-6 md:col-4"
+                breakpoints={breakpoints}
             />
             <MInputText 
                 {...getProps(formik, 'location', 'Address')}
                 columns={12}
-                className="sm:col-6 md:col-4"
+                breakpoints={breakpoints}
             />
             <MInputText 
                 {...getProps(formik, 'manager_email', 'Manager Email')}
                 columns={12}
-                className="sm:col-6 md:col-4"
+                breakpoints={breakpoints}
             />
         </form>
     )

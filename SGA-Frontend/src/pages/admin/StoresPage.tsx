@@ -1,15 +1,31 @@
-import { AddButton, ListTemplate, PageTitle, StoreDialog, StoreItemTemplate } from "@components"
-import { storeFormValidationSchema, storeFormValues } from "@forms";
-import { useAppDispatch, useAppSelector, useAuthStore, useToast } from "@hooks";
-import { DialogMode, Store, StoreCreate, StoreForm, StoreUpdate } from "@models";
-import { store } from "@services";
-import { addStore, deleteStore, setStores, updateStore } from "@store";
+// * React Libraries
+import { useState } from "react"
+
+// * Third Party Libraries
 import { useFormik } from "formik";
 import { confirmDialog, ConfirmDialog } from "primereact/confirmdialog";
 import { DataView } from "primereact/dataview";
-import { useEffect, useState } from "react"
+
+// * Components
+import { AddButton, PageTitle, StoreDialog, StoreListTemplate } from "@components"
+
+// * Hooks
+import { useAppDispatch, useAppSelector, useAuthStore, useToast } from "@hooks";
+
+// * Services
+import { store } from "@services";
+
+// * Forms
+import { storeFormValidationSchema, storeFormValues } from "@forms";
+
+// * Models
+import { DialogMode, Store, StoreForm } from "@models";
+
+// * Store
+import { addStore, deleteStore, updateStore } from "@store";
 
 export const StoresPage = () => {
+
     const { user } = useAuthStore();
     const { showSuccess, showError } = useToast();
 
@@ -17,7 +33,8 @@ export const StoresPage = () => {
     const dispatch = useAppDispatch();
 
     const [openMode, setOpenMode] = useState<DialogMode>(DialogMode.CLOSE);
-    const [openStoreId, setOpenStoreId] = useState<number>(0);
+
+    const { create, update } = store;
 
     const formik = useFormik<StoreForm>({
         initialValues: storeFormValues,
@@ -25,69 +42,34 @@ export const StoresPage = () => {
         onSubmit: async(values) => {
             console.log(values);
 
-            let response;
-
-            if (openMode === DialogMode.CREATE) {
-                // * Create Store
-                const request : StoreCreate = {
-                    store_name: values.store_name,
-                    location: values.location,
-                    fk_owner_id: user.user_id,
-                    ...values.manager_email && { manager_email: values.manager_email }
-                }
-
-                response = await store.create(request);
-            } else {
-                // * Update Store
-                const request : StoreUpdate = {
-                    store_name: values.store_name,
-                    location: values.location,
-                    ...values.manager_email && { manager_email: values.manager_email }
-                }
-
-                response = await store.update(openStoreId, request);
-            }
-
-            if (response?.status === 200) {
+            const { status, data } = await (openMode === DialogMode.CREATE ? create : update)(values);
+            
+            if (status === 200) {
                 setOpenMode(DialogMode.CLOSE);
 
-                if (openMode === DialogMode.CREATE) {
-                    dispatch(addStore(response.data));
-                    showSuccess('Success', 'Store Created Successfully');
-                } else {
-                    dispatch(updateStore(response.data));
-                    showSuccess('Success', 'Store Updated Successfully');
-                }
+                dispatch((openMode === DialogMode.CREATE ? addStore : updateStore)(data));
+                showSuccess('Success', `Store ${openMode === DialogMode.CREATE ? 'Created' : 'Updated'} Successfully`);
             } else {
                 showError('Error', 'Something went wrong');   
             }
         }
-    })
+    });
 
-    useEffect(() => {
-        const fetchStores = async () => {
-            const { status, data } = await store.get(user.user_id);
-
-            if (status === 200) dispatch(setStores(data));            
-        };
-
-        fetchStores();
-    }, []);
-    
     const onCreate = () => {
-        setOpenMode(DialogMode.CREATE);
         formik.resetForm();
+        formik.setFieldValue('fk_owner_id', user.user_id);
+        setOpenMode(DialogMode.CREATE);
     };
 
     const onEdit = (store: Store) => {
         formik.setValues({
+            store_id: store.store_id,
             store_name: store.store_name,
             location: store.location,
             fk_owner_id: user.user_id,
             manager_email: store.manager?.email ?? '',
         });
 
-        setOpenStoreId(store.store_id);
         setOpenMode(DialogMode.EDIT);
     };
 
@@ -115,18 +97,10 @@ export const StoresPage = () => {
     };
 
     const listTemplate = (items: Store[]) => (
-        <ListTemplate 
-            noItemsMessage="No Stores Found" 
-            items={items} 
-            itemTemplate={(index, item) => (
-                <StoreItemTemplate 
-                    key={index}
-                    item={item as Store} 
-                    index={index} 
-                    onDelete={(store_id: number) => onDelete(store_id)} 
-                    onEdit={(item : Store) => onEdit(item)}
-                />
-            )} 
+        <StoreListTemplate 
+            items={items}
+            onDelete={onDelete}
+            onEdit={onEdit}
         />
     )
 
@@ -147,8 +121,8 @@ export const StoresPage = () => {
                 />
             </div>
             <StoreDialog 
-                mode={openMode}
-                setMode={setOpenMode}
+                openMode={openMode}
+                setOpenMode={setOpenMode}
                 formik={formik}
             />
             <ConfirmDialog />

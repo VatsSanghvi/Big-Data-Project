@@ -1,23 +1,17 @@
 // * Models
 import { User } from "../auth";
 
-export interface Store {
+interface StoreBase {
     store_id: number;
     store_name: string;
     location: string;
+}
+
+export interface Store extends StoreBase {
     manager?: User;
 }
 
-export interface StoreCreate extends Omit<Store, 'store_id' | 'manager'> {
-    fk_owner_id: number;
-    manager_email?: string;
-}
-
-export interface StoreUpdate extends Omit<Store, 'store_id' | 'manager'> {
-    manager_email?: string;
-}
-
-export interface StoreForm extends Omit<Store, 'store_id' | 'manager'> {
+export interface StoreForm extends StoreBase {
     fk_owner_id: number;
     manager_email: string;
 }
