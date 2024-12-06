@@ -4,11 +4,11 @@ import { LoginState, Role } from "@models";
 export const initialAuthValues = {
     authState: LoginState.UnAuthenticated,
     user: {
-        id: 0,
-        firstName: '',
-        lastName: '',
+        user_id: 0,
+        first_name: '',
+        last_name: '',
         email: '',
-        phoneNumber: '',
+        phone_number: '',
         role: Role.User
     }
 }

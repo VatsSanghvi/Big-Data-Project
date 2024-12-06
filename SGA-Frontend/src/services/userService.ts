@@ -1,5 +1,5 @@
 // * Models
-import { LoginForm, RegisterRequest } from "@models";
+import { Login, RegisterRequest } from "@models";
 
 // * Constants
 import { endpoints } from "@constants";
@@ -9,7 +9,7 @@ import { instance } from "./axiosService";
 
 
 export const user = {
-    login: (user: LoginForm) => {
+    login: (user: Login) => {
         return instance.post(endpoints.auth.login, user);
     },
     register: (values: RegisterRequest) => {

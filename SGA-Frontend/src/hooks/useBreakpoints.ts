@@ -1,7 +1,8 @@
-import { breakpoints } from "@constants";
+// * React Libraries
 import { useEffect, useState } from "react"
 
-
+// * Constants
+import { breakpoints } from "@constants";
 
 export const useBreakpoints = () => {
     
@@ -20,6 +21,6 @@ export const useBreakpoints = () => {
     return {
         isMobile,
         isTablet,
-        isDesktop
+        isDesktop,
     }
 }

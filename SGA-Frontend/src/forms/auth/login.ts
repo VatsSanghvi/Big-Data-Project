@@ -2,9 +2,9 @@
 import { object, string } from "yup"
 
 // * Models
-import { LoginForm } from "@models"
+import { Login } from "@models"
 
-export const loginInitialValues : LoginForm = {
+export const loginInitialValues : Login = {
     email: '',
     password: ''
 };

@@ -1,0 +1,10 @@
+@use 'primeflex/primeflex.scss' as *;
+@use '../../breakpoints' as *;
+
+.page-title {
+    @include styleclass('w-full flex justify-content-center');
+
+    h1 {
+        @include styleclass('font-weight-bold text-5xl');
+    }
+}

@@ -1,20 +1,20 @@
 import { RegisterForm, Role } from "@models";
-import { number, object, ref, string } from "yup";
+import { object, ref, string } from "yup";
 
 export const registerInitialValues : RegisterForm = {
-    firstName: '',
-    lastName: '',
+    first_name: '',
+    last_name: '',
     email: '',
     password: '',
-    confirmPassword: '',
-    phoneNumber: '',
+    confirm_password: '',
+    phone_number: '',
     role: Role.User,
 }
 
 export const registerValidationSchema = object({
-    firstName: string()
+    first_name: string()
                 .required('First Name is required'),
-    lastName: string()
+    last_name: string()
                 .required('Last Name is required'),
     email: string()
             .email('It must be a valid email')
@@ -22,11 +22,11 @@ export const registerValidationSchema = object({
     password: string()
             .required('Password is required')
             .min(8, 'Password must be at least 8 characters'),
-    confirmPassword: string()
+    confirm_password: string()
             .required('Confirm your password')
             .oneOf([ref('password')], 'Passwords must match'),
-    phoneNumber: number()
+    phone_number: string()
             .required('Phone Number is required')
-            .integer('No decimals are allowed'),
+            .length(10, 'Phone Number must be 10 digits'),
     role: string()
 });

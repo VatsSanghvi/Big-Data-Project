@@ -1,17 +1,19 @@
 // * React Libraries
 import { Topbar } from "@components"
 import { menuOptions } from "@constants";
-import { useAuthStore, useBreakpoints } from "@hooks";
+import { useAuthStore, useBreakpoints, useInfoStore } from "@hooks";
+import { LoginState } from "@models";
 import { Menu } from "primereact/menu";
 import { MenuItem } from "primereact/menuitem";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { Outlet, useNavigate } from "react-router-dom"
 
 export const GeneralLayout = () => {
     
     const { isMobile } = useBreakpoints();
 
-    const { user } = useAuthStore();
+    const { user, authState } = useAuthStore();
+    const { getInfo } = useInfoStore();
     const navigate = useNavigate();
 
     const menuItems : MenuItem[] = useMemo(() => {
@@ -25,6 +27,12 @@ export const GeneralLayout = () => {
             }
         });
     }, [user.role]);
+
+    useEffect(() => {
+        if (authState === LoginState.Authenticated && user.user_id) {
+            getInfo(user);
+        }
+    }, [authState]);
 
     return (
         <div className="general-layout">
@@ -41,7 +49,9 @@ export const GeneralLayout = () => {
                     )
                 }
                 <div className="general-layout-outlet">
-                    <Outlet />
+                    <div className="general-layout-outlet-card">
+                        <Outlet />
+                    </div>
                 </div>
             </div>
         </div>

@@ -12,10 +12,7 @@ import { loginInitialValues, loginValidationSchema } from "@forms"
 import { getProps } from "@helpers"
 
 // * Hooks
-import { useAuthStore, useToast } from "@hooks"
-
-// * Models
-import { User } from "@models"
+import { useAuthStore, useInfoStore, useToast } from "@hooks"
 
 // * Services
 import { user } from "@services"
@@ -23,6 +20,8 @@ import { user } from "@services"
 export const LoginPage = () => {
 
     const { onLogin } = useAuthStore();
+    const { getInfo } = useInfoStore();
+
     const { showSuccess, showError } = useToast();
 
     const formik = useFormik({
@@ -35,18 +34,11 @@ export const LoginPage = () => {
             if (response.status === 200) {
                 const data = response.data;
 
-                const user : User = {
-                    id: data.user_id,
-                    firstName: data.first_name,
-                    lastName: data.last_name,
-                    email: data.email,
-                    phoneNumber: data.phone_number,
-                    role: data.role
-                };
+                onLogin(data);
 
-                onLogin(user);
+                await getInfo(data);
 
-                showSuccess("Login Successful", `Welcome ${user.firstName} ${user.lastName}`);
+                showSuccess("Login Successful", `Welcome ${data.first_name} ${data.last_name}`);
             }
             else {
                 showError("Error", "Login Failed");

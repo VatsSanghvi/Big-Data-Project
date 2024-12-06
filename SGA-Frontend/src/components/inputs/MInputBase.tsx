@@ -20,10 +20,20 @@ export const MInputBase : FC<MInputBaseProps> = (props) => {
         children,
         wrapperClassName,
         wrapperStyle,
+        columns,
+        breakpoints
     } = props;
 
     const classes = classNames(
-        'w-full flex flex-column gap-2',
+        {
+            'w-full': !columns,
+            [`col-${columns}`]: columns,
+            [`sm:col-${breakpoints?.sm}`]: breakpoints?.sm,
+            [`md:col-${breakpoints?.md}`]: breakpoints?.md,
+            [`lg:col-${breakpoints?.lg}`]: breakpoints?.lg,
+            [`xl:col-${breakpoints?.xl}`]: breakpoints?.xl
+        },
+        'flex flex-column gap-2',
         wrapperClassName
     );
 

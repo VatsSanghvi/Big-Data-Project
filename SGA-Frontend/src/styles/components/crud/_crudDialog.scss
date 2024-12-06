@@ -1,0 +1,6 @@
+@use 'primeflex/primeflex.scss' as *;
+@use '../../breakpoints' as *;
+
+.crud-dialog {
+    @include styleclass('w-full md:w-9 lg:w-8 xl:w-6');
+}

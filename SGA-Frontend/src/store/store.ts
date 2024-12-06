@@ -1,11 +1,15 @@
+// * React Libraries
 import { configureStore } from "@reduxjs/toolkit";
-import { authSlice, configSlice } from "./slices";
+
+// * Slices
+import { authSlice, configSlice, infoSlice } from "./slices";
 
 
 export const store = configureStore({
     reducer: {
         auth: authSlice.reducer,
-        config: configSlice.reducer
+        config: configSlice.reducer,
+        info: infoSlice.reducer,
     }
 });
 
