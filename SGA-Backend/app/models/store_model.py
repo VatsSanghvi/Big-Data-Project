@@ -27,8 +27,6 @@ class StorePrice(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     price = Column(DECIMAL(12, 2), nullable=False)
-    price_valid_from = Column(Date, nullable=False)
-    price_valid_until = Column(Date)
     quantity_limit = Column(Integer, nullable=True)
     matched_with_store = Column(String(100), nullable=True)
 
@@ -44,3 +42,17 @@ class StorePrice(Base):
     # Relationships
     store = relationship("Store", back_populates="prices")
     product = relationship("Product", back_populates="store_prices")
+    flyers = relationship("Flyer", back_populates="store_price")
+
+
+class Flyer(Base):
+    __tablename__ = "flyers"
+
+    flyer_id = Column(Integer, Identity(start=1, increment=1), primary_key=True, index=True)
+    flyer_url = Column(String(255), nullable=False)
+
+    # Foreign Keys
+    store_price_id = Column(Integer, ForeignKey("store_prices.id", ondelete="CASCADE"))
+
+    # Relationships
+    store_price = relationship("StorePrice", back_populates="flyers")

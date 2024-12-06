@@ -1,11 +1,11 @@
 from typing import List, Optional
-from datetime import datetime
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
-from app.models.store_model import Store, StorePrice
+from app.models.store_model import Store, StorePrice, Flyer
+from app.models.product_model import Product
 from app.schemas.store_schema import StoreCreateRequest, StoreUpdateRequest, StoreResponse
 
-def insert_store(db: Session, store: StoreCreateRequest) -> StoreResponse:
+def insert_store(db: Session, store: StoreCreateRequest):
     """
     Insert a Store record into the database.
 
@@ -34,7 +34,7 @@ def insert_store(db: Session, store: StoreCreateRequest) -> StoreResponse:
         db.rollback() # Rollback transaction in case of error
         raise RuntimeError(f"Failed to insert store: {str(e)}") from e
 
-def get_stores_by_owner(owner_id: int, db: Session) -> List[StoreResponse]:
+def get_stores_by_owner(owner_id: int, db: Session):
     """
     Retrieve all Store records from the database.
 
@@ -42,6 +42,8 @@ def get_stores_by_owner(owner_id: int, db: Session) -> List[StoreResponse]:
     :return: List of StoreResponse objects.
     """
     stores = db.query(Store).filter(Store.fk_owner_id == owner_id).all()
+    if not stores:
+        raise RuntimeError("No stores found")
     return [StoreResponse.model_validate(store) for store in stores]
 
 def get_store_by_id(db: Session, store_id: int) -> StoreResponse:
@@ -126,21 +128,66 @@ def delete_store(db: Session, store_id: int):
         db.delete(store)
         db.commit()
 
-        return {"message": f"Store {store.store_name} deleted successfully."}
+        return f"Store {store.store_name} deleted successfully."
     except SQLAlchemyError as e:
         db.rollback()
         raise RuntimeError(f"Failed to delete store: {str(e)}") from e
 
-def get_store_prices(
-        db: Session,
-        product_id: int,
-        store_ids: List[int],
-        current_time: datetime = datetime.now()
-):
-    return db.query(StorePrice).filter(
-        StorePrice.product_id == product_id,
-        StorePrice.store_id.in_(store_ids),
-        StorePrice.price_valid_from <= current_time,
-        StorePrice.price_valid_until >= current_time
-    ).all()
+def get_store_prices(db: Session, product_id: int, store_ids: List[int]):
+    """
+    Get the prices of a product at a list of stores at a given time.
+    :param db: SQLAlchemy database session.
+    :param product_id: ID of the product to get prices for.
+    :param store_ids: List of store IDs to get prices from.
+    :return: List of StorePrice objects.
+    """
+    # First verify product exists
+    product = db.query(Product).filter(Product.product_id == product_id).first()
+    if not product:
+        raise ValueError(f"Product with ID {product_id} not found")
+
+    # Verify stores exist
+    existing_stores = db.query(Store.store_id).filter(Store.store_id.in_(store_ids)).all()
+    existing_store_ids = [store.store_id for store in existing_stores]
+
+    if not existing_store_ids:
+        raise ValueError("None of the provided store IDs exist")
+
+    if len(existing_store_ids) != len(store_ids):
+        invalid_stores = set(store_ids) - set(existing_store_ids)
+        raise ValueError(f"Some store IDs are invalid: {invalid_stores}")
+
+    # Get prices
+    store_prices = (
+        db.query(StorePrice)
+        .filter(
+            StorePrice.product_id == product_id,
+            StorePrice.store_id.in_(store_ids)
+        )
+        .all()
+    )
+
+    if not store_prices:
+        raise ValueError(f"No prices found for product {product_id} in the specified stores")
+
+    return store_prices
+
+
+def get_store_flyer(db: Session, store_price_id: int):
+    """
+    Get the flyer for a store.
+    :param db: SQLAlchemy database session.
+    :param store_id: ID of the store to get the flyer for.
+    :return: Flyer object for the store.
+    """
+
+    # First verify store price exists
+    store_price = db.query(StorePrice).filter(StorePrice.id == store_price_id).first()
+    if not store_price:
+        raise ValueError("Store price not found")
+
+    store_flyer = db.query(Flyer).join(StorePrice).filter(store_price.id == store_price_id).first()
+    if not store_flyer:
+        raise RuntimeError("No flyer found")
+    return store_flyer
 

@@ -1,8 +1,9 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from app.crud import product_crud
-from app.schemas.product_schema import ProductInsert, ProductResponse
+from app.schemas.product_schema import ProductCreateRequest, ProductResponse
 from app.database import SessionLocal
+from app.utils.base_response import BaseResponse
 
 router = APIRouter()
 
@@ -14,39 +15,43 @@ def get_db():
     finally:
         db.close()
 
-@router.post("/", response_model=ProductResponse)
-def insert_product(product: ProductInsert, db: Session = Depends(get_db)):
+@router.post("/", response_model=BaseResponse[ProductResponse])
+def insert_product(product: ProductCreateRequest, db: Session = Depends(get_db)):
     try:
         created_product = product_crud.insert_product(db=db, product=product)
-        return created_product
+        return BaseResponse.success_response(data=created_product, message="Product created successfully")
 
     except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
+        return BaseResponse.error_response(message=str(e))
 
-@router.get("/all", response_model=list[ProductResponse])
-def get_all_products(db: Session = Depends(get_db)):
+@router.get("/{store_id}", response_model=BaseResponse[list[ProductResponse]])
+def get_products_by_store(store_id: int, db: Session = Depends(get_db)):
     try:
-        return product_crud.get_all_products(db=db)
+        get_products = product_crud.get_products_by_store(db=db, store_id=store_id)
+        return BaseResponse.success_response(data=get_products, message="Products retrieved successfully")
     except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
+        return BaseResponse.error_response(message=str(e))
 
-@router.get("/{product_id}", response_model=ProductResponse)
+@router.get("/{product_id}", response_model=BaseResponse[ProductResponse])
 def get_product_by_id(product_id: int, db: Session = Depends(get_db)):
     try:
-        return product_crud.get_product_by_id(db=db, product_id=product_id)
+        get_product = product_crud.get_product_by_id(db=db, product_id=product_id)
+        return BaseResponse.success_response(data=get_product, message="Product retrieved successfully")
     except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
+        return BaseResponse.error_response(message=str(e))
 
-@router.put("/{product_id}", response_model=ProductResponse)
-def update_product(product_id: int, product: ProductInsert, db: Session = Depends(get_db)):
+@router.put("/{product_id}", response_model=BaseResponse[ProductResponse])
+def update_product(product_id: int, product: ProductCreateRequest, db: Session = Depends(get_db)):
     try:
-        return product_crud.update_product(db=db, product_id=product_id, updates=product)
+        updated_product = product_crud.update_product(db=db, product_id=product_id, updates=product)
+        return BaseResponse.success_response(data=updated_product, message="Product updated successfully")
     except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
+        return BaseResponse.error_response(message=str(e))
 
-@router.delete("/{product_id}")
+@router.delete("/{product_id}", response_model=BaseResponse)
 def delete_product(product_id: int, db: Session = Depends(get_db)):
     try:
-        return product_crud.delete_product(db=db, product_id=product_id)
+        deleted_product = product_crud.delete_product(db=db, product_id=product_id)
+        return BaseResponse.success_response(data=deleted_product, message="Product deleted successfully")
     except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
+        return BaseResponse.error_response(message=str(e))

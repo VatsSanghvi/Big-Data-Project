@@ -30,14 +30,16 @@ def insert_department(db: Session, department: DepartmentCreate) -> DepartmentRe
         db.rollback() # Rollback transaction in case of error
         raise RuntimeError(f"Failed to insert department: {str(e)}") from e
     
-def get_all_departments(db: Session) -> List[DepartmentResponse]:
+def get_departments_by_store(db: Session, store_id: int) -> List[DepartmentResponse]:
     """
     Retrieve all Department records from the database.
 
     :param db: SQLAlchemy database session.
     :return: List of DepartmentResponse objects.
     """
-    departments = db.query(Department).all()
+    departments = db.query(Department).filter(Department.fk_store_id == store_id).all()
+    if not departments:
+        raise RuntimeError("No departments found.")
     return [DepartmentResponse.model_validate(department) for department in departments]
 
 def get_department_by_id(db: Session, department_id: int) -> DepartmentResponse:
@@ -51,7 +53,7 @@ def get_department_by_id(db: Session, department_id: int) -> DepartmentResponse:
     """
     department = db.query(Department).filter(Department.department_id == department_id).first()
     if not department:
-        raise RuntimeError(f"Department with ID {department_id} not found.")
+        raise RuntimeError(f"Department not found.")
     return DepartmentResponse.model_validate(department)
 
 def update_department(db: Session, department_id: int, updates: DepartmentCreate) -> DepartmentResponse:
@@ -96,7 +98,7 @@ def delete_department(db: Session, department_id: int):
         db.delete(department)
         db.commit()
 
-        return {"message": f"Department {department.department_name} deleted successfully."}
+        return f"Department {department.department_name} deleted successfully."
     except SQLAlchemyError as e:
         db.rollback()
         raise RuntimeError(f"Failed to delete department: {str(e)}") from e

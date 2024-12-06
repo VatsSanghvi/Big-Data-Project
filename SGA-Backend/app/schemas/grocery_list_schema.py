@@ -1,33 +1,40 @@
 from pydantic import BaseModel, ConfigDict
 from typing import List, Optional
 
+from app.schemas.product_schema import ProductResponse
+
+
 class GroceryListBase(BaseModel):
+    id: int
+    name: str
+    total_spent: float
+    user_id: int
+    is_completed: Optional[bool] = False
+
+class GroceryListCreate(BaseModel):
     name: str
     user_id: int
 
 class GroceryItemBase(BaseModel):
-    name: str
-    category: str
-    grocery_list_id: int
-
-class GroceryListCreate(GroceryListBase):
-    pass
-
-class GroceryItemCreate(GroceryItemBase):
-    pass
-
-class GroceryItemResponse(GroceryItemBase):
-    model_config = ConfigDict(from_attributes=True)
-
-class GroceryItem(GroceryItemBase):
     id: int
-    name: str
-    category: str
-
-    model_config = ConfigDict(from_attributes=True)
+    quantity: int
+    grocery_list_id: int
+    product_id: int
+    # is_checked: bool = False
 
 class GroceryListResponse(GroceryListBase):
-    items: Optional[List[GroceryItem]]
+    items: List[GroceryItemBase]
 
     model_config = ConfigDict(from_attributes=True)
+
+class GroceryItemCreate(BaseModel):
+    quantity: int
+    grocery_list_id: int
+    product_id: int
+
+class GroceryItemResponse(GroceryItemBase):
+    product: Optional[ProductResponse]
+
+    model_config = ConfigDict(from_attributes=True)
+
 

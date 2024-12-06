@@ -1,8 +1,9 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from app.crud import category_crud
 from app.schemas.category_schema import CategoryInsert, CategoryResponse
 from app.database import SessionLocal
+from app.utils.base_response import BaseResponse
 from typing import List
 
 router = APIRouter()
@@ -15,38 +16,66 @@ def get_db():
     finally:
         db.close()
 
-@router.post("/", response_model=CategoryResponse)
+@router.post("/", response_model=BaseResponse[CategoryResponse])
 def create_category(category: CategoryInsert, db: Session = Depends(get_db)):
     try:
-        return category_crud.insert_category(db=db, category=category)
+        inserted_category = category_crud.insert_category(db=db, category=category)
+        return BaseResponse.success_response(
+            message="Category created successfully.",
+            data=inserted_category
+        )
     except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
+        return BaseResponse.error_response(
+            message=str(e)
+        )
 
-
-@router.get("/all", response_model=List[CategoryResponse])
-def get_all_categories(db: Session = Depends(get_db)):
+@router.get("/{department_id}", response_model=BaseResponse[List[CategoryResponse]])
+def get_categories_by_department(department_id: int, db: Session = Depends(get_db)):
     try:
-        return category_crud.get_all_categories(db=db)
+        categories_by_department = category_crud.get_categories_by_department(db=db, department_id=department_id)
+        return BaseResponse.success_response(
+            message="Categories retrieved successfully.",
+            data=categories_by_department
+        )
     except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
+        return BaseResponse.error_response(
+            message=str(e)
+        )
 
-@router.get("/{category_id}", response_model=CategoryResponse)
+@router.get("/{category_id}", response_model=BaseResponse[CategoryResponse])
 def get_category_by_id(category_id: int, db: Session = Depends(get_db)):
     try:
-        return category_crud.get_category_by_id(db=db, category_id=category_id)
+        category = category_crud.get_category_by_id(db=db, category_id=category_id)
+        return BaseResponse.success_response(
+            message="Category retrieved successfully.",
+            data=category
+        )
     except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
+        return BaseResponse.error_response(
+            message=str(e)
+        )
 
-@router.put("/{category_id}", response_model=CategoryResponse)
+@router.put("/{category_id}", response_model=BaseResponse[CategoryResponse])
 def update_category(category_id: int, category: CategoryInsert, db: Session = Depends(get_db)):
     try:
-        return category_crud.update_category(db=db, category_id=category_id, updates=category)
+        updated_category = category_crud.update_category(db=db, category_id=category_id, updates=category)
+        return BaseResponse.success_response(
+            message="Category updated successfully.",
+            data=updated_category
+        )
     except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
+        return BaseResponse.error_response(
+            message=str(e)
+        )
 
-@router.delete("/{category_id}")
+@router.delete("/{category_id}", response_model=BaseResponse)
 def delete_category(category_id: int, db: Session = Depends(get_db)):
     try:
-        return category_crud.delete_category(db=db, category_id=category_id)
+        deleted_category = category_crud.delete_category(db=db, category_id=category_id)
+        return BaseResponse.success_response(
+            message=deleted_category
+        )
     except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
+        return BaseResponse.error_response(
+            message=str(e)
+        )

@@ -32,14 +32,16 @@ def insert_category(db: Session, category: CategoryInsert) -> CategoryResponse:
         db.rollback() # Rollback transaction in case of error
         raise RuntimeError(f"Failed to insert category: {str(e)}") from e
 
-def get_all_categories(db: Session) -> List[CategoryResponse]:
+def get_categories_by_department(db: Session, department_id: int) -> List[CategoryResponse]:
     """
     Retrieve all Category records from the database.
 
     :param db: SQLAlchemy database session.
     :return: List of CategoryResponse objects.
     """
-    categories = db.query(Category).all()
+    categories = db.query(Category).filter(Category.fk_department_id == department_id).all()
+    if not categories:
+        raise RuntimeError(f"No categories found")
     return [CategoryResponse.model_validate(category) for category in categories]
  
 def get_category_by_id(db: Session, category_id: int) -> CategoryResponse:
@@ -53,7 +55,7 @@ def get_category_by_id(db: Session, category_id: int) -> CategoryResponse:
     """
     category = db.query(Category).filter(Category.category_id == category_id).first()
     if not category:
-        raise RuntimeError(f"Category with ID {category_id} not found.")
+        raise RuntimeError(f"Category not found.")
     return CategoryResponse.model_validate(category)
  
 def update_category(db: Session, category_id: int, updates: CategoryInsert) -> CategoryResponse:
@@ -97,7 +99,7 @@ def delete_category(db: Session, category_id: int):
         db.delete(category)
         db.commit()
 
-        return {"message": f"Category {category.category_name} deleted successfully."}
+        return f"Category {category.category_name} deleted successfully."
     except SQLAlchemyError as e:
         db.rollback()
         raise RuntimeError(f"Failed to delete category: {str(e)}") from e

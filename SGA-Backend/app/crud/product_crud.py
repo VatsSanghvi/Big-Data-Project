@@ -2,14 +2,14 @@ from typing import List
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 from app.models.product_model import Product
-from app.schemas.product_schema import ProductInsert, ProductResponse
+from app.schemas.product_schema import ProductCreateRequest, ProductResponse
 
-def insert_product(db: Session, product: ProductInsert) -> ProductResponse:
+def insert_product(db: Session, product: ProductCreateRequest):
     """
     Insert a Product record into the database.
 
     :param db: SQLAlchemy database session.
-    :param product: ProductInsert DTO to be inserted.
+    :param product: ProductCreateRequest DTO to be inserted.
     :return: ProductResponse object representing the inserted product.
     """
     try:
@@ -18,11 +18,6 @@ def insert_product(db: Session, product: ProductInsert) -> ProductResponse:
             product_name=product.product_name,
             stock_quantity=product.stock_quantity,
             price=product.price,
-            status=product.status,
-            unit_of_measure=product.unit_of_measure,
-            ingredients=product.ingredients,
-            price_valid_from=product.price_valid_from,
-            price_valid_to=product.price_valid_to,
             fk_category_id=product.fk_category_id,
             fk_department_id=product.fk_department_id,
             fk_store_id=product.fk_store_id,
@@ -42,14 +37,16 @@ def insert_product(db: Session, product: ProductInsert) -> ProductResponse:
         db.rollback()  # Rollback transaction in case of error
         raise RuntimeError(f"Failed to insert product: {str(e)}") from e
     
-def get_all_products(db: Session) -> List[ProductResponse]:
+def get_products_by_store(store_id: int, db: Session):
     """
     Retrieve all Product records from the database.
 
     :param db: SQLAlchemy database session.
     :return: List of ProductResponse objects.
     """
-    products = db.query(Product).all()
+    products = db.query(Product).filter(Product.fk_store_id == store_id).all()
+    if not products:
+        raise RuntimeError("No products found.")
     return [ProductResponse.model_validate(product) for product in products]
 
 def get_product_by_id(db: Session, product_id: int) -> ProductResponse:
@@ -63,16 +60,16 @@ def get_product_by_id(db: Session, product_id: int) -> ProductResponse:
     """
     product = db.query(Product).filter(Product.product_id == product_id).first()
     if not product:
-        raise RuntimeError(f"Product with ID {product_id} not found.")
+        raise RuntimeError("Product not found.")
     return ProductResponse.model_validate(product)
 
-def update_product(db: Session, product_id: int, updates: ProductInsert) -> ProductResponse:
+def update_product(db: Session, product_id: int, updates: ProductCreateRequest):
     """
     Update a Product record in the database.
 
     :param db: SQLAlchemy database session.
     :param product_id: ID of the product to update.
-    :param updates: ProductInsert DTO containing the updated data.
+    :param updates: ProductCreateRequest DTO containing the updated data.
     :return: ProductResponse object representing the updated product.
     :raises: RuntimeError if the product is not found.
     """
@@ -108,7 +105,7 @@ def delete_product(db: Session, product_id: int):
         db.delete(product)
         db.commit()
 
-        return {"message": f"Product {product.product_name} deleted successfully."}
+        return f"Product {product.product_name} deleted successfully."
     except SQLAlchemyError as e:
         db.rollback()
         raise RuntimeError(f"Failed to delete product: {str(e)}") from e

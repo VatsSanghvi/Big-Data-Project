@@ -3,14 +3,14 @@ from sqlalchemy import (
     Integer,
     Identity,
     DECIMAL,
-    Date,
     String,
-    Text,
     ForeignKey,
-    CheckConstraint
+    CheckConstraint,
+    DateTime
 )
 from sqlalchemy.orm import relationship
 from app.database import Base
+from datetime import datetime
 
 class Product(Base):
     __tablename__ = "products"
@@ -21,18 +21,14 @@ class Product(Base):
         primary_key=True,
         index=True
     )
-    product_name = Column(String(100), nullable=False, unique=True)  # Enforces uniqueness
-    stock_quantity = Column(Integer, nullable=False, default=0)  # Matches DEFAULT 0
-    price = Column(DECIMAL(12, 2), nullable=False)  # Matches DECIMAL(12, 2)
+    product_name = Column(String(100), nullable=False, unique=True)
+    stock_quantity = Column(Integer, nullable=False)
+    price = Column(DECIMAL(12, 2), nullable=False)
     status = Column(
         String(10),
         nullable=False,
         default="In Stock"
     )  # Matches CHECK(status IN ('In Stock', 'Out Of Stock'))
-    unit_of_measure = Column(String(20), nullable=False, default="unit")  # Matches DEFAULT 'unit'
-    ingredients = Column(Text, nullable=True)  # Matches TEXT type
-    price_valid_from = Column(Date, nullable=True)
-    price_valid_to = Column(Date, nullable=True)
 
     # Foreign keys
     fk_category_id = Column(Integer, ForeignKey("categories.category_id"), nullable=True)
@@ -53,3 +49,18 @@ class Product(Base):
     department = relationship("Department", back_populates="products")
     store = relationship("Store", back_populates="products")
     store_prices = relationship("StorePrice", back_populates="product")
+    grocery_item = relationship("GroceryItem", back_populates="product")
+
+class SearchLog(Base):
+    __tablename__ = "search_logs"
+
+    search_id = Column(Integer, Identity(start=1, increment=1), primary_key=True, index=True)
+    search_term = Column(String(100), nullable=False)
+    search_date = Column(DateTime, default=datetime.now)
+
+    # Foreign keys
+    user_id = Column(Integer, ForeignKey("users.user_id"), nullable=False)
+
+    # Relationships
+    user = relationship("User", back_populates="searches")
+

@@ -5,13 +5,19 @@ class UserLogin(BaseModel):
     email: str
     password: str
 
-class UserRegister(BaseModel):
+class UserCreate(BaseModel):
     first_name: str
     last_name: str
     email: str
     password: str
     phone_number: Optional[str] = None
     role: str
+
+class UserUpdate(BaseModel):
+    first_name: str
+    last_name: str
+    email: str
+    phone_number: str
 
 class UserBase(BaseModel):
     user_id: int
@@ -28,11 +34,6 @@ class UsersResponse(BaseModel):
     ok: bool
     msg: str
     users: List[UserResponse]
-
-class UserUpdate(BaseModel):
-    name: Optional[str] = None
-    phone_number: Optional[str] = None
-    address: Optional[str] = None
 
 class PasswordReset(BaseModel):
     email: EmailStr

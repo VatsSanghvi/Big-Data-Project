@@ -1,14 +1,14 @@
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 from app.models.user_model import User
-from app.schemas.user_schema import UserRegister,UserUpdate, UserResponse
+from app.schemas.user_schema import UserCreate,UserUpdate, UserResponse
 from app.utils.authentication import hash_password
 from passlib.context import CryptContext
 import re
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-def register_user(db: Session, user: UserRegister) -> User:
+def register_user(db: Session, user: UserCreate):
     """
     Register a new user in the database
 
@@ -36,11 +36,15 @@ def register_user(db: Session, user: UserRegister) -> User:
         role=user.role
     )
 
-    db.add(new_user)
-    db.commit()
-    db.refresh(new_user)
+    try:
+        db.add(new_user)
+        db.commit()
+        db.refresh(new_user)
 
-    return new_user
+        return new_user
+    except SQLAlchemyError as e:
+        db.rollback()
+        raise RuntimeError(f"Failed to create user: {str(e)}") from e
 
 def authenticate_user(db: Session, email: str, password: str):
     """
@@ -51,14 +55,11 @@ def authenticate_user(db: Session, email: str, password: str):
     :param password: The user's password
     """
     user = get_user_by_email(db, email)
+
     if not user:
-        return None
+        raise ValueError("User not found")
     if not verify_password(password, user.password):
-        return None
-    elif not validate_email(email):
-        return None
-    elif not validate_phone_number(user.phone_number):
-        return None
+        raise ValueError("Invalid email or password")
     return user
 
 def get_user_by_id(db: Session, user_id: int):
@@ -99,7 +100,7 @@ def update_password(db: Session, user_id: int, current_password: str, new_passwo
         raise ValueError(f"User with ID {user_id} not found.")
 
     if not verify_password(current_password, user.password):
-        return False
+        raise ValueError("Invalid password")
 
     try:
         user.password = pwd_context.hash(new_password)

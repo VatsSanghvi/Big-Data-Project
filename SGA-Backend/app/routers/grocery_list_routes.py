@@ -1,9 +1,10 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from typing import List
 from app.crud import grocery_list_crud as crud
-from app.schemas.grocery_list_schema import GroceryItem
+from app.schemas.grocery_list_schema import GroceryListResponse, GroceryListCreate, GroceryItemBase, GroceryItemCreate
 from app.database import SessionLocal
+from app.utils.base_response import BaseResponse
 
 # Dependency
 def get_db():
@@ -15,61 +16,132 @@ def get_db():
 
 router = APIRouter()
 
-@router.post("/")
-async def insert_item_to_grocery_list(
-    item: GroceryItem,
+@router.post("/", response_model=BaseResponse[GroceryListResponse])
+async def insert_grocery_list(
+    grocery_list: GroceryListCreate,
     db: Session = Depends(get_db),
 ):
-    if not crud.insert_item_to_grocery_list(db, item):
-        raise HTTPException(status_code=403, detail="Error inserting item")
-    return {"message": "Item inserted successfully"}
+    try:
+        inserted_grocery_list = crud.insert_grocery_list(db, grocery_list)
+        return BaseResponse.success_response(
+            data=inserted_grocery_list,
+            message="Grocery list created successfully"
+        )
+    except Exception as e:
+        return BaseResponse.error_response(
+            message=str(e)
+        )
 
-@router.get("/{list_id}/items", response_model=List[GroceryItem])
-async def get_grocery_list_items(
+@router.get("/{user_id}", response_model=BaseResponse[GroceryListResponse])
+async def get_grocery_list(
     user_id: int,
-    list_id: int,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
 ):
-    # Verify user has access to this list
-    if not crud.get_grocery_list(db, list_id, user_id):
-        raise HTTPException(status_code=403, detail="Not authorized to access this list")
-    return crud.get_grocery_list(db, list_id, user_id)
+    try:
+        grocery_list = crud.get_grocery_list(db, user_id)
+        return BaseResponse.success_response(
+            data=grocery_list,
+            message="Grocery lists retrieved successfully"
+        )
+    except Exception as e:
+        return BaseResponse.error_response(
+            message=str(e)
+        )
 
-@router.delete("/{list_id}")
+@router.delete("/{list_id}", response_model=BaseResponse)
 async def delete_grocery_list(
     list_id: int,
     db: Session = Depends(get_db)
 ):
-    if not crud.delete_grocery_list(db, list_id):
-        raise HTTPException(status_code=403, detail="Only the list owner can delete it")
-    crud.delete_grocery_list(db, list_id)
-    return {"message": "Grocery list deleted successfully"}
+    try:
+        deleted_grocery_list = crud.delete_grocery_list(db, list_id)
+        return BaseResponse.success_response(
+            data=deleted_grocery_list,
+            message="Grocery list deleted successfully"
+        )
+    except Exception as e:
+        return BaseResponse.error_response(
+            message=str(e)
+        )
 
-@router.get("/{item_id}")
-async def get_grocery_item_by_id(
+@router.get("/item/{list_id}", response_model=BaseResponse[List[GroceryItemBase]])
+async def get_grocery_list_items(
+    list_id: int,
+    db: Session = Depends(get_db)
+):
+    try:
+        grocery_list_items = crud.get_grocery_list_items(db, list_id)
+        return BaseResponse.success_response(
+            data=grocery_list_items,
+            message="Grocery list items retrieved successfully")
+    except Exception as e:
+        return BaseResponse.error_response(
+            message=str(e)
+        )
+
+@router.post("/item", response_model=BaseResponse[GroceryItemBase])
+async def insert_grocery_list_item(
+    item: GroceryItemCreate,
+    db: Session = Depends(get_db),
+):
+    try:
+        inserted_grocery_item = crud.insert_grocery_list_item(db, item)
+        return BaseResponse.success_response(
+            data=inserted_grocery_item,
+            message="Grocery list item created successfully"
+        )
+    except Exception as e:
+        return BaseResponse.error_response(
+            message=str(e)
+        )
+
+@router.get("/item/{list_id}/{item_id}", response_model=BaseResponse[GroceryItemBase])
+async def get_grocery_list_item_by_id(
     item_id: int,
     db: Session = Depends(get_db),
 ):
-    if not crud.get_grocery_item_by_id(db, item_id):
-        raise HTTPException(status_code=404, detail="Item not found")
-    return crud.get_grocery_item_by_id(db, item_id)
+    try:
+        grocery_item = crud.get_grocery_item_by_id(db, item_id)
+        return BaseResponse.success_response(
+            data=grocery_item,
+            message="Grocery item retrieved successfully"
+        )
+    except Exception as e:
+        return BaseResponse.error_response(
+            message=str(e)
+        )
 
-@router.put("/{item_id}")
+@router.put("/item/{list_id}/{item_id}", response_model=BaseResponse[GroceryItemBase])
 async def update_grocery_list_item(
+    list_id: int,
     item_id: int,
-    item: GroceryItem,
+    updates: GroceryItemCreate,
     db: Session = Depends(get_db),
 ):
-    if not crud.update_grocery_list_item(db, item_id, item):
-        raise HTTPException(status_code=403, detail="Error updating item")
-    return crud.update_grocery_list_item(db, item_id, item)
+    try:
+        updated_grocery_item = crud.update_grocery_list_item(db, list_id, item_id, updates)
+        return BaseResponse.success_response(
+            data=updated_grocery_item,
+            message="Grocery item updated successfully"
+        )
+    except Exception as e:
+        return BaseResponse.error_response(
+            message=str(e)
+        )
 
-@router.delete("/{list_id}/items/{item_id}")
+@router.delete("/item/{list_id}/{item_id}", response_model=BaseResponse)
 async def delete_grocery_list_item(
     list_id: int,
     item_id: int,
     db: Session = Depends(get_db),
 ):
-    if not crud.delete_grocery_list_item(db, list_id):
-        raise HTTPException(status_code=403, detail="Error deleting item")
-    return crud.delete_grocery_list_item(db, item_id)
+    try:
+        deleted_grocery_item = crud.delete_grocery_list_item(db, list_id, item_id)
+        return BaseResponse.success_response(
+            data=deleted_grocery_item,
+            message="Grocery item deleted successfully"
+        )
+    except Exception as e:
+        return BaseResponse.error_response(
+            message=str(e)
+        )
