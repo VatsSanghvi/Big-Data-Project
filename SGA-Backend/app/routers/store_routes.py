@@ -37,7 +37,7 @@ def create_store(store: StoreCreateRequest, db: Session = Depends(get_db)):
 
             new_store = store_crud.insert_store(db=db, store=store)
             assigned_store = store_crud.update_manager(db=db, store_id=new_store.store_id, user_id=manager.user_id)
-            return assigned_store
+            return BaseResponse.success_response(data=assigned_store, message="Store created successfully")
 
         inserted_store = store_crud.insert_store(db=db, store=store)
         return BaseResponse.success_response(data=inserted_store, message="Store created successfully")

@@ -1,5 +1,5 @@
 // * React Libraries
-import { Navigate, redirect, RouteObject } from "react-router-dom";
+import { Navigate, RouteObject } from "react-router-dom";
 
 // * Layouts
 import { AuthLayout } from "@layout";

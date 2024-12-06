@@ -38,8 +38,8 @@ def get_departments_by_store(db: Session, store_id: int) -> List[DepartmentRespo
     :return: List of DepartmentResponse objects.
     """
     departments = db.query(Department).filter(Department.fk_store_id == store_id).all()
-    if not departments:
-        raise RuntimeError("No departments found.")
+    # if not departments:
+    #     return []
     return [DepartmentResponse.model_validate(department) for department in departments]
 
 def get_department_by_id(db: Session, department_id: int) -> DepartmentResponse:

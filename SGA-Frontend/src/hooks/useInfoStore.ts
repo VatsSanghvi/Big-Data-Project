@@ -1,26 +1,68 @@
 // * Store
-import { setStores } from "@store";
+import { setDepartments, setStores } from "@store";
 
 // * Hooks
 import { useAppDispatch } from "./useStore"
 
 // * Services
-import { store } from "@services";
+import { department, store } from "@services";
 
 // * Models
-import { Role, User } from "@models";
+import { Department, Role, Store, User } from "@models";
 
 
 export const useInfoStore = () => {
     const dispatch = useAppDispatch();
 
+    const getStores = async (user_id: number) => {
+        const { data } = await store.get(user_id);
+
+        if (data.ok) dispatch(setStores(data.data));
+
+        return data;
+    };
+
+    const getDepartments = async (stores: Store[]) => {
+
+        let departaments : Department[] = [];
+
+        for (const store of stores) {
+            const { data } = await department.get(store.store_id);
+
+            if (data.ok) {
+                departaments = [
+                    ...departaments,
+                    ...data.data.map((department : Department) => {
+                        return {
+                            ...department,
+                            fk_store_id: store.store_id
+                        }
+                    })
+                ];
+            }
+        }
+
+        console.log(departaments);
+
+        dispatch(setDepartments(departaments));
+
+        return {
+            ok: true,
+            data: departaments
+        };
+
+    };
+
     const getInfo = async (user: User) => {
 
         if (user.role === Role.Admin) {
             // * Fetch Stores
-            const { status, data } = await store.get(user.user_id);
+            const storeResponse = await getStores(user.user_id);
     
-            if (status === 200) dispatch(setStores(data));   
+            if (storeResponse.ok) {
+                // * Fetch Departments
+                await getDepartments(storeResponse.data);
+            }
             
         }
     };

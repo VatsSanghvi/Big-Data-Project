@@ -1,6 +1,7 @@
 const endpointModules = {
     user: 'users',
-    store: 'store'
+    store: 'store',
+    department: 'department'
 }
 
 export const endpoints = {
@@ -13,5 +14,11 @@ export const endpoints = {
         create: `${endpointModules.store}`,
         update: `${endpointModules.store}`,
         delete: `${endpointModules.store}`
+    },
+    department: {
+        get: `${endpointModules.department}`,
+        create: `${endpointModules.department}`,
+        update: `${endpointModules.department}`,
+        delete: `${endpointModules.department}`
     }
 }
