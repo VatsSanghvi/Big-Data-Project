@@ -1,7 +1,7 @@
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 from app.models.user_model import User
-from app.schemas.user_schema import UserCreate,UserUpdate, UserResponse
+from app.schemas.user_schema import UserCreate, UserUpdate, UserResponse
 from app.utils.authentication import hash_password
 from passlib.context import CryptContext
 import re
@@ -86,9 +86,9 @@ def get_user_by_email(db: Session, email: str):
         raise ValueError(f"User with email {email} not found.")
     return user
 
-def update_password(db: Session, user_id: int, current_password: str, new_password: str):
+def reset_password(db: Session, user_id: int, current_password: str, new_password: str):
     """
-    Update a user's password
+    Recover a user's password
     :param db: SQLAlchemy database session
     :param user_id: The user's ID
     :param current_password: The user's current password
@@ -103,7 +103,7 @@ def update_password(db: Session, user_id: int, current_password: str, new_passwo
         raise ValueError("Invalid password")
 
     try:
-        user.password = pwd_context.hash(new_password)
+        user.password = hash_password(new_password)
         db.commit()
         return True
     except:

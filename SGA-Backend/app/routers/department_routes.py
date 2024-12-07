@@ -38,6 +38,18 @@ def get_departments_by_store(store_id: int, db: Session = Depends(get_db)):
     except Exception as e:
         return BaseResponse.error_response(message=str(e))
 
+@router.get("/", response_model=BaseResponse[List[DepartmentResponse]])
+def get_departments(db: Session = Depends(get_db)):
+    try:
+        departments = department_crud.get_departments(db=db)
+        return BaseResponse.success_response(
+            message="Departments retrieved successfully",
+            data=departments
+        )
+    except Exception as e:
+        return BaseResponse.error_response(message=str(e))
+
+
 @router.get("/{department_id}", response_model=BaseResponse[DepartmentResponse])
 def get_department_by_id(department_id: int, db: Session = Depends(get_db)):
     try:

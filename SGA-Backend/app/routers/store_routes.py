@@ -60,6 +60,17 @@ def get_stores_by_owner(owner_id: int, db: Session = Depends(get_db)):
     except Exception as e:
         return BaseResponse.error_response(str(e))
 
+@router.get("/", response_model=BaseResponse[List[StoreResponse]])
+def get_stores(db: Session = Depends(get_db)):
+    try:
+        stores = store_crud.get_stores(db=db)
+        if not stores:
+            return BaseResponse.error_response("No stores found")
+        return BaseResponse.success_response(data=stores, message="Stores retrieved successfully")
+    except Exception as e:
+        return BaseResponse.error_response(str(e))
+
+
 @router.put("/{store_id}", response_model=BaseResponse[StoreResponse])
 def update_store(store_id: int, updates: StoreUpdateRequest, db: Session = Depends(get_db)):
     try:

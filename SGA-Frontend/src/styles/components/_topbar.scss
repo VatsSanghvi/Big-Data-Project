@@ -24,6 +24,10 @@
     .left-side {
         @include styleclass('flex gap-1 align-items-center');
     }
+    
+    .right-side {
+        @include styleclass('flex gap-1 align-items-center');
+    }
 
     .menu-button {
         @include styleclass('text-white');

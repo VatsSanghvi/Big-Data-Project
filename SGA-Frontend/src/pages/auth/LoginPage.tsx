@@ -1,6 +1,5 @@
 // * Third Party Libraries
 import { useFormik } from "formik"
-import { Button } from "primereact/button"
 
 // * Components
 import { CardHeader, MInputText, MPassword, NavigateButton, SubmitButton } from "@components"
@@ -27,12 +26,12 @@ export const LoginPage = () => {
     const formik = useFormik({
         initialValues: loginInitialValues,
         validationSchema: loginValidationSchema,
-        onSubmit: async(values) => {
+        onSubmit: async (values) => {
             console.log(values);
             const response = await user.login(values);
 
-            if (response.status === 200) {
-                const data = response.data;
+            if (response.data.ok) {
+                const data = response.data.data;
 
                 onLogin(data);
 
@@ -57,16 +56,17 @@ export const LoginPage = () => {
                     type="email"
                     inputMode="email"
                 />
-                <MPassword 
+                <MPassword
                     {...getProps(formik, 'password', 'Password')}
                     toggleMask
                 />
                 <div className="forgot-password">
-                    <Button
+                    <NavigateButton
                         link
+                        go="/send-email"
                     >
                         Forgot Password?
-                    </Button>
+                    </NavigateButton>
                 </div>
                 <SubmitButton
                     className="submit-button"

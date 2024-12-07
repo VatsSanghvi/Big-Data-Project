@@ -5,10 +5,10 @@ import { Navigate, RouteObject } from "react-router-dom";
 import { AuthLayout } from "@layout";
 
 // * Pages
-import { LoginPage, RegisterPage } from "@pages";
+import { LoginPage, RecoverPasswordPage, RegisterPage, SendEmailPage } from "@pages";
 import { PublicRoute } from "./decorators";
 
-export const authRoutes : RouteObject[] = [
+export const authRoutes: RouteObject[] = [
     {
         element: (
             <PublicRoute>
@@ -27,6 +27,14 @@ export const authRoutes : RouteObject[] = [
             {
                 path: '/register',
                 element: <RegisterPage />
+            },
+            {
+                path: '/send-email',
+                element: <SendEmailPage />
+            },
+            {
+                path: '/reset-password/:email',
+                element: <RecoverPasswordPage />
             },
             {
                 path: '*',

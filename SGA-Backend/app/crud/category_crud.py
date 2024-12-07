@@ -2,6 +2,7 @@ from typing import List
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 from app.models.category_model import Category
+from app.models.department_model import Department
 from app.schemas.category_schema import CategoryInsert, CategoryResponse
 
 def insert_category(db: Session, category: CategoryInsert) -> CategoryResponse:
@@ -42,6 +43,23 @@ def get_categories_by_department(db: Session, department_id: int) -> List[Catego
     categories = db.query(Category).filter(Category.fk_department_id == department_id).all()
     if not categories:
         raise RuntimeError(f"No categories found")
+    return [CategoryResponse.model_validate(category) for category in categories]
+
+def get_categories(db: Session) -> List[CategoryResponse]:
+    """
+    Retrieve all Category records from the database.
+
+    :param db: SQLAlchemy database session.
+    :return: List of CategoryResponse objects.
+    """
+    categories = []
+    departments = db.query(Department).all()
+    for department in departments:
+        categories_by_department = db.query(Category).filter(Category.fk_department_id == department.department_id).all()
+        categories.extend(categories_by_department)
+
+    if not categories:
+        raise RuntimeError("No categories found")
     return [CategoryResponse.model_validate(category) for category in categories]
  
 def get_category_by_id(db: Session, category_id: int) -> CategoryResponse:

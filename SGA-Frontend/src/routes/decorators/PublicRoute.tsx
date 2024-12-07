@@ -9,13 +9,13 @@ import { useAuthStore } from "@hooks";
 import { LoginState } from "@models";
 
 // * Constants
-import { loggedDefaultRoute } from "@constants";
+import { roleRoutes } from "@constants";
 
-export const PublicRoute : FC<PublicRouteProps> = ({ children }) => {
-    const { authState } = useAuthStore();
+export const PublicRoute: FC<PublicRouteProps> = ({ children }) => {
+    const { authState, user } = useAuthStore();
 
-    if (authState === LoginState.Authenticated) return <Navigate to={loggedDefaultRoute} replace/>
-    
+    if (authState === LoginState.Authenticated) return <Navigate to={roleRoutes[user.role]} replace />
+
     return children;
 }
 

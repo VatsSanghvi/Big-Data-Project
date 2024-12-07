@@ -9,4 +9,5 @@ class CategoryInsert(BaseModel):
     fk_department_id: int
     
 class CategoryResponse(CategoryBase):
+    fk_department_id: int
     model_config = ConfigDict(from_attributes=True)

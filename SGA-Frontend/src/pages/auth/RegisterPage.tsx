@@ -27,22 +27,22 @@ export const RegisterPage = () => {
     const formik = useFormik({
         initialValues: registerInitialValues,
         validationSchema: registerValidationSchema,
-        onSubmit: async(values) => {
+        onSubmit: async (values) => {
             console.log(values);
 
             const { confirm_password, ...rest } = values;
 
-            const newUser : RegisterRequest = rest
+            const newUser: RegisterRequest = rest
 
             const response = await user.register(newUser);
 
-            if (response.status === 200) {
-                const data = response.data;
+            if (response.data.ok) {
+                const data = response.data.data;
 
                 onLogin(data);
 
                 showSuccess("Registration Successful", `Welcome ${data.first_name} ${data.last_name}`);
-                
+
             } else {
                 showError("Error", "Registration Failed");
             }
@@ -55,18 +55,18 @@ export const RegisterPage = () => {
             <form
                 onSubmit={formik.handleSubmit}
             >
-                <MInputText {...getProps(formik, 'first_name', 'First Name')}/>
-                <MInputText {...getProps(formik, 'last_name', 'Last Name')}/>
-                <MInputText 
+                <MInputText {...getProps(formik, 'first_name', 'First Name')} />
+                <MInputText {...getProps(formik, 'last_name', 'Last Name')} />
+                <MInputText
                     {...getProps(formik, 'email', 'Email')}
                     type="email"
                     inputMode="email"
                 />
-                <MPassword 
+                <MPassword
                     {...getProps(formik, 'password', 'Password')}
                     toggleMask
                 />
-                <MPassword 
+                <MPassword
                     {...getProps(formik, 'confirm_password', 'Confirm Password')}
                     toggleMask
                 />

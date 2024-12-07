@@ -5,10 +5,10 @@ import { authRoutes } from "./auth";
 import { commonRoutes } from "./common";
 import { RolesRoute } from "./decorators/RolesRoute";
 import { Role } from "@models";
-import { StoresPage } from "@pages";
+import { StoresPage, ProfilePage } from "@pages";
 // import { StoreProvider } from "@providers";
 
-export const routes : RouteObject[] = [
+export const routes: RouteObject[] = [
     ...authRoutes,
     {
         element: (
@@ -23,6 +23,14 @@ export const routes : RouteObject[] = [
                 element: (
                     <RolesRoute allowedRoles={[Role.Admin]}>
                         <StoresPage />
+                    </RolesRoute>
+                )
+            },
+            {
+                path: "/profile",
+                element: (
+                    <RolesRoute allowedRoles={[Role.User]}>
+                        <ProfilePage />
                     </RolesRoute>
                 )
             }

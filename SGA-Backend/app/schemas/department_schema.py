@@ -9,4 +9,5 @@ class DepartmentCreate(BaseModel):
     fk_store_id: int
     
 class DepartmentResponse(DepartmentBase):
+    fk_store_id: int
     model_config = ConfigDict(from_attributes=True)

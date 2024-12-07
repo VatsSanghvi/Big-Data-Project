@@ -1,11 +1,24 @@
-from fastapi import APIRouter, Depends, BackgroundTasks
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from app.crud import user_crud
 from app.schemas.user_schema import UserLogin, UserCreate, UserUpdate, PasswordUpdate, PasswordReset
 from app.schemas.user_schema import  UserResponse
 from app.database import SessionLocal
 from app.utils.base_response import BaseResponse
-# from app.utils.email_service import send_password_reset_email
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+import os
+from os.path import join, dirname
+from dotenv import load_dotenv
+
+dotenv_path = join(dirname(__file__), '.env')
+load_dotenv(dotenv_path)
+
+SMTP_SERVER = os.getenv('SMTP_SERVER')
+SMTP_PORT = os.getenv('SMTP_PORT')
+MAIL_USERNAME = os.getenv('MAIL_USERNAME')
+MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
 
 router = APIRouter()
 
@@ -60,15 +73,44 @@ async def update_profile(
             message=str(e)
         )
 
-@router.put("/password", response_model=BaseResponse[UserResponse])
-async def update_password(
-    user_id: int,
+@router.post("/send-email", response_model=BaseResponse)
+async def request_password_reset(passwordReset: PasswordReset):
+    message = MIMEMultipart("alternative")
+    message["From"] = passwordReset.sender_email
+    message["To"] = passwordReset.to_email
+    message["Subject"] = "Recover your account"
+    recovery_link = f"http://localhost:5173/reset-password/{passwordReset.to_email}"
+    text = f"Please use the following link to recover your account: {recovery_link}"
+    part = MIMEText(text, "plain")
+    message.attach(part)
+
+    try:
+        part = MIMEText(text, "plain")
+        message.attach(part)
+        server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
+        server.set_debuglevel(1)
+        server.esmtp_features['auth'] = 'LOGIN PLAIN'
+        server.login(MAIL_USERNAME, MAIL_PASSWORD)
+        server.sendmail(passwordReset.sender_email, passwordReset.to_email, message.as_string())
+
+        return BaseResponse.success_response(
+            message="Email sent successfully"
+        )
+
+    except Exception as e:
+        return BaseResponse.error_response(
+            message=str(e)
+        )
+
+@router.put("/reset-password/{email}", response_model=BaseResponse)
+async def reset_password(
+    email: str,
     password_data: PasswordUpdate,
     db: Session = Depends(get_db)
 ):
     try:
-        current_user = user_crud.get_user_by_id(db, user_id)
-        updated_password = user_crud.update_password(
+        current_user = user_crud.get_user_by_email(db, email)
+        updated_password = user_crud.reset_password(
             db,
             current_user.user_id,
             password_data.current_password,
@@ -83,21 +125,3 @@ async def update_password(
             message=str(e)
         )
 
-# @router.post("/password-reset", response_model=BaseResponse)
-# async def request_password_reset(
-#     reset_data: PasswordReset,
-#     background_tasks: BackgroundTasks,
-# ):
-#     # Send email in background to not block the response
-#     try:
-#         background_tasks.add_task(
-#             send_password_reset_email,
-#             reset_data.email,
-#         )
-#         return BaseResponse.success_response(
-#             message="Password reset email sent successfully"
-#         )
-#     except Exception as e:
-#         return BaseResponse.error_response(
-#             message=str(e)
-#         )

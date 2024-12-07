@@ -46,6 +46,18 @@ def get_stores_by_owner(owner_id: int, db: Session):
         raise RuntimeError("No stores found")
     return [StoreResponse.model_validate(store) for store in stores]
 
+def get_stores(db: Session):
+    """
+    Retrieve all Store records from the database.
+
+    :param db: SQLAlchemy database session.
+    :return: List of StoreResponse objects.
+    """
+    stores = db.query(Store).all()
+    if not stores:
+        raise RuntimeError("No stores found")
+    return [StoreResponse.model_validate(store) for store in stores]
+
 def get_store_by_id(db: Session, store_id: int) -> StoreResponse:
     """
     Retrieve a Store record from the database.

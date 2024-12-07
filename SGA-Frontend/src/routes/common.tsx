@@ -1,13 +1,28 @@
 // * React Libraries
 import { Navigate, RouteObject } from "react-router-dom";
 
-export const commonRoutes : RouteObject[] = [
+// * Layouts
+import { GeneralLayout } from "@layout";
+
+// * Pages
+import { PublicRoute } from "./decorators";
+
+export const commonRoutes: RouteObject[] = [
     {
-        index: true,
-        loader: () => <Navigate to="/home" />,
+        element: (
+            <PublicRoute>
+                <GeneralLayout />
+            </PublicRoute>
+        ),
+        children: [
+            {
+                index: true,
+                loader: () => <Navigate to="/home" />,
+            },
+            {
+                path: '/home',
+                element: <div>Home</div>
+            }
+        ]
     },
-    {
-        path: '/home',
-        element: <div>Home</div>
-    }
 ]

@@ -2,6 +2,7 @@ from typing import List
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 from app.models.department_model import Department
+from app.models.store_model import Store
 from app.schemas.department_schema import DepartmentCreate, DepartmentResponse
 
 def insert_department(db: Session, department: DepartmentCreate) -> DepartmentResponse:
@@ -38,8 +39,25 @@ def get_departments_by_store(db: Session, store_id: int) -> List[DepartmentRespo
     :return: List of DepartmentResponse objects.
     """
     departments = db.query(Department).filter(Department.fk_store_id == store_id).all()
-    # if not departments:
-    #     return []
+    if not departments:
+        raise RuntimeError("No departments found")
+    return [DepartmentResponse.model_validate(department) for department in departments]
+
+def get_departments(db: Session) -> List[DepartmentResponse]:
+    """
+    Retrieve all Department records from the database.
+
+    :param db: SQLAlchemy database session.
+    :return: List of DepartmentResponse objects.
+    """
+    departments = []
+    stores = db.query(Store).all()
+    for stores in stores:
+        department_by_store = db.query(Department).filter(Department.fk_store_id == stores.store_id).all()
+        departments.extend(department_by_store)
+
+    if not departments:
+        raise RuntimeError("No departments found")
     return [DepartmentResponse.model_validate(department) for department in departments]
 
 def get_department_by_id(db: Session, department_id: int) -> DepartmentResponse:

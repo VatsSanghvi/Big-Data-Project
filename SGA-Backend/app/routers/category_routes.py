@@ -42,6 +42,19 @@ def get_categories_by_department(department_id: int, db: Session = Depends(get_d
             message=str(e)
         )
 
+@router.get("/", response_model=BaseResponse[List[CategoryResponse]])
+def get_categories(db: Session = Depends(get_db)):
+    try:
+        all_categories = category_crud.get_categories(db=db)
+        return BaseResponse.success_response(
+            message="Categories retrieved successfully.",
+            data=all_categories
+        )
+    except Exception as e:
+        return BaseResponse.error_response(
+            message=str(e)
+        )
+
 @router.get("/{category_id}", response_model=BaseResponse[CategoryResponse])
 def get_category_by_id(category_id: int, db: Session = Depends(get_db)):
     try:

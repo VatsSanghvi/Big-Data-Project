@@ -1,6 +1,9 @@
 from typing import List
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
+from app.models.store_model import Store
+from app.models.department_model import Department
+from app.models.category_model import Category
 from app.models.product_model import Product
 from app.schemas.product_schema import ProductCreateRequest, ProductResponse
 
@@ -45,6 +48,31 @@ def get_products_by_store(store_id: int, db: Session):
     :return: List of ProductResponse objects.
     """
     products = db.query(Product).filter(Product.fk_store_id == store_id).all()
+    if not products:
+        raise RuntimeError("No products found.")
+    return [ProductResponse.model_validate(product) for product in products]
+
+def get_products(db: Session):
+    """
+    Retrieve all Product records from the database.
+
+    :param db: SQLAlchemy database session.
+    :return: List of ProductResponse objects.
+    """
+
+    products = []
+    stores = db.query(Store).all()
+    for store in stores:
+        departments = db.query(Department).filter(Department.fk_store_id == store.store_id).all()
+        if not departments:
+            raise RuntimeError("No departments found.")
+        for department in departments:
+            categories = db.query(Category).filter(Category.fk_department_id == department.department_id).all()
+            if not categories:
+                raise RuntimeError("No categories found.")
+            for category in categories:
+                products.extend(db.query(Product).filter(Product.fk_category_id == category.category_id).all())
+
     if not products:
         raise RuntimeError("No products found.")
     return [ProductResponse.model_validate(product) for product in products]

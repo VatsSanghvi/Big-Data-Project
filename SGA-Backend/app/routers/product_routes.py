@@ -32,6 +32,14 @@ def get_products_by_store(store_id: int, db: Session = Depends(get_db)):
     except Exception as e:
         return BaseResponse.error_response(message=str(e))
 
+@router.get("/", response_model=BaseResponse[list[ProductResponse]])
+def get_products(db: Session = Depends(get_db)):
+    try:
+        products = product_crud.get_products(db=db)
+        return BaseResponse.success_response(data=products, message="Products retrieved successfully")
+    except Exception as e:
+        return BaseResponse.error_response(message=str(e))
+
 @router.get("/{product_id}", response_model=BaseResponse[ProductResponse])
 def get_product_by_id(product_id: int, db: Session = Depends(get_db)):
     try:

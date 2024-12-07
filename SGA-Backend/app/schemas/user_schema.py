@@ -36,7 +36,8 @@ class UsersResponse(BaseModel):
     users: List[UserResponse]
 
 class PasswordReset(BaseModel):
-    email: EmailStr
+    sender_email: EmailStr
+    to_email: EmailStr
 
 class PasswordUpdate(BaseModel):
     current_password: str
