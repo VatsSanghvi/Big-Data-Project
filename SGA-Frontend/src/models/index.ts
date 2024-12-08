@@ -6,4 +6,4 @@ export * from "./crud";
 export * from "./menu";
 export * from "./provider";
 export * from "./style";
-// export * from "./user";
+export * from "./user";

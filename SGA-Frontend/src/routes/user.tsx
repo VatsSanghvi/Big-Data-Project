@@ -1,7 +1,7 @@
 // * React Libraries
 import { Navigate, RouteObject } from "react-router-dom";
 
-export const userRoutes : RouteObject[] = [
+export const userRoutes: RouteObject[] = [
     {
         path: "/",
         element: <div> Layout </div>,
@@ -10,7 +10,12 @@ export const userRoutes : RouteObject[] = [
             {
                 path: 'profile',
                 element: <div>Profile</div>
+            },
+            {
+                path: 'products',
+                element: <div>Products</div>
             }
+
         ]
     }
 ]

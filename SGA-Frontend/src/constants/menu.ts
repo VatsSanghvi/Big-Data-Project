@@ -8,9 +8,21 @@ export const menuOptions: MenuOptions[] = [
     roles: [Role.Admin],
   },
   {
+    label: "Departments",
+    icon: "building",
+    to: "/departments",
+    roles: [Role.Admin],
+  },
+  {
     label: "User Profile",
     icon: "bars",
     to: "/profile",
+    roles: [Role.User],
+  },
+  {
+    label: "Products",
+    icon: "shopping-cart",
+    to: "/products",
     roles: [Role.User],
   },
   {
@@ -18,11 +30,5 @@ export const menuOptions: MenuOptions[] = [
     icon: "dollar",
     to: "/budget",
     roles: [Role.User],
-  },
-  {
-      label: 'Departments',
-      icon: 'building',
-      to: '/departments',
-      roles: [Role.Admin]
   },
 ];
