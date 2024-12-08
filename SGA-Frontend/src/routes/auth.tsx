@@ -5,7 +5,7 @@ import { Navigate, RouteObject } from "react-router-dom";
 import { AuthLayout } from "@layout";
 
 // * Pages
-import { LoginPage, RecoverPasswordPage, RegisterPage, SendEmailPage } from "@pages";
+import { LoginPage, /*RecoverPasswordPage,*/ RegisterPage, SendEmailPage } from "@pages";
 import { PublicRoute } from "./decorators";
 
 export const authRoutes: RouteObject[] = [
@@ -32,10 +32,10 @@ export const authRoutes: RouteObject[] = [
                 path: '/send-email',
                 element: <SendEmailPage />
             },
-            {
-                path: '/reset-password/:email',
-                element: <RecoverPasswordPage />
-            },
+            // {
+            //     path: '/reset-password/:email',
+            //     element: <RecoverPasswordPage />
+            // },
             {
                 path: '*',
                 element: <Navigate to="/login" />

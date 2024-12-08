@@ -17,12 +17,12 @@ export const menuOptions: MenuOptions[] = [
     label: "Budget",
     icon: "dollar",
     to: "/budget",
-    },
-    {
-        label: 'Departments',
-        icon: 'building',
-        to: '/departments',
-        roles: [Role.Admin]
     roles: [Role.User],
+  },
+  {
+      label: 'Departments',
+      icon: 'building',
+      to: '/departments',
+      roles: [Role.Admin]
   },
 ];
