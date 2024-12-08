@@ -2,14 +2,13 @@
 import { FC } from "react";
 
 // * Models
-import { Department } from "@models";
+import { Category } from "@models";
 
 // * Components
 import { ListTemplate } from "../ListTemplate";
-import { DepartmentItemTemplate } from "./DepartmentItemTemplate";
+import { CategoryItemTemplate } from "./CategoryItemTemplate";
 
-export const DepartmentListTemplate : FC<DepartmentListTemplateProps> = (props) => {
-
+export const CategoryListTemplate : FC<CategoryListTemplateProps> = (props) => {
     const {
         items,
         onDelete,
@@ -17,18 +16,18 @@ export const DepartmentListTemplate : FC<DepartmentListTemplateProps> = (props) 
     } = props;
 
     return (
-        <ListTemplate<Department>
-            noItemsMessage="No Departments Found" 
+        <ListTemplate<Category>
+            noItemsMessage="No Categories Found" 
             items={items}
         >
             {
                 (item, index) => (
-                    <DepartmentItemTemplate 
+                    <CategoryItemTemplate
                         key={index}
                         item={item} 
                         index={index}
                         onDelete={(store_id: number) => onDelete(store_id)}
-                        onEdit={(item : Department) => onEdit(item)}
+                        onEdit={(item : Category) => onEdit(item)}
                     />
                 )
             }
@@ -36,8 +35,8 @@ export const DepartmentListTemplate : FC<DepartmentListTemplateProps> = (props) 
     )
 }
 
-interface DepartmentListTemplateProps {
-    items: Department[];
+interface CategoryListTemplateProps {
+    items: Category[];
     onDelete: (store_id: number) => void;
-    onEdit: (item: Department) => void;
+    onEdit: (item: Category) => void;
 }

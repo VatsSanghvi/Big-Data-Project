@@ -3,8 +3,8 @@ import { instance } from "./axiosService";
 import { DepartmentForm } from "@models";
 
 export const department = {
-    get: (store_id: number) => {
-        return instance.get(`${endpoints.department.get}/${store_id}`);
+    get: (owner_id: number) => {
+        return instance.get(`${endpoints.department.get}/${owner_id}`);
     },
     create: (newDepartment: DepartmentForm) => {
         return instance.post(endpoints.department.create, newDepartment);

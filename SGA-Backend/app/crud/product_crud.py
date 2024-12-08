@@ -53,8 +53,6 @@ def get_products_by_owner(owner_id: int, db: Session):
         raise RuntimeError("No stores found.")
     for store in stores:
         products_by_store = db.query(Product).filter(Product.fk_store_id == store.store_id).all()
-        if not products_by_store:
-            raise RuntimeError("No products found.")
         products.extend(products_by_store)
 
     return [ProductResponse.model_validate(product) for product in products]

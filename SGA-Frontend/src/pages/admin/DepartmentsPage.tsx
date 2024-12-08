@@ -1,14 +1,29 @@
-import { AddButton, DepartmentDialog, DepartmentListTemplate, PageTitle } from "@components"
-import { departmentFormValidationSchema, departmentFormValues } from "@forms";
-import { useAppDispatch, useAppSelector, useToast } from "@hooks";
-import { Department, DepartmentForm, DialogMode, Store } from "@models";
-import { department } from "@services";
-import { addDepartment, deleteDepartment, updateDepartment } from "@store";
+// * React Libraries
+import { useState } from "react";
+
+// * Third Party Libraries
 import { useFormik } from "formik";
 import { confirmDialog, ConfirmDialog } from "primereact/confirmdialog"
 import { DataView } from "primereact/dataview";
 import { TabPanel, TabView } from "primereact/tabview";
-import { useState } from "react";
+
+// * Components
+import { AddButton, DepartmentDialog, DepartmentListTemplate, PageTitle } from "@components"
+
+// * Forms
+import { departmentFormValidationSchema, departmentFormValues } from "@forms";
+
+// * Hooks
+import { useAppDispatch, useAppSelector, useToast } from "@hooks";
+
+// * Models
+import { Department, DepartmentForm, DialogMode, Store } from "@models";
+
+// * Services
+import { department } from "@services";
+
+// * Store
+import { addDepartment, deleteDepartment, updateDepartment } from "@store";
 
 export const DepartmentsPage = () => {
 
@@ -32,12 +47,7 @@ export const DepartmentsPage = () => {
             if (data.ok) {
                 setOpenMode(DialogMode.CLOSE);
 
-                const newDepartment : Department = {
-                    ...data.data,
-                    fk_store_id: values.fk_store_id
-                }
-
-                dispatch((openMode === DialogMode.CREATE ? addDepartment : updateDepartment)(newDepartment));
+                dispatch((openMode === DialogMode.CREATE ? addDepartment : updateDepartment)(data.data));
                 showSuccess('Success', `Store ${openMode === DialogMode.CREATE ? 'Created' : 'Updated'} Successfully`);
             } else {
                 showError('Error', 'Something went wrong');   
@@ -51,9 +61,7 @@ export const DepartmentsPage = () => {
     };
 
     const onEdit = (department: Department) => {
-        formik.setValues({
-            ...department
-        });
+        formik.setValues(department);
 
         setOpenMode(DialogMode.EDIT);
     };

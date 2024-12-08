@@ -1,14 +1,14 @@
 // * Store
-import { setDepartments, setStores } from "@store";
+import { setCategories, setDepartments, setProducts, setStores } from "@store";
 
 // * Hooks
 import { useAppDispatch } from "./useStore"
 
 // * Services
-import { department, store } from "@services";
+import { category, department, product, store } from "@services";
 
 // * Models
-import { Department, Role, Store, User } from "@models";
+import { Category, Department, Role, User } from "@models";
 
 
 export const useInfoStore = () => {
@@ -22,38 +22,40 @@ export const useInfoStore = () => {
         return data;
     };
 
-    const getDepartments = async (stores: Store[]) => {
+    const getDepartments = async (user_id: number) => {
 
-        let departaments : Department[] = [];
+        const { data } = await department.get(user_id);
 
-        for (const store of stores) {
-            const { data } = await department.get(store.store_id);
+        if (data.ok) dispatch(setDepartments(data.data));
 
-            if (data.ok) {
-                departaments = [
-                    ...departaments,
-                    ...data.data.map((department : Department) => {
-                        return {
-                            ...department,
-                            fk_store_id: store.store_id
-                        }
-                    })
-                ];
-            }
-        }
-
-        console.log(departaments);
-
-        dispatch(setDepartments(departaments));
-
-        return {
-            ok: true,
-            data: departaments
-        };
-
+        return data;
     };
 
-    const getCategories = async(departments: Department[]) => {}
+    const getCategories = async(user_id: number, departments: Department[]) => {
+
+        const { data } = await category.get(user_id);
+        
+        if (data.ok) {
+            const categories : Category[] = [];
+
+            for (const category of data.data) {
+                const fk_store_id : number = departments.find((department: Department) => category.fk_department_id === department.department_id)?.fk_store_id ?? 0
+
+                categories.push({
+                    ...category,
+                    fk_store_id
+                })
+            }
+
+            dispatch(setCategories(categories))
+        }
+    }
+
+    const getProducts = async(user_id: number) => {
+        const { data } = await product.get(user_id);
+
+        if (data.ok) dispatch(setProducts(data.data));
+    }
 
     const getInfo = async (user: User) => {
 
@@ -63,7 +65,14 @@ export const useInfoStore = () => {
     
             if (storeResponse.ok) {
                 // * Fetch Departments
-                await getDepartments(storeResponse.data);
+                const departmentResponse = await getDepartments(user.user_id);
+
+                if (departmentResponse.ok) {
+                    // * Fetch Categories
+                    await getCategories(user.user_id, departmentResponse.data)
+                }
+
+                await getProducts(user.user_id);
             }
             
         }

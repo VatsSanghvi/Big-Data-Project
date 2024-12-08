@@ -15,7 +15,7 @@ import { commonRoutes } from "./common";
 import { PrivateRoute, RolesRoute } from "./decorators";
 
 // * Pages
-import { DepartmentsPage, StoresPage, ProfilePage, ProductsPage } from "@pages";
+import { CategoriesPage, DepartmentsPage, StoresPage, ProfilePage, UserProductsPage, ProductsPage } from "@pages";
 
 export const routes: RouteObject[] = [
     ...authRoutes,
@@ -36,10 +36,34 @@ export const routes: RouteObject[] = [
                 )
             },
             {
+                path: "/profile",
+                element: (
+                    <RolesRoute allowedRoles={[Role.User]}>
+                        <ProfilePage />
+                    </RolesRoute>
+                )
+            },
+            {
                 path: '/departments',
                 element: (
                     <RolesRoute allowedRoles={[Role.Admin]}>
                         <DepartmentsPage />
+                    </RolesRoute>
+                )
+            },
+            {
+                path: '/categories',
+                element: (
+                    <RolesRoute allowedRoles={[Role.Admin]}>
+                        <CategoriesPage />
+                    </RolesRoute>
+                )
+            },
+            {
+                path: '/products-admin',
+                element: (
+                    <RolesRoute allowedRoles={[Role.Admin]}>
+                        <ProductsPage />
                     </RolesRoute>
                 )
             },
@@ -55,7 +79,7 @@ export const routes: RouteObject[] = [
                 path: "/products",
                 element: (
                     <RolesRoute allowedRoles={[Role.User]}>
-                        <ProductsPage />
+                        <UserProductsPage />
                     </RolesRoute>
                 )
             },

@@ -3,6 +3,8 @@ const endpointModules = {
   store: "store",
   department: "department",
   budget: "budget",
+  category: "category",
+  products: "products",
 };
 
 export const endpoints = {
@@ -20,7 +22,7 @@ export const endpoints = {
     delete: `${endpointModules.store}`,
   },
   department: {
-    get: `${endpointModules.department}`,
+    get: `${endpointModules.department}/owner`,
     create: `${endpointModules.department}`,
     update: `${endpointModules.department}`,
     delete: `${endpointModules.department}`,
@@ -31,4 +33,16 @@ export const endpoints = {
     update: `${endpointModules.budget}`,
     reset: `${endpointModules.budget}/reset`,
   },
+  category: {
+    get: `${endpointModules.category}/owner`,
+    create: `${endpointModules.category}`,
+    update: `${endpointModules.category}`,
+    delete: `${endpointModules.category}`,
+  },
+  product: {
+    get: `${endpointModules.products}/owner`,
+    create: `${endpointModules.products}`,
+    update: `${endpointModules.products}`,
+    delete: `${endpointModules.products}`,
+  }
 };

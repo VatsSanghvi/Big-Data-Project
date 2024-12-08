@@ -7,13 +7,12 @@ import { confirmDialog, ConfirmDialog } from "primereact/confirmdialog";
 import { DataView } from "primereact/dataview";
 
 // * Components
-import { AddButton, PageTitle, ProductDialog, ProductListTemplate } from "@components"
+import { AddButton, PageTitle, /*ProductDialog, ProductListTemplate*/ } from "@components"
 
 // * Hooks
-import { useAppDispatch, useAppSelector, useAuthProduct, useToast } from "@hooks";
+import { useAppDispatch, useAppSelector, /* useAuthStore ,*/ useToast } from "@hooks";
 
 // * Services
-import { product } from "@services";
 
 // * Forms
 import { productFormValidationSchema, productFormValues } from "@forms";
@@ -21,10 +20,10 @@ import { productFormValidationSchema, productFormValues } from "@forms";
 // * Models
 import { DialogMode, Product, ProductForm } from "@models";
 
-// * Product
-import { addProductGroceryList } from "@product";
+// * Store
+// import { addProductGroceryList } from "@store";
 
-export const ProductsPage = () => {
+export const UserProductsPage = () => {
 
     const { showSuccess, showError } = useToast();
 
@@ -33,24 +32,24 @@ export const ProductsPage = () => {
 
     const [openMode, setOpenMode] = useState<DialogMode>(DialogMode.CLOSE);
 
-    const { add } = product;
+    // const { add } = product;
 
     const formik = useFormik<ProductForm>({
         initialValues: productFormValues,
         validationSchema: productFormValidationSchema,
         onSubmit: async (values) => {
-            console.log(values);
+            // console.log(values);
 
-            const { data } = await (add)(values);
+            // const { data } = await (add)(values);
 
-            if (data.ok) {
-                setOpenMode(DialogMode.CLOSE);
+            // if (data.ok) {
+            //     setOpenMode(DialogMode.CLOSE);
 
-                dispatch((addProductGroceryList)(data.data));
-                showSuccess('Success', `Product Added Successfully`);
-            } else {
-                showError('Error', 'Something went wrong');
-            }
+            //     dispatch((addProductGroceryList)(data.data));
+            //     showSuccess('Success', `Product Added Successfully`);
+            // } else {
+            //     showError('Error', 'Something went wrong');
+            // }
         }
     });
 
@@ -61,9 +60,10 @@ export const ProductsPage = () => {
 
 
     const listTemplate = (items: Product[]) => (
-        <ProductListTemplate
-            items={items}
-        />
+        // <ProductListTemplate
+        //     items={items}
+        // />
+        <></>
     )
     return (
         <>
@@ -81,11 +81,11 @@ export const ProductsPage = () => {
                     listTemplate={listTemplate}
                 />
             </div>
-            <ProductDialog
+            {/* <ProductDialog
                 openMode={openMode}
                 setOpenMode={setOpenMode}
                 formik={formik}
-            />
+            /> */}
             <ConfirmDialog />
         </>
     )
