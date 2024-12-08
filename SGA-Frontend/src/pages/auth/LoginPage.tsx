@@ -11,7 +11,7 @@ import { loginInitialValues, loginValidationSchema } from "@forms"
 import { getProps } from "@helpers"
 
 // * Hooks
-import { useAuthStore, useInfoStore, useToast } from "@hooks"
+import { useAuthStore, useToast } from "@hooks"
 
 // * Services
 import { user } from "@services"
@@ -19,7 +19,6 @@ import { user } from "@services"
 export const LoginPage = () => {
 
     const { onLogin } = useAuthStore();
-    const { getInfo } = useInfoStore();
 
     const { showSuccess, showError } = useToast();
 
@@ -33,9 +32,7 @@ export const LoginPage = () => {
             if (response.data.ok) {
                 const data = response.data.data;
 
-                // onLogin(data);
-
-                await getInfo(data);
+                onLogin(data);
 
                 showSuccess("Login Successful", `Welcome ${data.first_name} ${data.last_name}`);
             }
