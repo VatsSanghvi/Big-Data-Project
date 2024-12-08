@@ -40,41 +40,23 @@ def insert_product(db: Session, product: ProductCreateRequest):
         db.rollback()  # Rollback transaction in case of error
         raise RuntimeError(f"Failed to insert product: {str(e)}") from e
     
-def get_products_by_store(store_id: int, db: Session):
+def get_products_by_owner(owner_id: int, db: Session):
     """
     Retrieve all Product records from the database.
 
     :param db: SQLAlchemy database session.
     :return: List of ProductResponse objects.
     """
-    products = db.query(Product).filter(Product.fk_store_id == store_id).all()
-    if not products:
-        raise RuntimeError("No products found.")
-    return [ProductResponse.model_validate(product) for product in products]
-
-def get_products(db: Session):
-    """
-    Retrieve all Product records from the database.
-
-    :param db: SQLAlchemy database session.
-    :return: List of ProductResponse objects.
-    """
-
     products = []
-    stores = db.query(Store).all()
+    stores = db.query(Store).filter(Store.fk_owner_id == owner_id).all()
+    if not stores:
+        raise RuntimeError("No stores found.")
     for store in stores:
-        departments = db.query(Department).filter(Department.fk_store_id == store.store_id).all()
-        if not departments:
-            raise RuntimeError("No departments found.")
-        for department in departments:
-            categories = db.query(Category).filter(Category.fk_department_id == department.department_id).all()
-            if not categories:
-                raise RuntimeError("No categories found.")
-            for category in categories:
-                products.extend(db.query(Product).filter(Product.fk_category_id == category.category_id).all())
+        products_by_store = db.query(Product).filter(Product.fk_store_id == store.store_id).all()
+        if not products_by_store:
+            raise RuntimeError("No products found.")
+        products.extend(products_by_store)
 
-    if not products:
-        raise RuntimeError("No products found.")
     return [ProductResponse.model_validate(product) for product in products]
 
 def get_product_by_id(db: Session, product_id: int) -> ProductResponse:

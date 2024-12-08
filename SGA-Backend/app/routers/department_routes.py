@@ -36,27 +36,15 @@ def get_departments_by_store(store_id: int, db: Session = Depends(get_db)):
             data=get_departments
         )
     except Exception as e:
-        return BaseResponse.error_response(message=str(e))
+        return (BaseResponse.error_response(message=str(e)))
 
-@router.get("/", response_model=BaseResponse[List[DepartmentResponse]])
-def get_departments(db: Session = Depends(get_db)):
+@router.get("/owner/{owner_id}", response_model=BaseResponse[List[DepartmentResponse]])
+def get_departments_by_owner(owner_id: int, db: Session = Depends(get_db)):
     try:
-        departments = department_crud.get_departments(db=db)
+        departments_by_owner = department_crud.get_departments_by_owner(db=db, owner_id=owner_id)
         return BaseResponse.success_response(
             message="Departments retrieved successfully",
-            data=departments
-        )
-    except Exception as e:
-        return BaseResponse.error_response(message=str(e))
-
-
-@router.get("/{department_id}", response_model=BaseResponse[DepartmentResponse])
-def get_department_by_id(department_id: int, db: Session = Depends(get_db)):
-    try:
-        department = department_crud.get_department_by_id(db=db, department_id=department_id)
-        return BaseResponse.success_response(
-            message="Department retrieved successfully",
-            data=department
+            data=departments_by_owner
         )
     except Exception as e:
         return BaseResponse.error_response(message=str(e))

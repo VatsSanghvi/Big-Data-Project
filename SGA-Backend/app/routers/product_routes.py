@@ -24,27 +24,11 @@ def insert_product(product: ProductCreateRequest, db: Session = Depends(get_db))
     except Exception as e:
         return BaseResponse.error_response(message=str(e))
 
-@router.get("/{store_id}", response_model=BaseResponse[list[ProductResponse]])
-def get_products_by_store(store_id: int, db: Session = Depends(get_db)):
+@router.get("/owner/{owner_id}", response_model=BaseResponse[list[ProductResponse]])
+def get_products_by_owner(owner_id: int, db: Session = Depends(get_db)):
     try:
-        get_products = product_crud.get_products_by_store(db=db, store_id=store_id)
+        get_products = product_crud.get_products_by_owner(db=db, owner_id=owner_id)
         return BaseResponse.success_response(data=get_products, message="Products retrieved successfully")
-    except Exception as e:
-        return BaseResponse.error_response(message=str(e))
-
-@router.get("/", response_model=BaseResponse[list[ProductResponse]])
-def get_products(db: Session = Depends(get_db)):
-    try:
-        products = product_crud.get_products(db=db)
-        return BaseResponse.success_response(data=products, message="Products retrieved successfully")
-    except Exception as e:
-        return BaseResponse.error_response(message=str(e))
-
-@router.get("/{product_id}", response_model=BaseResponse[ProductResponse])
-def get_product_by_id(product_id: int, db: Session = Depends(get_db)):
-    try:
-        get_product = product_crud.get_product_by_id(db=db, product_id=product_id)
-        return BaseResponse.success_response(data=get_product, message="Product retrieved successfully")
     except Exception as e:
         return BaseResponse.error_response(message=str(e))
 

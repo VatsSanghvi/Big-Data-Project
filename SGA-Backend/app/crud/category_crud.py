@@ -1,8 +1,9 @@
 from typing import List
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
-from app.models.category_model import Category
+from app.models.store_model import Store
 from app.models.department_model import Department
+from app.models.category_model import Category
 from app.schemas.category_schema import CategoryInsert, CategoryResponse
 
 def insert_category(db: Session, category: CategoryInsert) -> CategoryResponse:
@@ -45,7 +46,7 @@ def get_categories_by_department(db: Session, department_id: int) -> List[Catego
         raise RuntimeError(f"No categories found")
     return [CategoryResponse.model_validate(category) for category in categories]
 
-def get_categories(db: Session) -> List[CategoryResponse]:
+def get_categories_by_owner(owner_id: int, db: Session) -> List[CategoryResponse]:
     """
     Retrieve all Category records from the database.
 
@@ -53,10 +54,12 @@ def get_categories(db: Session) -> List[CategoryResponse]:
     :return: List of CategoryResponse objects.
     """
     categories = []
-    departments = db.query(Department).all()
-    for department in departments:
-        categories_by_department = db.query(Category).filter(Category.fk_department_id == department.department_id).all()
-        categories.extend(categories_by_department)
+    stores = db.query(Store).filter(Store.fk_owner_id == owner_id).all()
+    for store in stores:
+        departments_by_store = db.query(Department).filter(Department.fk_store_id == store.store_id).all()
+        for department in departments_by_store:
+            categories_by_department = db.query(Category).filter(Category.fk_department_id == department.department_id).all()
+            categories.extend(categories_by_department)
 
     if not categories:
         raise RuntimeError("No categories found")

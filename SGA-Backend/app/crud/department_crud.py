@@ -43,7 +43,7 @@ def get_departments_by_store(db: Session, store_id: int) -> List[DepartmentRespo
         raise RuntimeError("No departments found")
     return [DepartmentResponse.model_validate(department) for department in departments]
 
-def get_departments(db: Session) -> List[DepartmentResponse]:
+def get_departments_by_owner(db: Session, owner_id: int) -> List[DepartmentResponse]:
     """
     Retrieve all Department records from the database.
 
@@ -51,13 +51,13 @@ def get_departments(db: Session) -> List[DepartmentResponse]:
     :return: List of DepartmentResponse objects.
     """
     departments = []
-    stores = db.query(Store).all()
+    stores = db.query(Store).filter(Store.fk_owner_id == owner_id).all()
     for stores in stores:
         department_by_store = db.query(Department).filter(Department.fk_store_id == stores.store_id).all()
+        if not department_by_store:
+            raise RuntimeError("No departments found")
         departments.extend(department_by_store)
 
-    if not departments:
-        raise RuntimeError("No departments found")
     return [DepartmentResponse.model_validate(department) for department in departments]
 
 def get_department_by_id(db: Session, department_id: int) -> DepartmentResponse:
