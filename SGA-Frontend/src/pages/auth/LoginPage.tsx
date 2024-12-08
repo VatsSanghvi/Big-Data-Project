@@ -33,7 +33,7 @@ export const LoginPage = () => {
             if (response.data.ok) {
                 const data = response.data.data;
 
-                onLogin(data);
+                // onLogin(data);
 
                 await getInfo(data);
 

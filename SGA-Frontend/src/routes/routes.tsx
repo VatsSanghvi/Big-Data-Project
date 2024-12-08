@@ -1,12 +1,21 @@
+// * React Libraries
 import { RouteObject } from "react-router-dom";
-import { PrivateRoute } from "./decorators";
+
+// * Layout
 import { GeneralLayout } from "@layout";
+
+// * Models
+import { Role } from "@models";
+
+// * Routes
 import { authRoutes } from "./auth";
 import { commonRoutes } from "./common";
-import { RolesRoute } from "./decorators/RolesRoute";
-import { Role } from "@models";
-import { StoresPage, ProfilePage } from "@pages";
-// import { StoreProvider } from "@providers";
+
+// * Components
+import { PrivateRoute, RolesRoute } from "./decorators";
+
+// * Pages
+import { DepartmentsPage, StoresPage, ProfilePage } from "@pages";
 
 export const routes: RouteObject[] = [
     ...authRoutes,
@@ -31,6 +40,14 @@ export const routes: RouteObject[] = [
                 element: (
                     <RolesRoute allowedRoles={[Role.User]}>
                         <ProfilePage />
+                    </RolesRoute>
+                )
+            },
+            {
+                path: '/departments',
+                element: (
+                    <RolesRoute allowedRoles={[Role.Admin]}>
+                        <DepartmentsPage />
                     </RolesRoute>
                 )
             }

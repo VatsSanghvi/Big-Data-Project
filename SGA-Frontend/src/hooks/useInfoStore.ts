@@ -53,6 +53,8 @@ export const useInfoStore = () => {
 
     };
 
+    const getCategories = async(departments: Department[]) => {}
+
     const getInfo = async (user: User) => {
 
         if (user.role === Role.Admin) {

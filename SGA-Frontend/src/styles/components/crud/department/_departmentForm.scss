@@ -1,0 +1,6 @@
+@use 'primeflex/primeflex.scss' as *;
+@use '../../../breakpoints' as *;
+
+.department-form {
+    @include styleclass('grid pt-2');
+}

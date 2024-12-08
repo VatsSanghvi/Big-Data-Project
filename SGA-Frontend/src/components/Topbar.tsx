@@ -30,7 +30,7 @@ export const Topbar = () => {
                         <Image src={Logo} alt="Logo" width='50'/>
                     )
                 }
-                <h1>Smart Grocery Assitant</h1>
+                <h1>Smart Grocery Assistant</h1>
             </div>
             <Button
                 label={isMobile ? '' : 'Sign Out'}

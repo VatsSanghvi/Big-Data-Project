@@ -42,12 +42,12 @@ export const StoresPage = () => {
         onSubmit: async(values) => {
             console.log(values);
 
-            const { status, data } = await (openMode === DialogMode.CREATE ? create : update)(values);
+            const { data } = await (openMode === DialogMode.CREATE ? create : update)(values);
             
-            if (status === 200) {
+            if (data.ok) {
                 setOpenMode(DialogMode.CLOSE);
 
-                dispatch((openMode === DialogMode.CREATE ? addStore : updateStore)(data));
+                dispatch((openMode === DialogMode.CREATE ? addStore : updateStore)(data.data));
                 showSuccess('Success', `Store ${openMode === DialogMode.CREATE ? 'Created' : 'Updated'} Successfully`);
             } else {
                 showError('Error', 'Something went wrong');   
@@ -74,11 +74,9 @@ export const StoresPage = () => {
     };
 
     const onAcceptDelete = async (store_id: number) => {
-        console.log(store_id);
+        const { data } = await store.delete(store_id);
 
-        const { status } = await store.delete(store_id);
-
-        if (status === 200) {
+        if (data.ok) {
             showSuccess('Success', 'Store Deleted Successfully');
             dispatch(deleteStore(store_id));
         }

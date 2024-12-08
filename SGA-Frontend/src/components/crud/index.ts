@@ -1,3 +1,4 @@
+export * from './department';
 export * from './store';
 export * from './AddButton';
 export * from './CrudDialog';
