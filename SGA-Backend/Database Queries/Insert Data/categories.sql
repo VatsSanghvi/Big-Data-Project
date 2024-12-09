@@ -1,3 +1,5 @@
+DBCC CHECKIDENT ('categories', RESEED, 0);
+
 INSERT INTO categories (category_name, fk_department_id)
 VALUES
     -- Grocery Categories

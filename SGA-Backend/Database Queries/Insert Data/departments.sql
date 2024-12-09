@@ -1,3 +1,5 @@
+DBCC CHECKIDENT ('departments', RESEED, 0);
+
 INSERT INTO departments (department_name, fk_store_id)
 VALUES
     ('Grocery', 1), ('Grocery', 2), ('Grocery', 3), ('Grocery', 4), ('Grocery', 5),
