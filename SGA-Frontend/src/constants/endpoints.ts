@@ -41,8 +41,16 @@ export const endpoints = {
   },
   product: {
     get: `${endpointModules.products}/owner`,
+    get_all: `${endpointModules.products}`,
     create: `${endpointModules.products}`,
     update: `${endpointModules.products}`,
     delete: `${endpointModules.products}`,
-  }
+  },
+  groceryList: {
+    get: `${endpointModules.products}/grocery-list/:user_id`,
+    create: `${endpointModules.products}/grocery-list`,
+    addItem: `${endpointModules.products}/grocery-list/item`,
+    updateItem: `${endpointModules.products}/grocery-list/:list_id/:item_id`,
+    deleteItem: `${endpointModules.products}/grocery-list/:list_id/:item_id`,
+  },
 };

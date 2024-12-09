@@ -7,24 +7,21 @@ import { confirmDialog, ConfirmDialog } from "primereact/confirmdialog";
 import { DataView } from "primereact/dataview";
 
 // * Components
-import { AddButton, PageTitle, /*ProductDialog, ProductListTemplate*/ } from "@components"
+import { AddButton, PageTitle, GroceryListDialog, ProductListTemplate } from "@components"
 
 // * Hooks
-import { useAppDispatch, useAppSelector, /* useAuthStore ,*/ useToast } from "@hooks";
+import { useAppDispatch, useAppSelector, useToast } from "@hooks";
 
 // * Services
+import { userProduct } from "@services";
 
 // * Forms
-import { productFormValidationSchema, productFormValues } from "@forms";
+import { groceryListInitialValues, groceryListValidationSchema } from "@forms";
 
 // * Models
-import { DialogMode, Product, ProductForm } from "@models";
-
-// * Store
-// import { addProductGroceryList } from "@store";
+import { DialogMode, Product, GroceryListForm } from "@models";
 
 export const UserProductsPage = () => {
-
     const { showSuccess, showError } = useToast();
 
     const { products } = useAppSelector(state => state.info);
@@ -32,24 +29,22 @@ export const UserProductsPage = () => {
 
     const [openMode, setOpenMode] = useState<DialogMode>(DialogMode.CLOSE);
 
-    // const { add } = product;
+    const { createList } = userProduct;
 
-    const formik = useFormik<ProductForm>({
-        initialValues: productFormValues,
-        validationSchema: productFormValidationSchema,
+    const formik = useFormik<GroceryListForm>({
+        initialValues: groceryListInitialValues,
+        validationSchema: groceryListValidationSchema,
         onSubmit: async (values) => {
-            // console.log(values);
+            console.log(values);
 
-            // const { data } = await (add)(values);
-
-            // if (data.ok) {
-            //     setOpenMode(DialogMode.CLOSE);
-
-            //     dispatch((addProductGroceryList)(data.data));
-            //     showSuccess('Success', `Product Added Successfully`);
-            // } else {
-            //     showError('Error', 'Something went wrong');
-            // }
+            const { data } = await (createList)(values);
+            if (data.ok) {
+                setOpenMode(DialogMode.CLOSE);
+                dispatch(createGroceryList(data.data));
+                showSuccess('Success', `Product Added Successfully`);
+            } else {
+                showError('Error', 'Something went wrong');
+            }
         }
     });
 
@@ -58,12 +53,10 @@ export const UserProductsPage = () => {
         setOpenMode(DialogMode.ADD);
     };
 
-
     const listTemplate = (items: Product[]) => (
-        // <ProductListTemplate
-        //     items={items}
-        // />
-        <></>
+        <ProductListTemplate
+            items={items}
+        />
     )
     return (
         <>
@@ -81,11 +74,11 @@ export const UserProductsPage = () => {
                     listTemplate={listTemplate}
                 />
             </div>
-            {/* <ProductDialog
+            <GroceryListDialog
                 openMode={openMode}
                 setOpenMode={setOpenMode}
                 formik={formik}
-            /> */}
+            />
             <ConfirmDialog />
         </>
     )
