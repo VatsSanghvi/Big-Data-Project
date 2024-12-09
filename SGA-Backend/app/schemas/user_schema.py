@@ -14,9 +14,9 @@ class UserCreate(BaseModel):
     role: str
 
 class UserUpdate(BaseModel):
+    user_id: int
     first_name: str
     last_name: str
-    email: str
     phone_number: str
 
 class UserBase(BaseModel):
@@ -40,6 +40,7 @@ class PasswordReset(BaseModel):
     to_email: EmailStr
 
 class PasswordUpdate(BaseModel):
+    user_id: int
     current_password: str
     new_password: constr(min_length=8)
 

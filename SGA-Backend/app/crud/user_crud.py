@@ -1,6 +1,7 @@
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 from app.models.user_model import User
+from app.utils.password_reset_email import send_password_reset_email
 from app.schemas.user_schema import UserCreate, UserUpdate, UserResponse
 from app.utils.authentication import hash_password
 from passlib.context import CryptContext
@@ -31,7 +32,7 @@ def register_user(db: Session, user: UserCreate):
         first_name=user.first_name,
         last_name=user.last_name,
         email=user.email,
-        password=hash_password(user.password),
+        password=user.password,
         phone_number=user.phone_number,
         role=user.role
     )
@@ -45,6 +46,29 @@ def register_user(db: Session, user: UserCreate):
     except SQLAlchemyError as e:
         db.rollback()
         raise RuntimeError(f"Failed to create user: {str(e)}") from e
+
+def logout_user(db: Session, user_id: int):
+    """
+    Log out a user by their user_id.
+    
+    This function would typically invalidate a session or token. 
+    For simplicity, we'll assume the logout action is just a basic check for existence.
+    
+    :param db: SQLAlchemy database session
+    :param user_id: The user's ID to log out
+    :return: A success message if the user exists and is logged out
+    """
+    # Check if the user exists in the database
+    user = db.query(User).filter(User.user_id == user_id).first()
+
+    if not user:
+        raise ValueError(f"User with ID {user_id} not found.")
+    
+    # For simplicity, we're not invalidating a session or token here
+    # But if you had a session or token, you could invalidate it here.
+    
+    return {"message": "User logged out successfully"}
+
 
 def authenticate_user(db: Session, email: str, password: str):
     """
@@ -86,7 +110,7 @@ def get_user_by_email(db: Session, email: str):
         raise ValueError(f"User with email {email} not found.")
     return user
 
-def reset_password(db: Session, user_id: int, current_password: str, new_password: str):
+def update_password(db: Session, user_id: int, current_password: str, new_password: str):
     """
     Recover a user's password
     :param db: SQLAlchemy database session
@@ -103,7 +127,7 @@ def reset_password(db: Session, user_id: int, current_password: str, new_passwor
         raise ValueError("Invalid password")
 
     try:
-        user.password = hash_password(new_password)
+        user.password = new_password
         db.commit()
         return True
     except:
@@ -159,7 +183,7 @@ def update_user_profile(db: Session, user_id: int, updates: UserUpdate):
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     """Verify a plain password against a hashed password"""
-    return pwd_context.verify(plain_password, hashed_password)
+    return plain_password, hashed_password
 
 def validate_email(email: str):
     """
@@ -179,3 +203,22 @@ def validate_phone_number(phone_number: str):
     if not phone_number.isdigit() or len(phone_number) != 10:
         raise ValueError("Phone number must be exactly 10 digits.")
     return True
+
+def reset_password(db: Session, email: str):
+    """
+    Initiates the password reset process by sending a reset link to the user's email.
+    
+    :param db: SQLAlchemy database session
+    :param email: The email of the user who requests a password reset
+    :return: A success message if the email is sent
+    """
+    # Find the user by email
+    user = db.query(User).filter(User.email == email).first()
+
+    if not user:
+        raise ValueError("No user found with the provided email.")
+
+    # Simulate sending password reset email (you can replace this with actual email-sending code)
+    send_password_reset_email(email)
+
+    return {"message": "Password reset email sent."}

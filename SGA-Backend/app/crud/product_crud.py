@@ -57,19 +57,15 @@ def get_products_by_owner(owner_id: int, db: Session):
 
     return [ProductResponse.model_validate(product) for product in products]
 
-def get_product_by_id(db: Session, product_id: int) -> ProductResponse:
+def get_all_products(db: Session):
     """
-    Retrieve a single Product record by its ID.
+    Retrieve all Product records from the database.
 
     :param db: SQLAlchemy database session.
-    :param product_id: ID of the product to retrieve.
-    :return: ProductResponse object if found.
-    :raises: RuntimeError if the product is not found.
+    :return: List of ProductResponse objects.
     """
-    product = db.query(Product).filter(Product.product_id == product_id).first()
-    if not product:
-        raise RuntimeError("Product not found.")
-    return ProductResponse.model_validate(product)
+    products = db.query(Product).all()
+    return [ProductResponse.model_validate(product) for product in products]
 
 def update_product(db: Session, product_id: int, updates: ProductCreateRequest):
     """

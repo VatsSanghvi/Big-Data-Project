@@ -4,4 +4,4 @@ export * from "./register";
 export * from "./role";
 export * from "./user";
 export * from "./resetPassword";
-export * from './sendEmail';
+export * from "./sendEmail";

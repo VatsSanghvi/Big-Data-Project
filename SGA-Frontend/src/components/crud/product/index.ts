@@ -1,1 +1,2 @@
-export * from './ProductDialog';
+export * from "./ProductDialog";
+export * from "./ProductListTemplate";
