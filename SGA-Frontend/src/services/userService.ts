@@ -3,6 +3,7 @@ import {
   Login,
   RegisterRequest,
   ResetPasswordRequest,
+  SendEmailForm,
   UpdateProfileRequest,
 } from "@models";
 
@@ -19,7 +20,7 @@ export const user = {
   register: (values: RegisterRequest) => {
     return instance.post(endpoints.auth.register, values);
   },
-  sendEmail: (values: { email: string }) => {
+  sendEmail: (values: SendEmailForm) => {
     return instance.post(endpoints.auth.sendEmail, values);
   },
   resetPassword: (email: string, values: ResetPasswordRequest) => {

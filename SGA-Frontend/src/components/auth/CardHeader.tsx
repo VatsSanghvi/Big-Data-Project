@@ -1,3 +1,5 @@
+// * Card Header used on Auth Part
+
 export const CardHeader = ({ title }: CardHeaderProps) => {
     return (
         <div className="card-header">

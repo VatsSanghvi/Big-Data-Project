@@ -2,17 +2,16 @@
 import { object, string } from "yup";
 
 // * Models
-import { RecoverPassword } from "@models";
+import { ResetPasswordRequest } from "@models";
 
-export const recoverPasswordInitialValues: RecoverPassword = {
-  currentPassword: "",
-  newPassword: "",
+export const recoverPasswordInitialValues: ResetPasswordRequest = {
+  email: "",
+  current_password: "",
+  new_password: "",
 };
 
 export const recoverPasswordValidationSchema = object({
-  email: string()
-    .email("It must be a valid email")
-    .required("Email is required"),
-  currentPassword: string().required("Current password is required"),
-  newPassword: string().required("New password is required"),
+  email: string(),
+  current_password: string().required("Current password is required"),
+  new_password: string().required("New password is required"),
 });

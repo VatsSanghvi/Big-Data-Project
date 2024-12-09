@@ -19,35 +19,32 @@ import { user } from "@services";
 // * React 
 import { useParams } from "react-router-dom";
 import { ResetPasswordRequest } from "@models";
+import { useEffect } from "react";
 
 export const RecoverPasswordPage = () => {
 
     const { showSuccess, showError } = useToast();
     const { email } = useParams();
 
-    const formik = useFormik({
-        initialValues: { ...recoverPasswordInitialValues, email },
+    const formik = useFormik<ResetPasswordRequest>({
+        initialValues: recoverPasswordInitialValues,
         validationSchema: recoverPasswordValidationSchema,
         onSubmit: async (values) => {
-
-            const { currentPassword, newPassword } = values;
-
-            if (!email) {
-                showError("Error", "Email is required");
-                return;
-            }
-            const updatePassword: ResetPasswordRequest = { currentPassword, newPassword };
-
-            const response = await user.resetPassword(email, updatePassword);
-
-            console.log(response.data);
-            if (response.data.ok) {
-                showSuccess("Success", response.data.message);
+            const { data } = await user.resetPassword(values.email, values);
+            
+            if (data.ok) {
+                showSuccess("Success", data.message);
             } else {
-                showError("Error", response.data.message);
+                showError("Error", data.message);
             }
         }
     });
+
+    useEffect(() => {
+        if (email) {
+            formik.setFieldValue('email', email);
+        }
+    }, []);
 
     return (
         <div className="login">
@@ -62,12 +59,12 @@ export const RecoverPasswordPage = () => {
                     disabled
                 />
                 <MInputText
-                    {...getProps(formik, 'currentPassword', 'Current Password')}
+                    {...getProps(formik, 'current_password', 'Current Password')}
                     type="password"
                     inputMode="text"
                 />
                 <MInputText
-                    {...getProps(formik, 'newPassword', 'New Password')}
+                    {...getProps(formik, 'new_password', 'New Password')}
                     type="password"
                     inputMode="text"
                 />

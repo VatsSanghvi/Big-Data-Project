@@ -12,31 +12,27 @@ import { useToast } from "@hooks";
 
 // * Services
 import { user } from "@services";
-import {string} from "yup";
+
+// * Forms
+import { sendEmailFormInitialValues, sendEmailFormValidationSchema } from "@forms";
+
+// * Models
+import { SendEmailForm } from "@models";
 
 export const SendEmailPage = () => {
     
     const { showSuccess, showError } = useToast();
 
-    const formik = useFormik({
-        initialValues: {email: ''},
-        validationSchema: {
-            email: string()
-            .email('It must be a valid email')
-            .required('Email is required'),
-        },
+    const formik = useFormik<SendEmailForm>({
+        initialValues: sendEmailFormInitialValues,
+        validationSchema: sendEmailFormValidationSchema,
         onSubmit: async(values) => {
             console.log(values);
 
-            const { email } = values;
+            const { data } = await user.sendEmail(values);
 
-            const sendEmail = { email }
-
-            const response = await user.sendEmail(sendEmail);
-
-            if (response.status === 200) {
+            if (data.ok) {
                 showSuccess("Email Sent", `Check your email for reset link`);
-                
             } else {
                 showError("Error", "Error sending email");
             }
@@ -50,7 +46,7 @@ export const SendEmailPage = () => {
                 onSubmit={formik.handleSubmit}
             >
                 <MInputText 
-                    {...getProps(formik, 'email', 'Email')}
+                    {...getProps(formik, 'to_email', 'Email')}
                     type="email"
                     inputMode="email"
                 />
