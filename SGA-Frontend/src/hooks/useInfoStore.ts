@@ -1,14 +1,14 @@
 // * Store
-import { setCategories, setDepartments, setProducts, setStores } from "@store";
+import { setCategories, setDepartments, setGroceryList, setGroceryListItems, setProducts, setStores } from "@store";
 
 // * Hooks
 import { useAppDispatch } from "./useStore";
 
 // * Services
-import { category, department, product, store } from "@services";
+import { category, department, product, store, userProduct } from "@services";
 
 // * Models
-import { Category, Department, Role, User } from "@models";
+import { Category, Department, GroceryList, GroceryListItem, Role, User } from "@models";
 
 export const useInfoStore = () => {
   const dispatch = useAppDispatch();
@@ -64,6 +64,24 @@ export const useInfoStore = () => {
     if (data.ok) dispatch(setProducts(data.data));
   };
 
+  const getGroceryList = async (user_id: number) => {
+    const { data } = await userProduct.getGroceryList(user_id);
+
+    if (data.ok) {
+      const groceryList : GroceryList = {
+        id: data.data.id,
+        user_id: data.data.user_id,
+        name: data.data.name,
+        total_spent: data.data.total_spent,
+      }
+
+      const items: GroceryListItem[] = data.data.items;
+
+      dispatch(setGroceryList(groceryList));
+      dispatch(setGroceryListItems(items));
+    }
+  };
+
   const getInfo = async (user: User) => {
     if (user.role === Role.Admin) {
       // * Fetch Stores
@@ -82,6 +100,8 @@ export const useInfoStore = () => {
       }
     } else if (user.role === Role.User) {
       await getAllProducts();
+
+      await getGroceryList(user.user_id);
     }
   };
 

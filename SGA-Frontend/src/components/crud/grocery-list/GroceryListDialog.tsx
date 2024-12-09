@@ -23,7 +23,7 @@ export const GroceryListDialog: FC<GroceryListDialogProps> = (props) => {
         <CrudDialog
             openMode={openMode}
             setOpenMode={setOpenMode}
-            title="GroceryList"
+            title="Grocery List"
             onSubmit={formik.handleSubmit}
         >
             <GroceryListForm

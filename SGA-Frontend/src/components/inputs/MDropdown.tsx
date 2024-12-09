@@ -14,6 +14,7 @@ import { MInputBase } from "./MInputBase";
 // * Helpers
 import { getId, hasError } from "@helpers";
 
+// * Dropdown to select an option from a list
 export const MDropdown : FC<MIBase<DropdownProps>> = (props) => {
     const {
         id,

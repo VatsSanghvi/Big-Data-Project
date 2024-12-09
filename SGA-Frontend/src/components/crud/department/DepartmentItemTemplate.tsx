@@ -11,6 +11,7 @@ import { Department } from "@models"
 import { EditButton } from "../EditButton";
 import { DeleteButton } from "../DeleteButton";
 
+// * Department Item Template
 export const DepartmentItemTemplate : FC<DepartmentItemTemplateProps> = (props) => {
 
     const {

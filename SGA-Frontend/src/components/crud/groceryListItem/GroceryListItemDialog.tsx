@@ -5,14 +5,16 @@ import { FC } from "react";
 import { FormikProps } from "formik";
 
 // * Models
-import { DialogMode, StoreForm as IStoreForm } from "@models";
+import { DialogMode, GroceryListItemForm as IGroceryListItemForm } from "@models";
 
 // * Components
 import { CrudDialog } from "../CrudDialog";
-import { StoreForm } from "./StoreForm";
+import { GroceryListItemForm } from "./GroceryListItemForm";
 
-// * Dialog for Store CRUD
-export const StoreDialog : FC<StoreDialogProps> = (props) => {
+
+// * Dialog to add a new product to grocery list
+export const GroceryListItemDialog :  FC<GroceryListItemDialogProps> = (props) => {
+
     const {
         openMode,
         formik,
@@ -23,18 +25,18 @@ export const StoreDialog : FC<StoreDialogProps> = (props) => {
         <CrudDialog
             openMode={openMode}
             setOpenMode={setOpenMode}
-            title="Store"
+            title="Product"
             onSubmit={formik.handleSubmit}
         >
-            <StoreForm 
+            <GroceryListItemForm
                 formik={formik}
             />
         </CrudDialog>
     )
 }
 
-interface StoreDialogProps {
+interface GroceryListItemDialogProps {
     openMode: DialogMode;
-    formik: FormikProps<IStoreForm>;
+    formik: FormikProps<IGroceryListItemForm>;
     setOpenMode: (openMode: DialogMode) => void;
 }

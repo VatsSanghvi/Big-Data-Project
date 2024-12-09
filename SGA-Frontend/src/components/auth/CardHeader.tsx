@@ -1,4 +1,4 @@
-// * Card Header used on Auth Part
+// * Card Header used on Auth Section
 
 export const CardHeader = ({ title }: CardHeaderProps) => {
     return (

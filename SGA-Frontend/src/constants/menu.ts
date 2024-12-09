@@ -9,14 +9,14 @@ export const menuOptions: MenuOptions[] = [
     },
     {
         label: "User Profile",
-        icon: "bars",
+        icon: "user",
         to: "/profile",
         roles: [Role.User, Role.Admin],
     },
     {
-        label: "Budget",
-        icon: "dollar",
-        to: "/budget",
+        label: "Grocery List",
+        icon: "list",
+        to: "/grocery-list",
         roles: [Role.User],
     },
     {

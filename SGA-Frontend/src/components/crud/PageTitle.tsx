@@ -7,6 +7,7 @@ import { classNames } from "primereact/utils";
 // * Models
 import { Style } from "@models";
 
+// * Page Title Component
 export const PageTitle : FC<Style<PageTitleProps>> = (props) => {
     const {
         title,

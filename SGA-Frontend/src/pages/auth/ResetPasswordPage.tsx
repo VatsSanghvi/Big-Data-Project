@@ -17,7 +17,7 @@ import { useToast } from "@hooks";
 import { user } from "@services";
 
 // * React 
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ResetPasswordRequest } from "@models";
 import { useEffect } from "react";
 
@@ -25,6 +25,8 @@ export const RecoverPasswordPage = () => {
 
     const { showSuccess, showError } = useToast();
     const { email } = useParams();
+
+    const navigate = useNavigate();
 
     const formik = useFormik<ResetPasswordRequest>({
         initialValues: recoverPasswordInitialValues,
@@ -34,6 +36,7 @@ export const RecoverPasswordPage = () => {
             
             if (data.ok) {
                 showSuccess("Success", data.message);
+                navigate('/login');
             } else {
                 showError("Error", data.message);
             }
@@ -59,12 +62,12 @@ export const RecoverPasswordPage = () => {
                     disabled
                 />
                 <MInputText
-                    {...getProps(formik, 'current_password', 'Current Password')}
+                    {...getProps(formik, 'current_password', 'New Password')}
                     type="password"
                     inputMode="text"
                 />
                 <MInputText
-                    {...getProps(formik, 'new_password', 'New Password')}
+                    {...getProps(formik, 'new_password', 'Confirm Password')}
                     type="password"
                     inputMode="text"
                 />

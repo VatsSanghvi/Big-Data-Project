@@ -3,6 +3,7 @@ export * from "./department";
 export * from "./product";
 export * from "./store";
 export * from "./grocery-list";
+export * from './groceryListItem';
 export * from "./AddButton";
 export * from "./CrudDialog";
 export * from "./DeleteButton";

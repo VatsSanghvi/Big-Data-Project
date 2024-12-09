@@ -8,6 +8,7 @@ import { Store } from "@models"
 import { ListTemplate } from "../ListTemplate";
 import { StoreItemTemplate } from "./StoreItemTemplate";
 
+// * Store List Template for CRUD
 export const StoreListTemplate : FC<StoreListTemplateProps> = (props) => {
 
     const {

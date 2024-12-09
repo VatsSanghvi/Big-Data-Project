@@ -11,6 +11,8 @@ import { getId, hasError } from "@helpers";
 // * Models
 import { IBase } from "@models"
 
+
+// * Base Input Component for all input components
 export const MInputBase : FC<MInputBaseProps> = (props) => {
     const {
         formik,

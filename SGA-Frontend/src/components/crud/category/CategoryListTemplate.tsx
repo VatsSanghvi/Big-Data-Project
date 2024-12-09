@@ -8,6 +8,7 @@ import { Category } from "@models";
 import { ListTemplate } from "../ListTemplate";
 import { CategoryItemTemplate } from "./CategoryItemTemplate";
 
+// * Template for Category List
 export const CategoryListTemplate : FC<CategoryListTemplateProps> = (props) => {
     const {
         items,

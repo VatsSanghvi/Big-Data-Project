@@ -17,6 +17,8 @@ import { MIBase } from "@models";
 // * Helpers
 import { getId } from "@helpers";
 
+
+// * Password input for password fields
 export const MPassword : FC<MIBase<PasswordProps>> = (props) => {
     const {
         id,

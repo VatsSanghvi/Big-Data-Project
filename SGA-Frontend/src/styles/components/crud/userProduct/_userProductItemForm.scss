@@ -1,0 +1,6 @@
+@use 'primeflex/primeflex.scss' as *;
+@use '../../../breakpoints' as *;
+
+.grocery-list-item-form, .grocery-list-form {
+    @include styleclass('grid pt-2');
+}

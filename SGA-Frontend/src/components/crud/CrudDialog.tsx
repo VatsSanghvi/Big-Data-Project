@@ -10,6 +10,7 @@ import { DialogMode, DialogTitle } from "@models";
 // * Components
 import { CrudDialogFooter } from "./CrudDialogFooter";
 
+// * Dialog for CRUD operations
 export const CrudDialog : FC<CrudDialogProps> = (props) => {
     const {
         openMode,

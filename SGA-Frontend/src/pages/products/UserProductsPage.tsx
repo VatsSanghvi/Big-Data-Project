@@ -3,11 +3,10 @@ import { useState } from "react"
 
 // * Third Party Libraries
 import { useFormik } from "formik";
-import { confirmDialog, ConfirmDialog } from "primereact/confirmdialog";
 import { DataView } from "primereact/dataview";
 
 // * Components
-import { AddButton, PageTitle, GroceryListDialog, ProductListTemplate } from "@components"
+import { PageTitle, ProductListTemplate, GroceryListItemDialog } from "@components"
 
 // * Hooks
 import { useAppDispatch, useAppSelector, useToast } from "@hooks";
@@ -16,31 +15,31 @@ import { useAppDispatch, useAppSelector, useToast } from "@hooks";
 import { userProduct } from "@services";
 
 // * Forms
-import { groceryListInitialValues, groceryListValidationSchema } from "@forms";
+import { groceryListItemInitialValues, groceryListItemValidationSchema } from "@forms";
 
 // * Models
-import { DialogMode, Product, GroceryListForm } from "@models";
+import { DialogMode, Product, GroceryListItemForm } from "@models";
+
+// * Store
+import { addGroceryListItem } from "@store";
 
 export const UserProductsPage = () => {
     const { showSuccess, showError } = useToast();
 
     const { products } = useAppSelector(state => state.info);
+    const { groceryList } = useAppSelector(state => state.user);
     const dispatch = useAppDispatch();
 
     const [openMode, setOpenMode] = useState<DialogMode>(DialogMode.CLOSE);
 
-    const { createList } = userProduct;
-
-    const formik = useFormik<GroceryListForm>({
-        initialValues: groceryListInitialValues,
-        validationSchema: groceryListValidationSchema,
+    const formik = useFormik<GroceryListItemForm>({
+        initialValues: groceryListItemInitialValues,
+        validationSchema: groceryListItemValidationSchema,
         onSubmit: async (values) => {
-            console.log(values);
-
-            const { data } = await (createList)(values);
+            const { data } = await userProduct.addItem(values);
             if (data.ok) {
                 setOpenMode(DialogMode.CLOSE);
-                dispatch(createGroceryList(data.data));
+                dispatch(addGroceryListItem(data.data));
                 showSuccess('Success', `Product Added Successfully`);
             } else {
                 showError('Error', 'Something went wrong');
@@ -48,38 +47,42 @@ export const UserProductsPage = () => {
         }
     });
 
-    const onCreate = () => {
+    const onAdd = (item: Product) => {
+        if (!groceryList) {
+            showError("Error", "Please create a grocery list first");
+            return;
+        }
+
         formik.resetForm();
+        formik.setFieldValue('product_id', item.product_id);
+        formik.setFieldValue('grocery_list_id', groceryList.id);
+        
         setOpenMode(DialogMode.ADD);
-    };
+    }
 
     const listTemplate = (items: Product[]) => (
         <ProductListTemplate
             items={items}
+            onAdd={(item: Product) => onAdd(item)}
         />
     )
     return (
         <>
             <PageTitle title="Products" />
-            <AddButton
-                label="Add Product"
-                onClick={onCreate}
-            />
             <div className="h-full overflow-auto">
                 <DataView
                     paginator
                     className="h-full"
-                    rows={4}
+                    rows={3}
                     value={products}
                     listTemplate={listTemplate}
                 />
             </div>
-            <GroceryListDialog
+            <GroceryListItemDialog
                 openMode={openMode}
                 setOpenMode={setOpenMode}
                 formik={formik}
             />
-            <ConfirmDialog />
         </>
     )
 }

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 // * Third Party Libraries
 import { Button, ButtonProps } from "primereact/button"
 
+// * Button to navigate to a different page
 export const NavigateButton : FC<NavigateButtonProps> = (props) => {
     const {
         children,

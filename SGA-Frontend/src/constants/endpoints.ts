@@ -5,6 +5,7 @@ const endpointModules = {
   budget: "budget",
   category: "category",
   products: "products",
+  groceryList: "grocery-list",
 };
 
 export const endpoints = {
@@ -47,10 +48,11 @@ export const endpoints = {
     delete: `${endpointModules.products}`,
   },
   groceryList: {
-    get: `${endpointModules.products}/grocery-list/:user_id`,
-    create: `${endpointModules.products}/grocery-list`,
-    addItem: `${endpointModules.products}/grocery-list/item`,
-    updateItem: `${endpointModules.products}/grocery-list/:list_id/:item_id`,
-    deleteItem: `${endpointModules.products}/grocery-list/:list_id/:item_id`,
+    get: `${endpointModules.groceryList}`,
+    create: `${endpointModules.groceryList}`,
+    delete: `${endpointModules.groceryList}`,
+    addItem: `${endpointModules.groceryList}/item`,
+    updateItem: `${endpointModules.groceryList}/item`,
+    deleteItem: `${endpointModules.groceryList}/item`,
   },
 };

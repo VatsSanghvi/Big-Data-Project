@@ -1,6 +1,9 @@
+// * React Libraries
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 
+
+// * Menu Item for the Sidebar
 export const MenuItem : FC<MenuItemProps> = (props) => {
 
     const {

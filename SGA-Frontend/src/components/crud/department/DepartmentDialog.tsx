@@ -11,6 +11,8 @@ import { DepartmentForm as IDepartmentForm, DialogMode } from "@models";
 import { CrudDialog } from "../CrudDialog";
 import { DepartmentForm } from "./DepartmentForm";
 
+
+// * Dialog for Department Form
 export const DepartmentDialog :  FC<DepartmentDialogProps> = (props) => {
 
     const {

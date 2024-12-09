@@ -1,7 +1,13 @@
-import { ComponentStyle } from "@models";
-import { classNames } from "primereact/utils";
+// * React Libraries
 import { ReactNode } from "react";
 
+// * Third Party Libraries
+import { classNames } from "primereact/utils";
+
+// * Models
+import { ComponentStyle } from "@models";
+
+// * ListTemplate for CRUD
 export const ListTemplate = <T,>(props : ListTemplateProps<T>) => {
 
     const {

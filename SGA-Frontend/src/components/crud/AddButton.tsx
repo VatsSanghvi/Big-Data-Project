@@ -8,6 +8,7 @@ import { classNames } from "primereact/utils";
 // * Models
 import { Style } from "@models";
 
+// * Button to add new item
 export const AddButton : FC<Style<AddButtonProps>> = (props) => {
 
     const {

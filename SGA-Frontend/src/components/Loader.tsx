@@ -1,5 +1,4 @@
-
-
+// * Loader component displayed when fetching data from the server
 export const Loader = () => {
     return (
         <div

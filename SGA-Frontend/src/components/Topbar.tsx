@@ -1,12 +1,24 @@
-import Logo from '@assets/virtual-assistant.png';
-import { menuOptions } from '@constants';
-import { useAuthStore, useBreakpoints } from '@hooks';
+// * React Libraries
+import { useState } from 'react';
+
+// * Third Party Libraries
 import { Button } from 'primereact/button';
 import { Image } from 'primereact/image';
 import { Sidebar } from 'primereact/sidebar';
-import { useState } from 'react';
+
+// * Hooks
+import { useAuthStore, useBreakpoints } from '@hooks';
+
+// * Constants
+import { menuOptions } from '@constants';
+
+// * Components
 import { MenuItem } from './MenuItem';
 
+// * Assets
+import Logo from '@assets/virtual-assistant.png';
+
+// * Topbar of the application
 export const Topbar = () => {
     const { isMobile } = useBreakpoints();
     const { onLogout, user } = useAuthStore();

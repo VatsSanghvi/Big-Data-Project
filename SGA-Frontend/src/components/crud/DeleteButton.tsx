@@ -7,6 +7,8 @@ import { Button } from "primereact/button";
 // * Models
 import { ComponentStyle } from "@models";
 
+
+// * Button to delete an item
 export const DeleteButton : FC<DeleteButtonProps> = (props) => {
 
     const {

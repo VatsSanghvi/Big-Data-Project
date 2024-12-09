@@ -16,6 +16,7 @@ import { MDropdown, MInputText } from "@components";
 // * Hooks
 import { useAppSelector } from "@hooks";
 
+// * Form for Department
 export const DepartmentForm : FC<DepartmentFormProps> = (props) => {
 
     const {

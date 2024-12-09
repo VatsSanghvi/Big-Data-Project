@@ -11,6 +11,7 @@ import { ProductItemTemplate } from "./ProductItemTemplate";
 export const ProductListTemplate: FC<ProductListTemplateProps> = (props) => {
     const {
         items,
+        onAdd
     } = props;
 
     return (
@@ -24,6 +25,7 @@ export const ProductListTemplate: FC<ProductListTemplateProps> = (props) => {
                         key={index}
                         item={item}
                         index={index}
+                        onAdd={onAdd}
                     />
                 )
             }
@@ -33,4 +35,5 @@ export const ProductListTemplate: FC<ProductListTemplateProps> = (props) => {
 
 interface ProductListTemplateProps {
     items: Product[];
+    onAdd: (item: Product) => void;
 }

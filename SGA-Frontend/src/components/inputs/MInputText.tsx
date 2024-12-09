@@ -17,6 +17,8 @@ import { MIBase } from "@models";
 // * Helpers
 import { getId, hasError } from "@helpers";
 
+
+// * Input Text Component to input text
 export const MInputText : FC<MIBase<InputTextProps>> = (props) => {
     const {
         id,

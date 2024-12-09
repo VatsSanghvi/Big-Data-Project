@@ -1,17 +1,19 @@
 // * Third Party Libraries
-import { number, object, string } from "yup";
+import { number, object } from "yup";
 
 // * Models
-import { GroceryListForm } from "@models";
+import { GroceryListItemForm } from "@models";
 
-export const groceryListInitialValues: GroceryListForm = {
+export const groceryListItemInitialValues: GroceryListItemForm = {
   id: 0,
-  name: "",
-  user_id: 0,
+  grocery_list_id: 0,
+  product_id: 0,
+  quantity: 0,
 };
 
-export const groceryListValidationSchema = object({
+export const groceryListItemValidationSchema = object({
   id: number(),
-  name: string().required("Name is required"),
-  user_id: number(),
+  grocery_list_id: number(),
+  product_id: number(),
+  quantity: number().required("Quantity is required"),
 });

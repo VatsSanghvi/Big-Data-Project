@@ -11,6 +11,7 @@ import { DeleteButton } from "../DeleteButton";
 // * Models
 import { Store } from "@models";
 
+// * Store Item Template for CRUD
 export const StoreItemTemplate : FC<StoreItemTemplateProps> = (props) => {
     const {
         item,

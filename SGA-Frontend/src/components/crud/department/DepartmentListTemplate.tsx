@@ -8,6 +8,7 @@ import { Department } from "@models";
 import { ListTemplate } from "../ListTemplate";
 import { DepartmentItemTemplate } from "./DepartmentItemTemplate";
 
+// * Department List Template
 export const DepartmentListTemplate : FC<DepartmentListTemplateProps> = (props) => {
 
     const {

@@ -17,6 +17,8 @@ import { MIBase } from "@models";
 // * Helpers
 import { getId, hasError } from "@helpers";
 
+
+// * Number input component for inputting numbers
 export const MInputNumber : FC<MIBase<InputNumberProps>> = (props) => {
 
     const {

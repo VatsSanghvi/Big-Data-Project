@@ -11,6 +11,7 @@ import { CategoryForm as ICategoryForm, DialogMode } from "@models";
 import { CrudDialog } from "../CrudDialog";
 import { CategoryForm } from "./CategoryForm";
 
+// * Category Dialog for CRUD
 export const CategoryDialog :  FC<CategoryDialogProps> = (props) => {
 
     const {

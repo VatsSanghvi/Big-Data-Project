@@ -16,6 +16,7 @@ import { MDropdown, MInputNumber, MInputText } from "@components";
 // * Hooks
 import { useAppSelector } from "@hooks";
 
+// * Product Form for CRUD operations
 export const ProductForm : FC<ProductFormProps> = (props) => {
 
     const {

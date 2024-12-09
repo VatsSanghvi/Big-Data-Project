@@ -17,6 +17,8 @@ import { MIBase } from "@models";
 // * Helpers
 import { getId, hasError } from "@helpers";
 
+
+// * InputMask to mask input
 export const MInputMask : FC<MIBase<InputMaskProps>> = (props) => {
     const {
         id,

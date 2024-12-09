@@ -7,6 +7,7 @@ import { Button } from "primereact/button";
 // * Models
 import { DialogMode, DialogTitle } from "@models";
 
+// * Footer for CRUD Dialog
 export const CrudDialogFooter : FC<CrudDialogFooterProps> = (props) => {
     const {
         openMode,

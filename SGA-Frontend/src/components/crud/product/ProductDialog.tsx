@@ -11,6 +11,7 @@ import { DialogMode, ProductForm as IProductForm } from "@models";
 import { CrudDialog } from "../CrudDialog";
 import { ProductForm } from "./ProductForm";
 
+// * Product Dialog for CRUD operations
 export const ProductDialog :  FC<ProductDialogProps> = (props) => {
 
     const {

@@ -16,6 +16,7 @@ import { MDropdown, MInputText } from "@components";
 // * Hooks
 import { useAppSelector } from "@hooks";
 
+// * Form for Category
 export const CategoryForm : FC<CategoryFormProps> = (props) => {
 
     const {

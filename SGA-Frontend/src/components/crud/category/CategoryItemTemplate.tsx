@@ -11,6 +11,7 @@ import { Category } from "@models"
 import { EditButton } from "../EditButton";
 import { DeleteButton } from "../DeleteButton";
 
+// * Template for Category Item
 export const CategoryItemTemplate : FC<CategoryItemTemplateProps> = (props) => {
 
     const {
@@ -29,10 +30,10 @@ export const CategoryItemTemplate : FC<CategoryItemTemplateProps> = (props) => {
 
     return (
         <div className={classes}>
-            <div className="deparment-item-info">
+            <div className="category-item-info">
                 <h3>{item.category_name}</h3>
             </div>
-            <div className="department-item-actions">
+            <div className="category-item-actions">
                 <EditButton onClick={() => onEdit(item)}/>
                 <DeleteButton onClick={() => onDelete(item.category_id)}/>
             </div>
