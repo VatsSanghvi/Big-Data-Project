@@ -3,7 +3,6 @@ from app.schemas.user_schema import UserCreate, UserLogin, PasswordUpdate, UserU
 from app.crud import user_crud
 from app.models import user_model,store_model, product_model, department_model, category_model, grocery_list_model, budget_model
 from app.database import engine
-from passlib.context import CryptContext
 
 # Setup a test database session
 def get_test_db():
@@ -21,99 +20,99 @@ def get_test_db():
         db.close()
 
 #-------------------------------------------------------------------------------------------------------------------------------
-# def test_register_user():
-#     # Initialize the test database session
-#     db_generator = get_test_db()
-#     db = next(db_generator)
+def test_register_user():
+    # Initialize the test database session
+    db_generator = get_test_db()
+    db = next(db_generator)
 
-#     # Mock data
-#     new_user = UserCreate(
-#         first_name="Dev",
-#         last_name="Patel",
-#         email="dev12@gmail.com",
-#         password="password123",
-#         phone_number="1234567899",
-#         role="customer"
-#     )
+    # Mock data
+    new_user = UserCreate(
+        first_name="Dev",
+        last_name="Patel",
+        email="dev12@gmail.com",
+        password="password123",
+        phone_number="1234567899",
+        role="customer"
+    )
 
-#     # Call the function
-#     inserted_user = user_crud.register_user(db=db, user=new_user)
+    # Call the function
+    inserted_user = user_crud.register_user(db=db, user=new_user)
 
-#     # Validate results
-#     assert user_crud.verify_password(
-#         plain_password="password123",
-#         hashed_password=inserted_user.password)
-#     assert user_crud.validate_email(
-#         email=inserted_user.email
-#     )
-#     assert user_crud.validate_phone_number(
-#         phone_number=inserted_user.phone_number
-#     )
+    # Validate results
+    assert user_crud.verify_password(
+        plain_password="password123",
+        hashed_password=inserted_user.password)
+    assert user_crud.validate_email(
+        email=inserted_user.email
+    )
+    assert user_crud.validate_phone_number(
+        phone_number=inserted_user.phone_number
+    )
 
 #--------------------------------------------------------------------------------------------------------------------------
-# def test_login_user():
-#     # Initialize the test database session
-#     db_generator = get_test_db()
-#     db = next(db_generator)
+def test_login_user():
+    # Initialize the test database session
+    db_generator = get_test_db()
+    db = next(db_generator)
 
-#     # Mock data
-#     new_user = UserLogin(
-#         email="dev@gmail.com",
-#         password="password123"
-#     )
+    # Mock data
+    new_user = UserLogin(
+        email="dev@gmail.com",
+        password="password123"
+    )
 
-#     # Call the function
-#     login_user = user_crud.authenticate_user(db=db, email=new_user.email, password=new_user.password)
-#     assert user_crud.authenticate_user(db=db, email=login_user.email, password=login_user.password)
+    # Call the function
+    login_user = user_crud.authenticate_user(db=db, email=new_user.email, password=new_user.password)
+    assert user_crud.authenticate_user(db=db, email=login_user.email, password=login_user.password)
 
 #--------------------------------------------------------------------------------------------------------------------------------------------
-# def test_logout_user():
-#     # Initialize the test database session
-#     db_generator = get_test_db()
-#     db = next(db_generator)
+def test_logout_user():
+    # Initialize the test database session
+    db_generator = get_test_db()
+    db = next(db_generator)
 
-#     # Mock user ID
-#     user_id = 35 
+    # Mock user ID
+    user_id = 35 
 
-#     # Call the logout function
-#     response = user_crud.logout_user(db=db, user_id=user_id)
+    # Call the logout function
+    response = user_crud.logout_user(db=db, user_id=user_id)
 
-#     # Validate the response
-#     assert response["message"] == "User logged out successfully"
+    # Validate the response
+    assert response["message"] == "User logged out successfully"
 
 #----------------------------------------------------------------------------------------------------------------------
-# def test_reset_password():
-#     # Initialize the test database session
-#     db_generator = get_test_db()
-#     db = next(db_generator)
+def test_reset_password():
+    # Initialize the test database session
+    db_generator = get_test_db()
+    db = next(db_generator)
 
-#     # Mock valid email for password reset
-#     email = "dev1234@gmail.com"
+    # Mock valid email for password reset
+    email = "dev1234@gmail.com"
 
-#     # Call the reset password function
-#     response = user_crud.reset_password(db=db, email=email)
+    # Call the reset password function
+    response = user_crud.reset_password(db=db, email=email)
 
-#     # Validate the response
-#     assert response["message"] == "Password reset email sent."
+    # Validate the response
+    assert response["message"] == "Password reset email sent."
 
 #--------------------------------------------------------------------------------------------------------------------
-# def test_update_password():
-#     # Initialize the test database session
-#     db_generator = get_test_db()
-#     db = next(db_generator)
+def test_update_password():
+    # Initialize the test database session
+    db_generator = get_test_db()
+    db = next(db_generator)
 
-#     # Mock data
-#     new_user = PasswordUpdate(
-#         user_id=1,
-#         current_password="password123",
-#         new_password="password1234"
-#     )
+    # Mock data
+    new_user = PasswordUpdate(
+        user_id=1,
+        current_password="password123",
+        new_password="password1234"
+    )
 
-#     # Call the function
-#     updated_password = user_crud.update_password(db=db, user_id=new_user.user_id, current_password=new_user.current_password, new_password=new_user.new_password)
+    # Call the function
+    updated_password = user_crud.update_password(db=db, user_id=new_user.user_id, current_password=new_user.current_password, new_password=new_user.new_password)
 
-#     # Validate results
-#     assert updated_password == True
+    # Validate results
+    assert updated_password == True
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------
 def test_update_user_profile():
@@ -139,52 +138,32 @@ def test_update_user_profile():
     assert updated_user_profile.phone_number == updated_user.phone_number
 
 
-# def test_get_user_by_id():
-#     # Initialize the test database session
-#     db_generator = get_test_db()
-#     db = next(db_generator)
+def test_get_user_by_id():
+    # Initialize the test database session
+    db_generator = get_test_db()
+    db = next(db_generator)
 
-#     # Mock data
-#     new_user = UserCreate(
-#         first_name="John",
-#         last_name="Pilgrim",
-#         email="johnpilgrim33@gmail.com",
-#         password="password123",
-#         phone_number="1234567899",
-#         role="customer"
-#     )
+    # Mock data
+    user_id = 1
 
-#     # Insert a new user
-#     inserted_user = user_crud.register_user(db=db, user=new_user)
+    # Call the function
+    user_by_id = user_crud.get_user_by_id(db, user_id=user_id)
 
-#     # Call the function
-#     user_by_id = user_crud.get_user_by_id(db, user_id=inserted_user.user_id)
-
-#     # Validate results
-#     assert user_by_id.user_id == inserted_user.user_id
+    # Validate results
+    assert user_by_id.user_id == user_by_id
 
 
-# def test_get_user_by_email():
-#     # Initialize the test database session
-#     db_generator = get_test_db()
-#     db = next(db_generator)
+def test_get_user_by_email():
+    # Initialize the test database session
+    db_generator = get_test_db()
+    db = next(db_generator)
 
-#     # Mock data
-#     new_user = UserCreate(
-#         first_name="John",
-#         last_name="Pilgrim",
-#         email="johnpilgrim33@gmail.com",
-#         password="password123",
-#         phone_number="1234567899",
-#         role="customer"
-#     )
+    # Mock data
+    user_email = "dev123@gmail.com"
 
-#     # Insert a new user
-#     inserted_user = user_crud.register_user(db=db, user=new_user)
+    # Call the function
+    user_by_email = user_crud.get_user_by_email(db, email=user_email)
 
-#     # Call the function
-#     user_by_email = user_crud.get_user_by_email(db, email=inserted_user.email)
-
-#     # Validate results
-#     assert user_by_email.email == inserted_user.email
+    # Validate results
+    assert user_by_email.email == True
 
