@@ -32,6 +32,14 @@ def get_products_by_owner(owner_id: int, db: Session = Depends(get_db)):
     except Exception as e:
         return BaseResponse.error_response(message=str(e))
 
+@router.get("/", response_model=BaseResponse[list[ProductResponse]])
+def get_all_products(db: Session = Depends(get_db)):
+    try:
+        get_products = product_crud.get_all_products(db=db)
+        return BaseResponse.success_response(data=get_products, message="Products retrieved successfully")
+    except Exception as e:
+        return BaseResponse.error_response(message=str(e))
+
 @router.put("/{product_id}", response_model=BaseResponse[ProductResponse])
 def update_product(product_id: int, product: ProductCreateRequest, db: Session = Depends(get_db)):
     try:
