@@ -1,7 +1,7 @@
 from app.database import TestingSessionLocal
 from app.schemas.grocery_list_schema import GroceryItemCreate, GroceryListCreate
 from app.crud import grocery_list_crud
-from app.models import user_model, grocery_list_model, store_model, product_model, department_model, category_model
+from app.models import user_model, grocery_list_model, store_model, product_model, department_model, category_model,budget_model
 from app.database import engine
 
 # Setup a test database session
@@ -12,6 +12,7 @@ def get_test_db():
     department_model.Base.metadata.create_all(bind=engine)
     store_model.Base.metadata.create_all(bind=engine)
     grocery_list_model.Base.metadata.create_all(bind=engine)
+    budget_model.Base.metadata.create_all(bind=engine)
 
     db = TestingSessionLocal()
     try:
