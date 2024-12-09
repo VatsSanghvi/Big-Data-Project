@@ -9,7 +9,8 @@ class GroceryListBase(BaseModel):
     name: str
     total_spent: float
     user_id: int
-    is_completed: Optional[bool] = False
+
+    model_config = ConfigDict(from_attributes=True)
 
 class GroceryListCreate(BaseModel):
     name: str
@@ -20,7 +21,8 @@ class GroceryItemBase(BaseModel):
     quantity: int
     grocery_list_id: int
     product_id: int
-    # is_checked: bool = False
+
+    model_config = ConfigDict(from_attributes=True)
 
 class GroceryListResponse(GroceryListBase):
     items: List[GroceryItemBase]
