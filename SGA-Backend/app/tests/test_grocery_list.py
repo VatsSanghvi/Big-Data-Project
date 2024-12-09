@@ -11,7 +11,7 @@ def get_test_db():
     product_model.Base.metadata.create_all(bind=engine)
     department_model.Base.metadata.create_all(bind=engine)
     store_model.Base.metadata.create_all(bind=engine)
-    grocerylist_model.Base.metadata.create_all(bind=engine)
+    grocery_list_model.Base.metadata.create_all(bind=engine)
 
     db = TestingSessionLocal()
     try:
@@ -31,7 +31,7 @@ def test_insert_grocery_list():
     )
 
     # Call the function
-    inserted_list = grocerylist_crud.insert_grocery_list(db=db, grocery_list=new_list)
+    inserted_list = grocery_list_crud.insert_grocery_list(db=db, grocery_list=new_list)
 
     # Validate results
     assert inserted_list.name == new_list.name
@@ -48,10 +48,10 @@ def test_get_grocery_list():
     )
 
     # Insert the grocery list
-    inserted_list = grocerylist_crud.insert_grocery_list(db=db, grocery_list=new_list)
+    inserted_list = grocery_list_crud.insert_grocery_list(db=db, grocery_list=new_list)
 
     # Call the function
-    grocery_list = grocerylist_crud.get_grocery_list(db=db, list_id=inserted_list.id, user_id=new_list.user_id)
+    grocery_list = grocery_list_crud.get_grocery_list(db=db, list_id=inserted_list.id, user_id=new_list.user_id)
 
     # Validate results
     assert len(grocery_list) > 0
@@ -68,10 +68,10 @@ def test_delete_grocery_list():
     )
 
     # Insert the grocery list
-    inserted_list = grocerylist_crud.insert_grocery_list(db=db, grocery_list=new_list)
+    inserted_list = grocery_list_crud.insert_grocery_list(db=db, grocery_list=new_list)
 
     # Validate results
-    grocerylist_crud.delete_grocery_list(db=db, list_id=inserted_list.id)
+    grocery_list_crud.delete_grocery_list(db=db, list_id=inserted_list.id)
 
 # Testing the function
 def test_insert_item_to_grocery_list():
@@ -86,7 +86,7 @@ def test_insert_item_to_grocery_list():
     )
 
     # Insert the grocery list
-    inserted_list = grocerylist_crud.insert_grocery_list(db=db, grocery_list=new_list)
+    inserted_list = grocery_list_crud.insert_grocery_list(db=db, grocery_list=new_list)
 
     # Mock data
     new_item = GroceryItemCreate(
@@ -96,7 +96,7 @@ def test_insert_item_to_grocery_list():
     )
 
     # Insert the grocery item
-    inserted_item = grocerylist_crud.insert_item_to_grocery_list(db=db, item=new_item)
+    inserted_item = grocery_list_crud.insert_item_to_grocery_list(db=db, item=new_item)
 
     # Validate results
     assert inserted_item.name == new_item.name
@@ -113,7 +113,7 @@ def test_get_grocery_item_by_id():
     )
 
     # Insert the grocery list
-    inserted_list = grocerylist_crud.insert_grocery_list(db=db, grocery_list=new_list)
+    inserted_list = grocery_list_crud.insert_grocery_list(db=db, grocery_list=new_list)
 
     # Mock data
     new_item = GroceryItemCreate(
@@ -123,10 +123,10 @@ def test_get_grocery_item_by_id():
     )
 
     # Insert the grocery item
-    inserted_item = grocerylist_crud.insert_item_to_grocery_list(db=db, item=new_item)
+    inserted_item = grocery_list_crud.insert_item_to_grocery_list(db=db, item=new_item)
 
     # Call the function
-    item = grocerylist_crud.get_grocery_item_by_id(db, item_id=inserted_item.id)
+    item = grocery_list_crud.get_grocery_item_by_id(db, item_id=inserted_item.id)
 
     # Validate results
     assert item.id == inserted_item.id
@@ -143,7 +143,7 @@ def test_update_grocery_list_item():
     )
 
     # Insert the grocery list
-    inserted_list = grocerylist_crud.insert_grocery_list(db=db, grocery_list=new_list)
+    inserted_list = grocery_list_crud.insert_grocery_list(db=db, grocery_list=new_list)
 
     # Mock data
     new_item = GroceryItemCreate(
@@ -153,7 +153,7 @@ def test_update_grocery_list_item():
     )
 
     # Insert the grocery item
-    inserted_item = grocerylist_crud.insert_item_to_grocery_list(db=db, item=new_item)
+    inserted_item = grocery_list_crud.insert_item_to_grocery_list(db=db, item=new_item)
 
     # Mock updated data
     updated_item = GroceryItemCreate(
@@ -163,7 +163,7 @@ def test_update_grocery_list_item():
     )
 
     # Update the grocery item
-    updated_item = grocerylist_crud.update_grocery_list_item(db=db, item_id=inserted_item.id, updates=updated_item)
+    updated_item = grocery_list_crud.update_grocery_list_item(db=db, item_id=inserted_item.id, updates=updated_item)
 
     # Validate results
     assert updated_item.id == inserted_item.id
@@ -180,7 +180,7 @@ def test_delete_grocery_list_item():
     )
 
     # Insert the grocery list
-    inserted_list = grocerylist_crud.insert_grocery_list(db=db, grocery_list=new_list)
+    inserted_list = grocery_list_crud.insert_grocery_list(db=db, grocery_list=new_list)
 
     # Mock data
     new_item = GroceryItemCreate(
@@ -190,10 +190,10 @@ def test_delete_grocery_list_item():
     )
 
     # Insert the grocery item
-    inserted_item = grocerylist_crud.insert_item_to_grocery_list(db=db, item=new_item)
+    inserted_item = grocery_list_crud.insert_item_to_grocery_list(db=db, item=new_item)
 
     # Delete the grocery item
-    grocerylist_crud.delete_grocery_list_item(db=db, item_id=inserted_item.id)
+    grocery_list_crud.delete_grocery_list_item(db=db, item_id=inserted_item.id)
 
 # Run the tests
 test_insert_grocery_list()
