@@ -11,7 +11,7 @@ export const menuOptions: MenuOptions[] = [
         label: "User Profile",
         icon: "bars",
         to: "/profile",
-        roles: [Role.User],
+        roles: [Role.User, Role.Admin],
     },
     {
         label: "Budget",

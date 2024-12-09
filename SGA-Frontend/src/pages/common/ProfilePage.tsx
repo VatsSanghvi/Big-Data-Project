@@ -20,18 +20,12 @@ import { UpdateProfileRequest } from "@models";
 import { user as userService } from "@services";
 
 // * Local Components
-import { Avatar } from 'primereact/avatar';
-import { Button } from 'primereact/button';
+import { useEffect } from "react";
 
 export const ProfilePage = () => {
 
     const { user, updateUser } = useAuthStore();
     const { showSuccess, showError } = useToast();
-
-    updateProfileInitialValues.first_name = user.first_name;
-    updateProfileInitialValues.last_name = user.last_name;
-    updateProfileInitialValues.email = user.email;
-    updateProfileInitialValues.phone_number = user.phone_number;
 
     const formik = useFormik({
         initialValues: updateProfileInitialValues,
@@ -47,7 +41,7 @@ export const ProfilePage = () => {
                 const data = response.data.data;
                 updateUser(data);
 
-                showSuccess(data.message, `${data.first_name} ${data.last_name}`);
+                showSuccess('Profile Updated Successfully', `Profile has been updated successfully ${data.first_name} ${data.last_name}`);
 
             } else {
                 showError("Error", response.data.message);
@@ -55,20 +49,20 @@ export const ProfilePage = () => {
         }
     });
 
+    useEffect(() => {
+        if (user && user.user_id) {
+            formik.setValues({
+                ...user
+            })
+        }
+    }, []);
+
     return (
         <div className="register">
             <CardHeader title="Update User" />
             <form
                 onSubmit={formik.handleSubmit}
             >
-                <Avatar
-                    className="avatar"
-                    icon="pi pi-user"
-                    shape="circle"
-                    size="xlarge"
-                />
-                <Button icon="pi pi-camera" rounded text aria-label="Upload Image" />
-
                 <MInputText {...getProps(formik, 'first_name', 'First Name')} />
                 <MInputText {...getProps(formik, 'last_name', 'Last Name')} />
                 <MInputText

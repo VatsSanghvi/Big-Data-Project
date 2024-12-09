@@ -19,6 +19,10 @@ export const useAuthStore = () => {
     const updateAuthState = (newState: LoginState) => dispatch(setAuthState(newState));
     const updateUser = (newUser: User) => {
         dispatch(setUser(newUser));
+        updateValue({
+            ...value,
+            user: newUser
+        })
     };
 
     const onLogin = (newUser: User) => {

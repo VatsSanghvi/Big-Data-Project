@@ -26,6 +26,6 @@ export const user = {
     return instance.put(`${endpoints.auth.resetPassword}/${email}`, values);
   },
   updateProfile: (user_id: number, values: UpdateProfileRequest) => {
-    return instance.put(`${endpoints.user.updateProfile}/${user_id}`, values);
+    return instance.put(`${endpoints.auth.updateProfile}/${user_id}`, values);
   },
 };

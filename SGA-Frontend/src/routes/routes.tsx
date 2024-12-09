@@ -38,7 +38,7 @@ export const routes: RouteObject[] = [
             {
                 path: "/profile",
                 element: (
-                    <RolesRoute allowedRoles={[Role.User]}>
+                    <RolesRoute allowedRoles={[Role.User, Role.Admin]}>
                         <ProfilePage />
                     </RolesRoute>
                 )
@@ -64,14 +64,6 @@ export const routes: RouteObject[] = [
                 element: (
                     <RolesRoute allowedRoles={[Role.Admin]}>
                         <ProductsPage />
-                    </RolesRoute>
-                )
-            },
-            {
-                path: "/profile",
-                element: (
-                    <RolesRoute allowedRoles={[Role.User]}>
-                        <ProfilePage />
                     </RolesRoute>
                 )
             },
