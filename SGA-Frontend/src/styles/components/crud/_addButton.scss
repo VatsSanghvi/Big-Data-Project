@@ -1,0 +1,11 @@
+@use 'primeflex/primeflex.scss' as *;
+@use '../../breakpoints' as *;
+
+.add-button {
+    @include styleclass('w-full flex justify-content-center mt-2');
+
+    @include sm {
+        justify-content: flex-end !important;
+        margin-top: 0 !important;
+    }
+}

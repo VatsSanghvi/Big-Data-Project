@@ -1,0 +1,36 @@
+@use 'primeflex/primeflex.scss' as *;
+@use '../breakpoints' as *;
+
+.topbar {
+    @include styleclass('w-full bg-primary flex justify-content-between align-items-center p-2');
+
+    h1 {
+        @include styleclass('text-xl');
+    }
+
+    @include sm {
+        padding: 1rem !important;
+
+        h1 {
+            font-size: 2rem !important;
+        }
+
+        .sign-out-button {
+            background-color: white;
+            color: var(--primary-color);
+        }
+    }
+
+    .left-side {
+        @include styleclass('flex gap-1 align-items-center');
+    }
+    
+    .right-side {
+        @include styleclass('flex gap-1 align-items-center');
+    }
+
+    .menu-button {
+        @include styleclass('text-white');
+    }
+
+}

@@ -1,0 +1,10 @@
+@use 'primeflex/primeflex.scss' as *;
+@use '../../breakpoints' as *;
+
+.list-template-empty {
+    @include styleclass('w-full flex justify-content-center align-items-center');
+}
+
+.list-template {
+    @include styleclass('grid grid-nogutter');
+}

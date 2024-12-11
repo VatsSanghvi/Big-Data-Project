@@ -1,0 +1,23 @@
+@use 'primeflex/primeflex.scss' as *;
+
+.register {
+    @include styleclass('w-full');
+
+    form {
+        @include styleclass('flex flex-column align-items-center w-full h-full px-5 py-6 gap-2');
+
+        .submit-button {
+            @include styleclass('w-full flex justify-content-center');
+
+            border-radius: 50px;
+        }
+
+        .signin-link {
+            @include styleclass('flex flex-column align-items-center w-full mt-4');
+
+            p {
+                @include styleclass('m-0');
+            }
+        }
+    }
+}

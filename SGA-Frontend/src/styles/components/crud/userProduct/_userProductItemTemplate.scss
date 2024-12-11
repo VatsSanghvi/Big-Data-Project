@@ -1,0 +1,14 @@
+@use 'primeflex/primeflex.scss' as *;
+@use '../../../breakpoints' as *;
+
+.product-item {
+    @include styleclass('col-12 flex flex-column sm:flex-row align-items-center sm:justify-content-between p-4 gap-3 sm:gap-0 border-bottom-1 surface-border');
+
+    &-info {
+        @include styleclass('flex flex-column gap-2');
+    }
+
+    &-actions {
+        @include styleclass('flex gap-2 align-items-center');
+    }
+}

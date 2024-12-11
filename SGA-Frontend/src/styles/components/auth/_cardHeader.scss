@@ -1,0 +1,15 @@
+@use 'primeflex/primeflex.scss' as *;
+@use '../../breakpoints' as *;
+
+.card-header {
+    @include styleclass('flex justify-content-center align-items-center w-full bg-primary text-light py-3');
+
+    @include sm {
+       padding: 1.5rem 0 !important;
+    }
+
+    h1{
+        font-size: 1.875rem !important;
+        margin: 0;
+    }
+}
